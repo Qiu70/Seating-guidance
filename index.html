@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>区域座位导航</title>
+    <title>座位导航 · 左海产业生态大会</title>
     <style>
         :root {
             --card-max-width: 360px;
@@ -16,7 +16,6 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* 独立背景层，固定定位，参考左海大会方案 */
         .bg-fixed {
             position: fixed;
             top: 0;
@@ -32,7 +31,7 @@
 
         body {
             font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Segoe UI', system-ui, sans-serif;
-            background-color: #4c1d95; /* 图片未加载时的后备色 */
+            background-color: #4c1d95;
             color: #f0eaff;
             min-height: 100vh;
             min-height: -webkit-fill-available;
@@ -55,7 +54,6 @@
             z-index: 1;
         }
 
-        /* 页面容器 */
         .page {
             width: 100%;
             display: flex;
@@ -73,7 +71,6 @@
             transform: translateY(0);
         }
 
-        /* 毛玻璃卡片 */
         .glass-card {
             width: 100%;
             background: rgba(255, 255, 255, 0.2);
@@ -86,12 +83,9 @@
             text-align: center;
         }
 
-        /* 首页元素 */
         .home-icon {
-            width: 13vw;
-            height: 13vw;
-            max-width: 56px;
-            max-height: 56px;
+            width: 56px;
+            height: 56px;
             margin: 0 auto 4vw;
             background: rgba(255, 255, 255, 0.15);
             border-radius: 3.5vw;
@@ -123,7 +117,6 @@
             margin-bottom: 6vw;
         }
 
-        /* 输入区域 */
         .input-wrap {
             position: relative;
             margin-bottom: 3vw;
@@ -159,7 +152,6 @@
             height: 4.5vw;
         }
 
-        /* 错误提示 */
         .error-message {
             display: block;
             height: 4.5vw;
@@ -174,7 +166,6 @@
             opacity: 1;
         }
 
-        /* 按钮 */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -214,7 +205,6 @@
             color: rgba(255, 255, 255, 0.5);
         }
 
-        /* 二级页面 */
         .result-header {
             display: flex;
             align-items: center;
@@ -251,8 +241,8 @@
         .zone-badge {
             width: 10vw;
             height: 10vw;
-            max-width: 38px;
-            max-height: 38px;
+            max-width: 44px;
+            max-height: 44px;
             border-radius: 50%;
             font-size: 5vw;
             font-weight: 800;
@@ -262,9 +252,9 @@
             justify-content: center;
             flex-shrink: 0;
         }
-        .zone-badge.zone-a { background: #f0a04b; }
-        .zone-badge.zone-b { background: #4a90d9; }
-        .zone-badge.zone-c { background: #5ba87d; }
+        .zone-badge.front { background: #f0a04b; }
+        .zone-badge.middle { background: #4a90d9; }
+        .zone-badge.back { background: #5ba87d; }
         .zone-text {
             font-size: 4vw;
             font-weight: 600;
@@ -302,7 +292,6 @@
             display: inline-block;
         }
 
-        /* 示意图占位 */
         .map-placeholder {
             margin: 4vw 0 2vw;
             padding: 6vw 4vw;
@@ -329,7 +318,6 @@
             opacity: 0.55;
         }
 
-        /* 针对小屏微调 */
         @media (max-width: 360px) {
             .home-title { font-size: 6vw; }
             .home-subtitle { font-size: 4vw; }
@@ -339,7 +327,6 @@
             .zone-text { font-size: 4.2vw; }
         }
 
-        /* 略大屏幕恢复px单位 */
         @media (min-width: 400px) {
             .glass-card {
                 border-radius: 20px;
@@ -357,9 +344,7 @@
     </style>
 </head>
 <body>
-    <!-- 固定背景层 -->
     <div class="bg-fixed"></div>
-
     <div class="app-container">
         <!-- 首页 -->
         <div class="page active" id="page-home">
@@ -375,8 +360,8 @@
                         <circle cx="13.5" cy="17.75" r="1" fill="#fff" />
                     </svg>
                 </div>
-                <h1 class="home-title">区域座位导航</h1>
-                <p class="home-subtitle">输入姓名，查看您的专属座位</p>
+                <h1 class="home-title">座位导航</h1>
+                <p class="home-subtitle">输入姓名，查看您的座位</p>
                 <div class="input-wrap">
                     <input type="text" id="nameInput" placeholder="请输入姓名" autocomplete="name" maxlength="30" aria-label="姓名输入框">
                     <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -434,27 +419,36 @@
             const seatBigInfo = document.getElementById('seatBigInfo');
             const errorMessage = document.getElementById('errorMessage');
 
-            // 座位数据（无描述文字）
-            const zoneDefs = [
-                { zone: 'A', rows: 2, seatsPerRow: 8, label: 'A区 · 前排VIP' },
-                { zone: 'B', rows: 4, seatsPerRow: 10, label: 'B区 · 中排' },
-                { zone: 'C', rows: 3, seatsPerRow: 8, label: 'C区 · 后排' }
-            ];
-
+            // 构建实际座位表：A区1-13排，每排1-10座；B区同理。只嘉宾席，不包含领导席。
             const allSeats = [];
-            zoneDefs.forEach(zoneDef => {
-                for (let row = 1; row <= zoneDef.rows; row++) {
-                    for (let seat = 1; seat <= zoneDef.seatsPerRow; seat++) {
-                        allSeats.push({
-                            zone: zoneDef.zone,
-                            row,
-                            seat,
-                            zoneLabel: zoneDef.label
-                        });
-                    }
+            const zoneLabels = {
+                front: '前排（1~4排）',
+                middle: '中排（5~9排）',
+                back: '后排（10~13排）'
+            };
+
+            for (let row = 1; row <= 13; row++) {
+                let section = row <= 4 ? 'front' : row <= 9 ? 'middle' : 'back';
+                for (let seat = 1; seat <= 10; seat++) {
+                    allSeats.push({
+                        zoneLetter: 'A',
+                        row: row,
+                        seat: seat,
+                        section: section,
+                        label: `A区 ${zoneLabels[section]}`,
+                        code: `A${row}-${seat}`
+                    });
+                    allSeats.push({
+                        zoneLetter: 'B',
+                        row: row,
+                        seat: seat,
+                        section: section,
+                        label: `B区 ${zoneLabels[section]}`,
+                        code: `B${row}-${seat}`
+                    });
                 }
-            });
-            const totalSeats = allSeats.length;
+            }
+            // 总座位数 13*10*2 = 260
 
             function hashString(str) {
                 let hash = 5381;
@@ -468,22 +462,23 @@
             function getSeatByName(name) {
                 const trimmed = name.trim();
                 if (!trimmed) return null;
-                return allSeats[hashString(trimmed) % totalSeats];
+                return allSeats[hashString(trimmed) % allSeats.length];
             }
 
             function buildBigInfoHTML(seat) {
-                const zoneClass = 'zone-' + seat.zone.toLowerCase();
+                const sectionClass = seat.section;
+                const sectionText = seat.section === 'front' ? '前排' : seat.section === 'middle' ? '中排' : '后排';
                 return `
                     <div class="seat-zone-display">
-                        <span class="zone-badge ${zoneClass}">${seat.zone}</span>
-                        <span class="zone-text">${seat.zoneLabel}</span>
+                        <span class="zone-badge ${sectionClass}">${seat.zoneLetter}</span>
+                        <span class="zone-text">${seat.zoneLetter}区 · ${sectionText}</span>
                     </div>
                     <div class="seat-detail-row">
                         <span class="seat-detail-item">第 ${seat.row} 排</span>
                         <span class="seat-detail-divider">·</span>
                         <span class="seat-detail-item">第 ${seat.seat} 座</span>
                     </div>
-                    <span class="seat-code">🏷️ 编号：${seat.zone}${seat.row}-${String(seat.seat).padStart(2,'0')}</span>
+                    <span class="seat-code">🏷️ 编号：${seat.code}</span>
                 `;
             }
 

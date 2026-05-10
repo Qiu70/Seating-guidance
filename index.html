@@ -6,7 +6,7 @@
     <title>座位导航 · 左海产业生态大会</title>
     <style>
         :root {
-            --card-max-width: 360px;
+            --card-max-width: 400px;
         }
 
         * {
@@ -38,7 +38,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 5vw;
+            padding: 3vw;
             overflow-x: hidden;
             -webkit-user-select: none;
             user-select: none;
@@ -46,7 +46,7 @@
 
         .app-container {
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -79,24 +79,24 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 5vw;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-            padding: 7vw 6vw;
+            padding: 5vw 4vw;
             text-align: center;
         }
 
         .home-icon {
             width: 56px;
             height: 56px;
-            margin: 0 auto 4vw;
+            margin: 0 auto 3vw;
             background: rgba(255, 255, 255, 0.15);
-            border-radius: 3.5vw;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             border: 1px solid rgba(255, 255, 255, 0.25);
         }
         .home-icon svg {
-            width: 55%;
-            height: 55%;
+            width: 30px;
+            height: 30px;
             stroke: #fff;
             fill: none;
             stroke-width: 2;
@@ -104,7 +104,7 @@
             stroke-linejoin: round;
         }
         .home-title {
-            font-size: 5.5vw;
+            font-size: 5.2vw;
             font-weight: 700;
             color: #fff;
             letter-spacing: 0.5px;
@@ -112,19 +112,19 @@
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
         }
         .home-subtitle {
-            font-size: 3.6vw;
+            font-size: 3.4vw;
             color: rgba(255, 255, 255, 0.78);
-            margin-bottom: 6vw;
+            margin-bottom: 5vw;
         }
 
         .input-wrap {
             position: relative;
-            margin-bottom: 3vw;
+            margin-bottom: 2vw;
         }
         .input-wrap input {
             width: 100%;
-            padding: 3.8vw 10vw 3.8vw 4vw;
-            font-size: 4vw;
+            padding: 3.5vw 9vw 3.5vw 3.5vw;
+            font-size: 3.8vw;
             border: 2px solid rgba(255, 255, 255, 0.35);
             border-radius: 10vw;
             outline: none;
@@ -143,22 +143,22 @@
         }
         .input-icon {
             position: absolute;
-            right: 4vw;
+            right: 3.5vw;
             top: 50%;
             transform: translateY(-50%);
             pointer-events: none;
             color: rgba(255, 255, 255, 0.55);
-            width: 4.5vw;
-            height: 4.5vw;
+            width: 4vw;
+            height: 4vw;
         }
 
         .error-message {
             display: block;
-            height: 4.5vw;
-            line-height: 4.5vw;
-            font-size: 3.2vw;
+            height: 4vw;
+            line-height: 4vw;
+            font-size: 3vw;
             color: #ffaaaa;
-            margin-bottom: 3vw;
+            margin-bottom: 2vw;
             opacity: 0;
             transition: opacity 0.2s;
         }
@@ -171,8 +171,8 @@
             align-items: center;
             justify-content: center;
             gap: 2vw;
-            padding: 3.8vw 6vw;
-            font-size: 4.2vw;
+            padding: 3.5vw 5vw;
+            font-size: 4vw;
             font-weight: 600;
             border: none;
             border-radius: 10vw;
@@ -194,25 +194,26 @@
             color: #fff;
             border: 1.5px solid rgba(255, 255, 255, 0.4);
             width: auto;
-            padding: 2.5vw 5vw;
-            font-size: 3.5vw;
+            padding: 2vw 4vw;
+            font-size: 3.2vw;
             border-radius: 8vw;
             box-shadow: none;
         }
         .home-hint {
-            margin-top: 3vw;
-            font-size: 3vw;
+            margin-top: 2.5vw;
+            font-size: 2.8vw;
             color: rgba(255, 255, 255, 0.5);
         }
 
+        /* 结果页 */
         .result-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 4vw;
+            margin-bottom: 3vw;
         }
         .result-greeting {
-            font-size: 4.5vw;
+            font-size: 4.2vw;
             font-weight: 600;
             color: rgba(255, 255, 255, 0.9);
         }
@@ -222,29 +223,29 @@
         }
 
         .seat-big-info {
-            margin: 4vw 0;
-            padding: 5vw 4vw;
+            margin: 3vw 0;
+            padding: 4vw 3vw;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 3.5vw;
+            border-radius: 3vw;
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
         .seat-zone-display {
             display: inline-flex;
             align-items: center;
-            gap: 3vw;
+            gap: 2.5vw;
             background: rgba(255, 255, 255, 0.14);
-            border-radius: 10vw;
-            padding: 2.5vw 5vw;
-            margin-bottom: 3vw;
+            border-radius: 8vw;
+            padding: 2vw 4vw;
+            margin-bottom: 2.5vw;
             border: 1px solid rgba(255, 255, 255, 0.22);
         }
         .zone-badge {
-            width: 10vw;
-            height: 10vw;
-            max-width: 44px;
-            max-height: 44px;
+            width: 9vw;
+            height: 9vw;
+            max-width: 40px;
+            max-height: 40px;
             border-radius: 50%;
-            font-size: 5vw;
+            font-size: 4.5vw;
             font-weight: 800;
             color: #fff;
             display: flex;
@@ -252,11 +253,17 @@
             justify-content: center;
             flex-shrink: 0;
         }
-        .zone-badge.front { background: #f0a04b; }
-        .zone-badge.middle { background: #4a90d9; }
-        .zone-badge.back { background: #5ba87d; }
+        .zone-badge.front {
+            background: #e8963a;
+        }
+        .zone-badge.middle {
+            background: #3d7ec5;
+        }
+        .zone-badge.back {
+            background: #4a9d6e;
+        }
         .zone-text {
-            font-size: 4vw;
+            font-size: 3.6vw;
             font-weight: 600;
             color: rgba(255, 255, 255, 0.9);
             text-align: left;
@@ -264,82 +271,157 @@
         .seat-detail-row {
             display: flex;
             flex-wrap: wrap;
-            gap: 3vw;
+            gap: 2.5vw;
             justify-content: center;
             align-items: center;
             margin: 1vw 0;
         }
         .seat-detail-item {
-            font-size: 6vw;
+            font-size: 5.5vw;
             font-weight: 800;
             color: #fff;
             text-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
         }
         .seat-detail-divider {
-            font-size: 4vw;
+            font-size: 3.5vw;
             color: rgba(255, 255, 255, 0.5);
             font-weight: 300;
         }
         .seat-code {
-            font-size: 3.8vw;
+            font-size: 3.5vw;
             font-weight: 700;
             color: rgba(255, 255, 255, 0.85);
             background: rgba(255, 255, 255, 0.12);
-            padding: 2vw 5vw;
-            border-radius: 6vw;
+            padding: 1.5vw 4vw;
+            border-radius: 5vw;
             letter-spacing: 1px;
-            margin-top: 2vw;
+            margin-top: 1.5vw;
             display: inline-block;
         }
 
-        .map-placeholder {
-            margin: 4vw 0 2vw;
-            padding: 6vw 4vw;
-            border: 2px dashed rgba(255, 255, 255, 0.45);
-            border-radius: 3.5vw;
-            background: rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.65);
-            font-size: 3.5vw;
-            font-weight: 500;
+        /* Canvas容器 */
+        .canvas-wrapper {
+            margin: 3vw 0 1vw;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 2.5vw;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .canvas-wrapper canvas {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        /* 图例 */
+        .legend-row {
             display: flex;
-            flex-direction: column;
+            flex-wrap: wrap;
+            gap: 2.5vw;
+            justify-content: center;
             align-items: center;
-            gap: 2vw;
+            font-size: 2.6vw;
+            color: rgba(255, 255, 255, 0.7);
+            padding: 1vw 0;
         }
-        .map-placeholder svg {
-            width: 8vw;
-            height: 8vw;
-            stroke: rgba(255, 255, 255, 0.55);
-            fill: none;
-            stroke-width: 2;
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 1.2vw;
         }
-        .map-placeholder small {
-            font-size: 2.8vw;
-            opacity: 0.55;
+        .legend-dot {
+            width: 2.8vw;
+            height: 2.8vw;
+            border-radius: 4px;
+            flex-shrink: 0;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+        }
+        .legend-dot.front-seat {
+            background: #f5d4a8;
+        }
+        .legend-dot.middle-seat {
+            background: #b3d1f0;
+        }
+        .legend-dot.back-seat {
+            background: #b8ddc4;
+        }
+        .legend-dot.lead-seat {
+            background: #c0b8c8;
+        }
+        .legend-dot.your-seat {
+            background: #e8455b;
+            border: 2px solid #c0392b;
+            box-shadow: 0 0 6px rgba(232, 69, 91, 0.5);
         }
 
         @media (max-width: 360px) {
-            .home-title { font-size: 6vw; }
-            .home-subtitle { font-size: 4vw; }
-            .input-wrap input { padding: 4.5vw 12vw 4.5vw 5vw; font-size: 4.2vw; }
-            .btn { padding: 4.5vw 7vw; font-size: 4.5vw; }
-            .seat-detail-item { font-size: 6.5vw; }
-            .zone-text { font-size: 4.2vw; }
+            .home-title {
+                font-size: 5.8vw;
+            }
+            .home-subtitle {
+                font-size: 3.8vw;
+            }
+            .input-wrap input {
+                padding: 4vw 11vw 4vw 4vw;
+                font-size: 4vw;
+            }
+            .btn {
+                padding: 4vw 6vw;
+                font-size: 4.2vw;
+            }
+            .seat-detail-item {
+                font-size: 6vw;
+            }
+            .zone-text {
+                font-size: 4vw;
+            }
+            .legend-row {
+                font-size: 2.8vw;
+                gap: 2vw;
+            }
         }
 
         @media (min-width: 400px) {
             .glass-card {
-                border-radius: 20px;
-                padding: 28px 22px;
+                border-radius: 18px;
+                padding: 22px 18px;
             }
-            .home-title { font-size: 1.3rem; }
-            .home-subtitle { font-size: 0.85rem; }
-            .input-wrap input { padding: 14px 42px 14px 16px; font-size: 0.95rem; }
-            .btn { padding: 14px 28px; font-size: 0.95rem; }
-            .seat-detail-item { font-size: 1.5rem; }
-            .zone-text { font-size: 0.9rem; }
-            .map-placeholder { font-size: 0.85rem; }
-            .error-message { height: 20px; line-height: 20px; font-size: 0.7rem; }
+            .home-title {
+                font-size: 1.25rem;
+            }
+            .home-subtitle {
+                font-size: 0.82rem;
+            }
+            .input-wrap input {
+                padding: 13px 38px 13px 14px;
+                font-size: 0.9rem;
+            }
+            .btn {
+                padding: 13px 24px;
+                font-size: 0.9rem;
+            }
+            .seat-detail-item {
+                font-size: 1.4rem;
+            }
+            .zone-text {
+                font-size: 0.85rem;
+            }
+            .error-message {
+                height: 18px;
+                line-height: 18px;
+                font-size: 0.7rem;
+            }
+            .legend-row {
+                font-size: 0.7rem;
+                gap: 10px;
+            }
+            .legend-dot {
+                width: 10px;
+                height: 10px;
+            }
+            .canvas-wrapper {
+                border-radius: 10px;
+            }
         }
     </style>
 </head>
@@ -371,13 +453,13 @@
                 </div>
                 <span class="error-message" id="errorMessage">请输入姓名</span>
                 <button class="btn" id="btnFindSeat" type="button">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:4.5vw;height:4.5vw;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:4vw;height:4vw;">
                         <circle cx="11" cy="11" r="8" />
                         <line x1="21" y1="21" x2="16.65" y2="16.65" />
                     </svg>
                     查找座位
                 </button>
-                <p class="home-hint">试试输入“张三”或“李小明”</p>
+                <p class="home-hint">试试输入"张三"或"李小明"</p>
             </div>
         </div>
 
@@ -391,18 +473,19 @@
                     <button class="btn btn-outline" id="btnBack" type="button">← 返回</button>
                 </div>
                 <div class="seat-big-info" id="seatBigInfo"></div>
-                <div class="map-placeholder">
-                    <svg viewBox="0 0 24 24">
-                        <rect x="3" y="4" width="18" height="3" rx="1" />
-                        <rect x="5" y="9" width="4" height="4" rx="0.8" />
-                        <rect x="11" y="9" width="4" height="4" rx="0.8" />
-                        <rect x="17" y="9" width="4" height="4" rx="0.8" />
-                        <rect x="5" y="15" width="4" height="4" rx="0.8" />
-                        <rect x="11" y="15" width="6" height="4" rx="0.8" fill="currentColor" stroke="none" opacity="0.4" />
-                        <circle cx="14" cy="17" r="1.2" fill="#fff" />
-                    </svg>
-                    <span>此处为全局座位示意图位置</span>
-                    <small>（图片或示意图可在此区域展示）</small>
+
+                <!-- 全局座位示意图 -->
+                <div class="canvas-wrapper" id="canvasWrapper">
+                    <canvas id="seatCanvas" aria-label="全局座位示意图"></canvas>
+                </div>
+
+                <!-- 图例 -->
+                <div class="legend-row">
+                    <span class="legend-item"><span class="legend-dot lead-seat"></span> 主席台</span>
+                    <span class="legend-item"><span class="legend-dot front-seat"></span> 前排</span>
+                    <span class="legend-item"><span class="legend-dot middle-seat"></span> 中排</span>
+                    <span class="legend-item"><span class="legend-dot back-seat"></span> 后排</span>
+                    <span class="legend-item"><span class="legend-dot your-seat"></span> 您的座位</span>
                 </div>
             </div>
         </div>
@@ -418,37 +501,22 @@
             const displayName = document.getElementById('displayName');
             const seatBigInfo = document.getElementById('seatBigInfo');
             const errorMessage = document.getElementById('errorMessage');
+            const canvas = document.getElementById('seatCanvas');
+            const canvasWrapper = document.getElementById('canvasWrapper');
+            const ctx = canvas.getContext('2d');
 
-            // 构建实际座位表：A区1-13排，每排1-10座；B区同理。只嘉宾席，不包含领导席。
+            // 构建座位表
             const allSeats = [];
-            const zoneLabels = {
-                front: '前排（1~4排）',
-                middle: '中排（5~9排）',
-                back: '后排（10~13排）'
-            };
-
             for (let row = 1; row <= 13; row++) {
                 let section = row <= 4 ? 'front' : row <= 9 ? 'middle' : 'back';
                 for (let seat = 1; seat <= 10; seat++) {
-                    allSeats.push({
-                        zoneLetter: 'A',
-                        row: row,
-                        seat: seat,
-                        section: section,
-                        label: `A区 ${zoneLabels[section]}`,
-                        code: `A${row}-${seat}`
-                    });
-                    allSeats.push({
-                        zoneLetter: 'B',
-                        row: row,
-                        seat: seat,
-                        section: section,
-                        label: `B区 ${zoneLabels[section]}`,
-                        code: `B${row}-${seat}`
-                    });
+                    allSeats.push({ zoneLetter: 'A', row, seat, section,
+                        code: `A${row}-${seat}` });
+                    allSeats.push({ zoneLetter: 'B', row, seat, section,
+                        code: `B${row}-${seat}` });
                 }
             }
-            // 总座位数 13*10*2 = 260
+            const totalGuestSeats = allSeats.length; // 260
 
             function hashString(str) {
                 let hash = 5381;
@@ -462,12 +530,325 @@
             function getSeatByName(name) {
                 const trimmed = name.trim();
                 if (!trimmed) return null;
-                return allSeats[hashString(trimmed) % allSeats.length];
+                return allSeats[hashString(trimmed) % totalGuestSeats];
             }
 
+            // ============ Canvas绘制 ============
+            const CANVAS_W = 520;
+            const CANVAS_H = 440;
+
+            // 布局参数
+            const marginLeft = 55;
+            const marginRight = 20;
+            const seatW = 14;
+            const seatH = 12;
+            const seatGap = 2;
+            const aisleW = 44;
+            const rowGap = 16; // 排间距（含座位高度）
+            const halfCount = 10; // 每半区10座
+            const halfBlockW = halfCount * seatW + (halfCount - 1) * seatGap;
+
+            const stageY = 8;
+            const stageH = 20;
+            const stageW = 300;
+
+            const leadY = 38;
+            const leadRows = 3;
+            const leadSeatsPerRow = 10;
+            const leadSeatW = 12;
+            const leadSeatH = 10;
+            const leadSeatGap = 2;
+            const leadRowGap = 13;
+            const leadBlockW = leadSeatsPerRow * leadSeatW + (leadSeatsPerRow - 1) * leadSeatGap;
+
+            const guestStartY = 90;
+            const guestRows = 13;
+
+            let animId = null;
+            let currentSeat = null;
+            let pulseVal = 0;
+
+            function getSectionColor(section) {
+                if (section === 'front') return { fill: '#f5d4a8', stroke: '#d4944a' };
+                if (section === 'middle') return { fill: '#b3d1f0', stroke: '#4a7db5' };
+                return { fill: '#b8ddc4', stroke: '#4a8d60' };
+            }
+
+            function drawRoundedRect(ctx, x, y, w, h, r) {
+                ctx.beginPath();
+                ctx.moveTo(x + r, y);
+                ctx.lineTo(x + w - r, y);
+                ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+                ctx.lineTo(x + w, y + h - r);
+                ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+                ctx.lineTo(x + r, y + h);
+                ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+                ctx.lineTo(x, y + r);
+                ctx.quadraticCurveTo(x, y, x + r, y);
+                ctx.closePath();
+            }
+
+            function drawStage(ctx, cx) {
+                // 舞台渐变
+                const sx = cx - stageW / 2;
+                const sy = stageY;
+                const grad = ctx.createLinearGradient(sx, sy, sx, sy + stageH);
+                grad.addColorStop(0, '#5a5d6e');
+                grad.addColorStop(0.5, '#3a3d4a');
+                grad.addColorStop(1, '#2a2d38');
+                ctx.fillStyle = grad;
+                drawRoundedRect(ctx, sx, sy, stageW, stageH, 4);
+                ctx.fill();
+                // 高光
+                ctx.fillStyle = 'rgba(255,255,255,0.06)';
+                drawRoundedRect(ctx, sx + 10, sy + 2, stageW - 20, stageH / 2 - 1, 2);
+                ctx.fill();
+                // 标签
+                ctx.fillStyle = '#e0e2e8';
+                ctx.font = 'bold 10px "PingFang SC","Microsoft YaHei",sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('舞 台', cx, sy - 4);
+                // 两侧线
+                ctx.strokeStyle = '#c0c4d0';
+                ctx.lineWidth = 0.6;
+                ctx.setLineDash([3, 4]);
+                ctx.beginPath();
+                ctx.moveTo(sx - 50, sy + stageH / 2);
+                ctx.lineTo(sx - 5, sy + stageH / 2);
+                ctx.moveTo(sx + stageW + 5, sy + stageH / 2);
+                ctx.lineTo(sx + stageW + 50, sy + stageH / 2);
+                ctx.stroke();
+                ctx.setLineDash([]);
+            }
+
+            function drawLeadSeats(ctx, cx) {
+                const lx = cx - leadBlockW / 2;
+                const ly = leadY;
+                for (let r = 0; r < leadRows; r++) {
+                    const ry = ly + r * leadRowGap;
+                    for (let s = 0; s < leadSeatsPerRow; s++) {
+                        const sx = lx + s * (leadSeatW + leadSeatGap);
+                        ctx.fillStyle = '#d5cde0';
+                        drawRoundedRect(ctx, sx, ry, leadSeatW, leadSeatH, 2);
+                        ctx.fill();
+                        ctx.strokeStyle = '#a898b8';
+                        ctx.lineWidth = 0.5;
+                        drawRoundedRect(ctx, sx, ry, leadSeatW, leadSeatH, 2);
+                        ctx.stroke();
+                    }
+                }
+                // 标签
+                ctx.fillStyle = '#c0b8c8';
+                ctx.font = '8px "PingFang SC","Microsoft YaHei",sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('主席台（领导席·30人）', cx, ly - 6);
+            }
+
+            function drawGuestSeats(ctx, cx, userSeat, pulse) {
+                const groupW = halfBlockW * 2 + aisleW;
+                const startX = cx - groupW / 2;
+
+                for (let row = 1; row <= guestRows; row++) {
+                    const ry = guestStartY + (row - 1) * rowGap;
+                    let section = row <= 4 ? 'front' : row <= 9 ? 'middle' : 'back';
+                    const colors = getSectionColor(section);
+
+                    // A区（左）
+                    for (let s = 1; s <= halfCount; s++) {
+                        const sx = startX + (s - 1) * (seatW + seatGap);
+                        const isUser = userSeat && userSeat.zoneLetter === 'A' && userSeat.row ===
+                            row && userSeat.seat === s;
+                        drawOneSeat(ctx, sx, ry, seatW, seatH, colors, isUser, pulse);
+                    }
+
+                    // 过道
+                    const ax = startX + halfBlockW;
+                    ctx.fillStyle = 'rgba(180,190,200,0.3)';
+                    ctx.fillRect(ax + 1, ry, aisleW - 2, seatH);
+                    ctx.strokeStyle = 'rgba(160,170,180,0.5)';
+                    ctx.lineWidth = 0.4;
+                    ctx.setLineDash([2, 3]);
+                    ctx.beginPath();
+                    ctx.moveTo(ax + 3, ry);
+                    ctx.lineTo(ax + aisleW - 3, ry + seatH);
+                    ctx.moveTo(ax + 3, ry + seatH);
+                    ctx.lineTo(ax + aisleW - 3, ry);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                    // 过道标签（仅第6排）
+                    if (row === 6) {
+                        ctx.fillStyle = 'rgba(200,210,220,0.7)';
+                        ctx.font = '7px "PingFang SC","Microsoft YaHei",sans-serif';
+                        ctx.textAlign = 'center';
+                        ctx.fillText('过', ax + aisleW / 2, ry + seatH / 2 + 3);
+                        ctx.fillText('道', ax + aisleW / 2, ry + seatH / 2 + 11);
+                    }
+
+                    // B区（右）
+                    for (let s = 1; s <= halfCount; s++) {
+                        const sx = startX + halfBlockW + aisleW + (s - 1) * (seatW + seatGap);
+                        const isUser = userSeat && userSeat.zoneLetter === 'B' && userSeat.row ===
+                            row && userSeat.seat === s;
+                        drawOneSeat(ctx, sx, ry, seatW, seatH, colors, isUser, pulse);
+                    }
+                }
+            }
+
+            function drawOneSeat(ctx, x, y, w, h, colors, isUser, pulse) {
+                if (isUser) {
+                    // 光晕
+                    const glowSize = 4 + 2 * Math.sin(pulse);
+                    ctx.save();
+                    ctx.shadowColor = 'rgba(232,69,91,0.8)';
+                    ctx.shadowBlur = 6 + glowSize;
+                    ctx.fillStyle = '#e8455b';
+                    drawRoundedRect(ctx, x, y, w, h, 2);
+                    ctx.fill();
+                    ctx.restore();
+                    // 主体
+                    const grad = ctx.createLinearGradient(x, y, x, y + h);
+                    grad.addColorStop(0, '#ff5c72');
+                    grad.addColorStop(1, '#d63850');
+                    ctx.fillStyle = grad;
+                    drawRoundedRect(ctx, x, y, w, h, 2);
+                    ctx.fill();
+                    ctx.strokeStyle = '#a02030';
+                    ctx.lineWidth = 1.5;
+                    drawRoundedRect(ctx, x, y, w, h, 2);
+                    ctx.stroke();
+                    // 对勾
+                    const mx = x + w / 2;
+                    const my = y + h / 2;
+                    ctx.strokeStyle = '#fff';
+                    ctx.lineWidth = 1.2;
+                    ctx.lineCap = 'round';
+                    ctx.beginPath();
+                    ctx.moveTo(mx - 2.5, my);
+                    ctx.lineTo(mx - 0.5, my + 2);
+                    ctx.lineTo(mx + 2.5, my - 2);
+                    ctx.stroke();
+                    ctx.lineCap = 'butt';
+                } else {
+                    ctx.fillStyle = colors.fill;
+                    drawRoundedRect(ctx, x, y, w, h, 2);
+                    ctx.fill();
+                    ctx.strokeStyle = colors.stroke;
+                    ctx.lineWidth = 0.6;
+                    drawRoundedRect(ctx, x, y, w, h, 2);
+                    ctx.stroke();
+                    ctx.fillStyle = 'rgba(255,255,255,0.25)';
+                    drawRoundedRect(ctx, x + 2, y + 1.5, w - 4, h / 2 - 1, 1);
+                    ctx.fill();
+                }
+            }
+
+            function drawZoneLabels(ctx, cx) {
+                const groupW = halfBlockW * 2 + aisleW;
+                const startX = cx - groupW / 2;
+                // A区标签
+                ctx.fillStyle = 'rgba(255,255,255,0.75)';
+                ctx.font = 'bold 9px "PingFang SC","Microsoft YaHei",sans-serif';
+                ctx.textAlign = 'center';
+                const aCenterX = startX + halfBlockW / 2;
+                ctx.fillText('A区', aCenterX, guestStartY - 8);
+                // B区标签
+                const bCenterX = startX + halfBlockW + aisleW + halfBlockW / 2;
+                ctx.fillText('B区', bCenterX, guestStartY - 8);
+
+                // 分区标签（左侧）
+                const labelX = 8;
+                ctx.font = '7px "PingFang SC","Microsoft YaHei",sans-serif';
+                ctx.textAlign = 'left';
+                const frontY = guestStartY + 1.5 * rowGap;
+                const middleY = guestStartY + 6 * rowGap;
+                const backY = guestStartY + 11 * rowGap;
+                ctx.fillStyle = 'rgba(240,160,75,0.85)';
+                ctx.fillText('前排', labelX, frontY);
+                ctx.fillText('1~4排', labelX, frontY + 10);
+                ctx.fillStyle = 'rgba(74,144,217,0.85)';
+                ctx.fillText('中排', labelX, middleY);
+                ctx.fillText('5~9排', labelX, middleY + 10);
+                ctx.fillStyle = 'rgba(91,168,125,0.85)';
+                ctx.fillText('后排', labelX, backY);
+                ctx.fillText('10~13排', labelX, backY + 10);
+
+                // 分隔虚线
+                ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+                ctx.lineWidth = 0.5;
+                ctx.setLineDash([4, 5]);
+                const sepY1 = guestStartY + 4 * rowGap - 2;
+                const sepY2 = guestStartY + 9 * rowGap - 2;
+                [sepY1, sepY2].forEach(sy => {
+                    ctx.beginPath();
+                    ctx.moveTo(marginLeft - 6, sy);
+                    ctx.lineTo(CANVAS_W - marginRight, sy);
+                    ctx.stroke();
+                });
+                ctx.setLineDash([]);
+            }
+
+            function drawControlArea(ctx, cx) {
+                const cy = guestStartY + guestRows * rowGap + 12;
+                ctx.fillStyle = 'rgba(180,185,200,0.3)';
+                drawRoundedRect(ctx, cx - 100, cy, 200, 18, 4);
+                ctx.fill();
+                ctx.fillStyle = 'rgba(200,205,215,0.7)';
+                ctx.font = '8px "PingFang SC","Microsoft YaHei",sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('控台工作区', cx, cy + 12);
+            }
+
+            function drawAll(ctx, userSeat, pulse) {
+                ctx.clearRect(0, 0, CANVAS_W, CANVAS_H);
+                // 背景
+                ctx.fillStyle = 'rgba(30,20,50,0.25)';
+                ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
+
+                const cx = CANVAS_W / 2;
+                drawStage(ctx, cx);
+                drawLeadSeats(ctx, cx);
+                drawGuestSeats(ctx, cx, userSeat, pulse);
+                drawZoneLabels(ctx, cx);
+                drawControlArea(ctx, cx);
+            }
+
+            function resizeCanvas() {
+                const wrapperW = canvasWrapper.clientWidth;
+                const displayW = Math.min(wrapperW, 500);
+                const scale = displayW / CANVAS_W;
+                const displayH = CANVAS_H * scale;
+                const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                canvas.width = CANVAS_W * dpr;
+                canvas.height = CANVAS_H * dpr;
+                canvas.style.width = displayW + 'px';
+                canvas.style.height = displayH + 'px';
+                ctx.setTransform(1, 0, 0, 1, 0, 0);
+                ctx.scale(dpr, dpr);
+            }
+
+            function startAnimation(userSeat) {
+                currentSeat = userSeat;
+                if (animId) cancelAnimationFrame(animId);
+
+                function loop(ts) {
+                    pulseVal = (ts / 700) * Math.PI * 2;
+                    drawAll(ctx, currentSeat, pulseVal);
+                    animId = requestAnimationFrame(loop);
+                }
+                animId = requestAnimationFrame(loop);
+            }
+
+            function stopAnimation() {
+                if (animId) { cancelAnimationFrame(animId);
+                    animId = null; }
+                currentSeat = null;
+            }
+
+            // ============ UI ============
             function buildBigInfoHTML(seat) {
                 const sectionClass = seat.section;
-                const sectionText = seat.section === 'front' ? '前排' : seat.section === 'middle' ? '中排' : '后排';
+                const sectionText = seat.section === 'front' ? '前排' : seat.section === 'middle' ? '中排' :
+                    '后排';
                 return `
                     <div class="seat-zone-display">
                         <span class="zone-badge ${sectionClass}">${seat.zoneLetter}</span>
@@ -493,6 +874,7 @@
             }
 
             function showHome() {
+                stopAnimation();
                 pageResult.classList.add('hidden');
                 pageResult.classList.remove('active');
                 pageHome.classList.remove('hidden');
@@ -510,9 +892,12 @@
                 pageResult.classList.add('active');
                 displayName.textContent = name.trim();
                 seatBigInfo.innerHTML = buildBigInfoHTML(seat);
+                resizeCanvas();
+                startAnimation(seat);
                 const url = new URL(window.location);
                 url.searchParams.set('name', name.trim());
                 history.pushState(null, '', url.toString());
+                pageResult.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
 
             function handleFind() {
@@ -525,9 +910,11 @@
 
             btnFindSeat.addEventListener('click', handleFind);
             nameInput.addEventListener('keydown', e => {
-                if (e.key === 'Enter') { e.preventDefault(); handleFind(); }
+                if (e.key === 'Enter') { e.preventDefault();
+                    handleFind(); }
             });
-            btnBack.addEventListener('click', e => { e.preventDefault(); showHome(); });
+            btnBack.addEventListener('click', e => { e.preventDefault();
+                showHome(); });
 
             window.addEventListener('popstate', () => {
                 const params = new URLSearchParams(window.location.search);
@@ -535,16 +922,30 @@
                 if (nameParam && nameParam.trim()) {
                     const seat = getSeatByName(nameParam);
                     if (seat) {
+                        stopAnimation();
                         pageHome.classList.add('hidden');
                         pageHome.classList.remove('active');
                         pageResult.classList.remove('hidden');
                         pageResult.classList.add('active');
                         displayName.textContent = nameParam.trim();
                         seatBigInfo.innerHTML = buildBigInfoHTML(seat);
+                        resizeCanvas();
+                        startAnimation(seat);
                         return;
                     }
                 }
                 showHome();
+            });
+
+            let resizeTimer;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    if (currentSeat) {
+                        resizeCanvas();
+                        drawAll(ctx, currentSeat, pulseVal);
+                    }
+                }, 200);
             });
 
             function init() {
@@ -559,6 +960,8 @@
                         pageResult.classList.add('active');
                         displayName.textContent = nameParam.trim();
                         seatBigInfo.innerHTML = buildBigInfoHTML(seat);
+                        resizeCanvas();
+                        startAnimation(seat);
                         return;
                     }
                 }

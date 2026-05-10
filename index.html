@@ -31,14 +31,14 @@
 
         body {
             font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Segoe UI', system-ui, sans-serif;
-            background-color: #4c1d95;
+            background-color: #3c1a6e;
             color: #f0eaff;
             min-height: 100vh;
             min-height: -webkit-fill-available;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2vw;
+            padding: 3vw;
             overflow-x: hidden;
             -webkit-user-select: none;
             user-select: none;
@@ -46,7 +46,7 @@
 
         .app-container {
             width: 100%;
-            max-width: 440px;
+            max-width: 420px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -54,46 +54,44 @@
             z-index: 1;
         }
 
+        /* 页面通用 */
         .page {
             width: 100%;
             display: flex;
             justify-content: center;
-            transition: opacity 0.3s ease, transform 0.3s ease;
+            transition: opacity 0.35s ease, transform 0.35s ease;
         }
         .page.hidden {
-            display: none;
-            opacity: 0;
-            transform: translateY(12px);
+            display: none !important;
         }
         .page.active {
             display: flex;
-            opacity: 1;
-            transform: translateY(0);
         }
 
+        /* 毛玻璃卡片 */
         .glass-card {
             width: 100%;
             background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 4vw;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-            padding: 4vw 3.5vw;
+            border-radius: 4.5vw;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.18);
+            padding: 5vw 4vw;
             text-align: center;
         }
 
-        /* 首页 */
+        /* ========== 首页 ========== */
         .home-icon {
             width: 52px;
             height: 52px;
             margin: 0 auto 3vw;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.18);
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 1px solid rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.28);
         }
         .home-icon svg {
             width: 28px;
@@ -115,7 +113,7 @@
         .home-subtitle {
             font-size: 3.4vw;
             color: rgba(255, 255, 255, 0.78);
-            margin-bottom: 5vw;
+            margin-bottom: 5.5vw;
         }
 
         .input-wrap {
@@ -124,12 +122,12 @@
         }
         .input-wrap input {
             width: 100%;
-            padding: 3.5vw 9vw 3.5vw 3.5vw;
+            padding: 3.6vw 9vw 3.6vw 3.6vw;
             font-size: 3.8vw;
             border: 2px solid rgba(255, 255, 255, 0.35);
             border-radius: 10vw;
             outline: none;
-            background: rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.14);
             color: #fff;
             text-align: center;
             letter-spacing: 0.5px;
@@ -140,7 +138,7 @@
         }
         .input-wrap input:focus {
             border-color: rgba(255, 255, 255, 0.7);
-            background: rgba(255, 255, 255, 0.22);
+            background: rgba(255, 255, 255, 0.24);
         }
         .input-icon {
             position: absolute;
@@ -155,8 +153,8 @@
 
         .error-message {
             display: block;
-            height: 4vw;
-            line-height: 4vw;
+            height: 4.5vw;
+            line-height: 4.5vw;
             font-size: 3vw;
             color: #ffaaaa;
             margin-bottom: 2vw;
@@ -172,7 +170,7 @@
             align-items: center;
             justify-content: center;
             gap: 2vw;
-            padding: 3.5vw 5vw;
+            padding: 3.6vw 5vw;
             font-size: 4vw;
             font-weight: 600;
             border: none;
@@ -183,14 +181,14 @@
             width: 100%;
             background: rgba(255, 255, 255, 0.9);
             color: #5b21b6;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14);
             touch-action: manipulation;
         }
         .btn:active {
             transform: scale(0.97);
             background: #fff;
         }
-        .btn-outline {
+        .btn-outline-sm {
             background: rgba(255, 255, 255, 0.15);
             color: #fff;
             border: 1.5px solid rgba(255, 255, 255, 0.4);
@@ -200,30 +198,20 @@
             border-radius: 8vw;
             box-shadow: none;
         }
-        .btn-zoom {
-            background: rgba(255, 255, 255, 0.18);
+        .btn-map {
+            background: rgba(255, 255, 255, 0.25);
             color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.35);
-            padding: 1.5vw 3vw;
-            font-size: 3.2vw;
-            border-radius: 6vw;
-            flex: 0 0 auto;
-            min-width: 8vw;
-            text-align: center;
-        }
-        .btn-zoom-row {
-            display: flex;
-            gap: 2vw;
-            justify-content: center;
+            border: 1.5px solid rgba(255, 255, 255, 0.5);
+            padding: 2.8vw 4vw;
+            font-size: 3.6vw;
+            border-radius: 8vw;
+            margin-top: 2.5vw;
+            display: inline-flex;
             align-items: center;
-            margin-top: 2vw;
-            flex-wrap: wrap;
+            gap: 2vw;
         }
-        .zoom-indicator {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 2.8vw;
-            min-width: 12vw;
-            text-align: center;
+        .btn-map:active {
+            background: rgba(255, 255, 255, 0.4);
         }
         .home-hint {
             margin-top: 2.5vw;
@@ -231,7 +219,7 @@
             color: rgba(255, 255, 255, 0.5);
         }
 
-        /* 结果页 */
+        /* ========== 结果页 ========== */
         .result-header {
             display: flex;
             align-items: center;
@@ -250,7 +238,7 @@
 
         .seat-big-info {
             margin: 3vw 0;
-            padding: 4vw 3vw;
+            padding: 4vw 3.5vw;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 3vw;
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -325,67 +313,141 @@
             display: inline-block;
         }
 
-        /* Canvas容器 */
-        .canvas-wrapper {
-            margin: 3vw 0 1vw;
-            background: rgba(0, 0, 0, 0.25);
-            border-radius: 2.5vw;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.25);
+        /* ========== 座位图页面（独立全屏） ========== */
+        .map-page-container {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             position: relative;
-            touch-action: none;
-            cursor: grab;
+            z-index: 1;
         }
-        .canvas-wrapper:active {
-            cursor: grabbing;
+        .map-top-bar {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2.5vw 3vw;
+            margin-bottom: 2vw;
+            background: rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 10vw;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
-        .canvas-wrapper canvas {
+        .map-top-bar .map-title {
+            font-size: 4.2vw;
+            font-weight: 700;
+            color: #fff;
+        }
+        .btn-back-map {
+            background: rgba(255, 255, 255, 0.18);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            padding: 2vw 3.5vw;
+            font-size: 3.2vw;
+            border-radius: 7vw;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 1.5vw;
+        }
+        .btn-back-map:active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .canvas-card {
+            width: 100%;
+            background: rgba(20, 15, 35, 0.55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 4vw;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+        }
+        .canvas-card canvas {
             display: block;
             width: 100%;
             height: auto;
+            touch-action: none;
         }
 
-        /* 图例 */
-        .legend-row {
+        .map-controls {
+            display: flex;
+            gap: 2.5vw;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2.5vw;
+            flex-wrap: wrap;
+        }
+        .btn-ctrl {
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            padding: 2.2vw 4vw;
+            font-size: 3.5vw;
+            border-radius: 7vw;
+            cursor: pointer;
+            min-width: 10vw;
+            text-align: center;
+            font-weight: 600;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .btn-ctrl:active {
+            background: rgba(255, 255, 255, 0.35);
+        }
+        .zoom-indicator {
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 3vw;
+            min-width: 12vw;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .map-legend {
             display: flex;
             flex-wrap: wrap;
             gap: 2.5vw;
             justify-content: center;
             align-items: center;
             font-size: 2.6vw;
-            color: rgba(255, 255, 255, 0.7);
-            padding: 1vw 0;
+            color: rgba(255, 255, 255, 0.75);
+            padding: 2vw 0 0;
         }
-        .legend-item {
+        .map-legend .legend-item {
             display: flex;
             align-items: center;
             gap: 1.2vw;
         }
         .legend-dot {
-            width: 2.8vw;
-            height: 2.8vw;
-            border-radius: 4px;
+            width: 3vw;
+            height: 3vw;
+            border-radius: 5px;
             flex-shrink: 0;
             border: 1px solid rgba(255, 255, 255, 0.35);
         }
-        .legend-dot.front-seat {
-            background: #f5d4a8;
-        }
-        .legend-dot.middle-seat {
-            background: #b3d1f0;
-        }
-        .legend-dot.back-seat {
-            background: #b8ddc4;
-        }
-        .legend-dot.lead-seat {
+        .legend-dot.lead-c {
             background: #d5cde0;
         }
-        .legend-dot.your-seat {
+        .legend-dot.front-c {
+            background: #f5d4a8;
+        }
+        .legend-dot.middle-c {
+            background: #b3d1f0;
+        }
+        .legend-dot.back-c {
+            background: #b8ddc4;
+        }
+        .legend-dot.your-c {
             background: #e8455b;
             border: 2px solid #c0392b;
-            box-shadow: 0 0 6px rgba(232, 69, 91, 0.5);
+            box-shadow: 0 0 8px rgba(232, 69, 91, 0.5);
         }
 
+        /* 响应式 */
         @media (max-width: 360px) {
             .home-title {
                 font-size: 5.8vw;
@@ -404,29 +466,19 @@
             .seat-detail-item {
                 font-size: 6vw;
             }
-            .zone-text {
-                font-size: 4vw;
-            }
-            .legend-row {
-                font-size: 2.8vw;
-                gap: 2vw;
-            }
-            .btn-zoom {
-                padding: 2vw 3.5vw;
-                font-size: 3.5vw;
-            }
-            .zoom-indicator {
-                font-size: 3vw;
+            .btn-ctrl {
+                padding: 2.5vw 4.5vw;
+                font-size: 3.8vw;
             }
         }
 
-        @media (min-width: 400px) {
+        @media (min-width: 420px) {
             .glass-card {
-                border-radius: 16px;
-                padding: 22px 18px;
+                border-radius: 18px;
+                padding: 24px 20px;
             }
             .home-title {
-                font-size: 1.22rem;
+                font-size: 1.25rem;
             }
             .home-subtitle {
                 font-size: 0.8rem;
@@ -450,33 +502,38 @@
                 line-height: 18px;
                 font-size: 0.68rem;
             }
-            .legend-row {
-                font-size: 0.7rem;
+            .map-legend {
+                font-size: 0.72rem;
                 gap: 10px;
             }
             .legend-dot {
-                width: 10px;
-                height: 10px;
+                width: 11px;
+                height: 11px;
             }
-            .canvas-wrapper {
-                border-radius: 10px;
-            }
-            .btn-zoom {
-                padding: 6px 12px;
-                font-size: 0.8rem;
-                border-radius: 20px;
+            .btn-ctrl {
+                padding: 8px 16px;
+                font-size: 0.85rem;
+                border-radius: 24px;
             }
             .zoom-indicator {
-                font-size: 0.75rem;
-                min-width: 50px;
+                font-size: 0.8rem;
+            }
+            .btn-back-map {
+                padding: 7px 14px;
+                font-size: 0.8rem;
+                border-radius: 22px;
+            }
+            .map-top-bar .map-title {
+                font-size: 1.05rem;
             }
         }
     </style>
 </head>
 <body>
     <div class="bg-fixed"></div>
-    <div class="app-container">
-        <!-- 首页 -->
+
+    <div class="app-container" id="mainAppContainer">
+        <!-- ========== 首页 ========== -->
         <div class="page active" id="page-home">
             <div class="glass-card">
                 <div class="home-icon">
@@ -493,7 +550,7 @@
                 <h1 class="home-title">座位导航</h1>
                 <p class="home-subtitle">输入姓名，查看您的座位</p>
                 <div class="input-wrap">
-                    <input type="text" id="nameInput" placeholder="请输入姓名" autocomplete="name" maxlength="30" aria-label="姓名输入框">
+                    <input type="text" id="nameInput" placeholder="请输入姓名" autocomplete="name" maxlength="30">
                     <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="8" r="4" />
                         <path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" />
@@ -502,8 +559,7 @@
                 <span class="error-message" id="errorMessage">请输入姓名</span>
                 <button class="btn" id="btnFindSeat" type="button">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:4vw;height:4vw;">
-                        <circle cx="11" cy="11" r="8" />
-                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
                     </svg>
                     查找座位
                 </button>
@@ -511,43 +567,46 @@
             </div>
         </div>
 
-        <!-- 二级页面 -->
+        <!-- ========== 结果页 ========== -->
         <div class="page hidden" id="page-result">
             <div class="glass-card">
                 <div class="result-header">
                     <div class="result-greeting">
                         👋 <span class="name-em" id="displayName">---</span> 的座位
                     </div>
-                    <button class="btn btn-outline" id="btnBack" type="button">← 返回</button>
+                    <button class="btn btn-outline-sm" id="btnBack" type="button">← 返回</button>
                 </div>
                 <div class="seat-big-info" id="seatBigInfo"></div>
+                <button class="btn btn-map" id="btnOpenMap" type="button">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+                    查看全局座位图
+                </button>
+            </div>
+        </div>
+    </div>
 
-                <!-- 缩放提示 -->
-                <div style="font-size:2.6vw;color:rgba(255,255,255,0.5);margin-bottom:1vw;">
-                    👆 双指缩放 · 单指拖动查看全图
-                </div>
-
-                <!-- 全局座位示意图 -->
-                <div class="canvas-wrapper" id="canvasWrapper">
-                    <canvas id="seatCanvas" aria-label="全局座位示意图"></canvas>
-                </div>
-
-                <!-- 缩放按钮 -->
-                <div class="btn-zoom-row">
-                    <button class="btn-zoom" id="zoomOutBtn" type="button">−</button>
-                    <span class="zoom-indicator" id="zoomIndicator">100%</span>
-                    <button class="btn-zoom" id="zoomInBtn" type="button">+</button>
-                    <button class="btn-zoom" id="zoomResetBtn" type="button" style="margin-left:2vw;">↺ 重置</button>
-                </div>
-
-                <!-- 图例 -->
-                <div class="legend-row" style="margin-top:2vw;">
-                    <span class="legend-item"><span class="legend-dot lead-seat"></span> 主席台</span>
-                    <span class="legend-item"><span class="legend-dot front-seat"></span> 前排</span>
-                    <span class="legend-item"><span class="legend-dot middle-seat"></span> 中排</span>
-                    <span class="legend-item"><span class="legend-dot back-seat"></span> 后排</span>
-                    <span class="legend-item"><span class="legend-dot your-seat"></span> 您的座位</span>
-                </div>
+    <!-- ========== 座位图独立页面 ========== -->
+    <div class="page hidden" id="page-map" style="width:100%;max-width:600px;">
+        <div class="map-page-container">
+            <div class="map-top-bar">
+                <span class="map-title">🏛️ 会场全局座位图</span>
+                <button class="btn-back-map" id="btnBackFromMap" type="button">← 返回</button>
+            </div>
+            <div class="canvas-card" id="canvasCard">
+                <canvas id="seatCanvas"></canvas>
+            </div>
+            <div class="map-controls">
+                <button class="btn-ctrl" id="zoomOutBtn" type="button">−</button>
+                <span class="zoom-indicator" id="zoomIndicator">100%</span>
+                <button class="btn-ctrl" id="zoomInBtn" type="button">+</button>
+                <button class="btn-ctrl" id="zoomResetBtn" type="button">↺ 重置</button>
+            </div>
+            <div class="map-legend">
+                <span class="legend-item"><span class="legend-dot lead-c"></span> 主席台</span>
+                <span class="legend-item"><span class="legend-dot front-c"></span> 前排</span>
+                <span class="legend-item"><span class="legend-dot middle-c"></span> 中排</span>
+                <span class="legend-item"><span class="legend-dot back-c"></span> 后排</span>
+                <span class="legend-item"><span class="legend-dot your-c"></span> 您的座位</span>
             </div>
         </div>
     </div>
@@ -557,14 +616,17 @@
             // ============ DOM ============
             const pageHome = document.getElementById('page-home');
             const pageResult = document.getElementById('page-result');
+            const pageMap = document.getElementById('page-map');
             const nameInput = document.getElementById('nameInput');
             const btnFindSeat = document.getElementById('btnFindSeat');
             const btnBack = document.getElementById('btnBack');
+            const btnOpenMap = document.getElementById('btnOpenMap');
+            const btnBackFromMap = document.getElementById('btnBackFromMap');
             const displayName = document.getElementById('displayName');
             const seatBigInfo = document.getElementById('seatBigInfo');
             const errorMessage = document.getElementById('errorMessage');
             const canvas = document.getElementById('seatCanvas');
-            const canvasWrapper = document.getElementById('canvasWrapper');
+            const canvasCard = document.getElementById('canvasCard');
             const ctx = canvas.getContext('2d');
             const zoomIndicator = document.getElementById('zoomIndicator');
 
@@ -577,7 +639,6 @@
                     allSeats.push({ zoneLetter: 'B', row, seat, section, code: `B${row}-${seat}` });
                 }
             }
-            const totalGuestSeats = allSeats.length;
 
             function hashString(str) {
                 let hash = 5381;
@@ -591,60 +652,46 @@
             function getSeatByName(name) {
                 const trimmed = name.trim();
                 if (!trimmed) return null;
-                return allSeats[hashString(trimmed) % totalGuestSeats];
+                return allSeats[hashString(trimmed) % allSeats.length];
             }
 
             // ============ Canvas 缩放状态 ============
-            const LOGICAL_W = 600;
-            const LOGICAL_H = 480;
-
-            // 变换状态
+            const LOGICAL_W = 640;
+            const LOGICAL_H = 520;
             let scale = 1;
             let offsetX = 0;
             let offsetY = 0;
-            const MIN_SCALE = 0.5;
-            const MAX_SCALE = 4;
+            const MIN_SCALE = 0.45;
+            const MAX_SCALE = 4.5;
 
-            // 触摸状态
             let touches = {};
             let lastPinchDist = 0;
-            let lastPinchCenter = { x: 0, y: 0 };
             let lastSingleTouch = { x: 0, y: 0 };
             let isDragging = false;
 
-            // ============ Canvas 绘制函数 ============
-            const seatW = 16;
-            const seatH = 13;
-            const seatGap = 2;
-            const aisleW = 52;
-            const rowGap = 18;
+            // 绘图参数
+            const seatW = 17;
+            const seatH = 14;
+            const seatGap = 2.5;
+            const aisleW = 56;
+            const rowGap = 19;
             const halfCount = 10;
             const halfBlockW = halfCount * seatW + (halfCount - 1) * seatGap;
 
-            const stageY = 6;
-            const stageH = 24;
-            const stageW = 360;
+            const stageY = 10;
+            const stageH = 28;
+            const stageW = 380;
 
-            const leadY = 40;
+            const leadY = 50;
             const leadRows = 3;
             const leadSeatsPerRow = 10;
-            const leadSeatW = 14;
-            const leadSeatH = 11;
-            const leadSeatGap = 2;
-            const leadRowGap = 15;
+            const leadSeatW = 15;
+            const leadSeatH = 12;
+            const leadSeatGap = 2.5;
+            const leadRowGap = 16;
             const leadBlockW = leadSeatsPerRow * leadSeatW + (leadSeatsPerRow - 1) * leadSeatGap;
 
-            const guestStartY = 100;
-
-            const colors = {
-                front: { fill: '#f5d4a8', stroke: '#d4944a' },
-                middle: { fill: '#b3d1f0', stroke: '#4a7db5' },
-                back: { fill: '#b8ddc4', stroke: '#4a8d60' }
-            };
-
-            function getSectionColor(section) {
-                return colors[section];
-            }
+            const guestStartY = 112;
 
             function drawRoundedRect(ctx, x, y, w, h, r) {
                 ctx.beginPath();
@@ -663,28 +710,37 @@
             function drawStage(ctx, cx) {
                 const sx = cx - stageW / 2;
                 const sy = stageY;
+                // 主体
                 const grad = ctx.createLinearGradient(sx, sy, sx, sy + stageH);
-                grad.addColorStop(0, '#5a5d6e');
-                grad.addColorStop(0.5, '#3a3d4a');
-                grad.addColorStop(1, '#2a2d38');
+                grad.addColorStop(0, '#7a7d8e');
+                grad.addColorStop(0.3, '#4a4d58');
+                grad.addColorStop(0.7, '#2e3038');
+                grad.addColorStop(1, '#1c1e24');
                 ctx.fillStyle = grad;
-                drawRoundedRect(ctx, sx, sy, stageW, stageH, 5);
+                drawRoundedRect(ctx, sx, sy, stageW, stageH, 8);
                 ctx.fill();
-                ctx.fillStyle = 'rgba(255,255,255,0.06)';
-                drawRoundedRect(ctx, sx + 12, sy + 3, stageW - 24, stageH / 2 - 1, 3);
+                // 顶部高光
+                ctx.fillStyle = 'rgba(255,255,255,0.08)';
+                drawRoundedRect(ctx, sx + 10, sy + 3, stageW - 20, stageH * 0.4, 4);
                 ctx.fill();
-                ctx.fillStyle = '#e8eaf0';
-                ctx.font = 'bold 12px "PingFang SC","Microsoft YaHei",sans-serif';
+                // 底部微光
+                ctx.fillStyle = 'rgba(255,255,255,0.03)';
+                drawRoundedRect(ctx, sx + 20, sy + stageH * 0.55, stageW - 40, stageH * 0.35, 4);
+                ctx.fill();
+                // 标签
+                ctx.fillStyle = '#e8eaf2';
+                ctx.font = 'bold 13px "PingFang SC","Microsoft YaHei",sans-serif';
                 ctx.textAlign = 'center';
-                ctx.fillText('舞 台', cx, sy - 5);
-                ctx.strokeStyle = '#c8ccd6';
+                ctx.fillText('舞 台', cx, sy - 6);
+                // 两侧装饰线
+                ctx.strokeStyle = '#bcc0cc';
                 ctx.lineWidth = 0.7;
                 ctx.setLineDash([4, 5]);
                 ctx.beginPath();
-                ctx.moveTo(sx - 60, sy + stageH / 2);
-                ctx.lineTo(sx - 5, sy + stageH / 2);
-                ctx.moveTo(sx + stageW + 5, sy + stageH / 2);
-                ctx.lineTo(sx + stageW + 60, sy + stageH / 2);
+                ctx.moveTo(sx - 70, sy + stageH / 2);
+                ctx.lineTo(sx - 8, sy + stageH / 2);
+                ctx.moveTo(sx + stageW + 8, sy + stageH / 2);
+                ctx.lineTo(sx + stageW + 70, sy + stageH / 2);
                 ctx.stroke();
                 ctx.setLineDash([]);
             }
@@ -696,72 +752,94 @@
                     const ry = ly + r * leadRowGap;
                     for (let s = 0; s < leadSeatsPerRow; s++) {
                         const sx = lx + s * (leadSeatW + leadSeatGap);
-                        ctx.fillStyle = '#e0d8ea';
-                        drawRoundedRect(ctx, sx, ry, leadSeatW, leadSeatH, 3);
+                        const grad = ctx.createLinearGradient(sx, ry, sx, ry + leadSeatH);
+                        grad.addColorStop(0, '#e8e0f2');
+                        grad.addColorStop(1, '#c8bcd8');
+                        ctx.fillStyle = grad;
+                        drawRoundedRect(ctx, sx, ry, leadSeatW, leadSeatH, 4);
                         ctx.fill();
-                        ctx.strokeStyle = '#b0a0be';
+                        ctx.strokeStyle = '#a898b8';
                         ctx.lineWidth = 0.6;
-                        drawRoundedRect(ctx, sx, ry, leadSeatW, leadSeatH, 3);
+                        drawRoundedRect(ctx, sx, ry, leadSeatW, leadSeatH, 4);
                         ctx.stroke();
-                        ctx.fillStyle = 'rgba(255,255,255,0.3)';
-                        drawRoundedRect(ctx, sx + 3, ry + 2, leadSeatW - 6, leadSeatH / 2 - 1, 2);
+                        ctx.fillStyle = 'rgba(255,255,255,0.4)';
+                        drawRoundedRect(ctx, sx + 3, ry + 2, leadSeatW - 6, leadSeatH / 2 - 1, 3);
                         ctx.fill();
                     }
                 }
-                ctx.fillStyle = '#c8bfd4';
-                ctx.font = '9px "PingFang SC","Microsoft YaHei",sans-serif';
+                // 标签背景
+                const labelW = 170;
+                const labelX = cx - labelW / 2;
+                ctx.fillStyle = 'rgba(0,0,0,0.25)';
+                drawRoundedRect(ctx, labelX, leadY - 26, labelW, 20, 8);
+                ctx.fill();
+                ctx.fillStyle = '#ddd8e6';
+                ctx.font = 'bold 10px "PingFang SC","Microsoft YaHei",sans-serif';
                 ctx.textAlign = 'center';
-                ctx.fillText('主席台（领导席·30人）', cx, ly - 7);
+                ctx.fillText('主席台（领导席 · 30人）', cx, leadY - 12);
             }
 
-            function drawOneSeat(ctx, x, y, w, h, colors, isUser, pulse) {
+            function drawOneSeat(ctx, x, y, w, h, section, isUser, pulse) {
+                const clrMap = {
+                    front: { fill: '#fce8cc', fill2: '#f2d09a', stroke: '#c89240' },
+                    middle: { fill: '#cde4fa', fill2: '#a3c8ee', stroke: '#3a6ea8' },
+                    back: { fill: '#c8e8d4', fill2: '#9ccba8', stroke: '#3a7a50' }
+                };
+                const clr = clrMap[section];
+
                 if (isUser) {
-                    const glowSize = 5 + 3 * Math.sin(pulse);
+                    const glowSize = 6 + 3.5 * Math.sin(pulse);
                     ctx.save();
-                    ctx.shadowColor = 'rgba(232,69,91,0.85)';
-                    ctx.shadowBlur = 8 + glowSize;
-                    ctx.fillStyle = '#e8455b';
-                    drawRoundedRect(ctx, x, y, w, h, 3);
+                    ctx.shadowColor = 'rgba(240,55,75,0.9)';
+                    ctx.shadowBlur = 10 + glowSize;
+                    const grad = ctx.createLinearGradient(x, y, x, y + h);
+                    grad.addColorStop(0, '#ff6478');
+                    grad.addColorStop(1, '#d03048');
+                    ctx.fillStyle = grad;
+                    drawRoundedRect(ctx, x, y, w, h, 4);
                     ctx.fill();
                     ctx.restore();
-                    const grad = ctx.createLinearGradient(x, y, x, y + h);
-                    grad.addColorStop(0, '#ff5c72');
-                    grad.addColorStop(1, '#d63850');
-                    ctx.fillStyle = grad;
-                    drawRoundedRect(ctx, x, y, w, h, 3);
-                    ctx.fill();
-                    ctx.strokeStyle = '#a02030';
-                    ctx.lineWidth = 2;
-                    drawRoundedRect(ctx, x, y, w, h, 3);
-                    ctx.stroke();
-                    const mx = x + w / 2;
-                    const my = y + h / 2;
                     ctx.strokeStyle = '#fff';
-                    ctx.lineWidth = 1.4;
+                    ctx.lineWidth = 2.2;
+                    drawRoundedRect(ctx, x, y, w, h, 4);
+                    ctx.stroke();
+                    // 对勾
+                    const mx = x + w / 2;
+                    const my = y + h / 2 + 1;
+                    ctx.strokeStyle = '#fff';
+                    ctx.lineWidth = 1.6;
                     ctx.lineCap = 'round';
                     ctx.beginPath();
-                    ctx.moveTo(mx - 3, my);
+                    ctx.moveTo(mx - 3.5, my - 0.5);
                     ctx.lineTo(mx - 0.5, my + 2.5);
-                    ctx.lineTo(mx + 3, my - 2.5);
+                    ctx.lineTo(mx + 3.5, my - 3);
                     ctx.stroke();
                     ctx.lineCap = 'butt';
                 } else {
-                    ctx.fillStyle = colors.fill;
-                    drawRoundedRect(ctx, x, y, w, h, 3);
+                    const grad = ctx.createLinearGradient(x, y, x, y + h);
+                    grad.addColorStop(0, clr.fill);
+                    grad.addColorStop(1, clr.fill2);
+                    ctx.fillStyle = grad;
+                    drawRoundedRect(ctx, x, y, w, h, 4);
                     ctx.fill();
-                    ctx.strokeStyle = colors.stroke;
+                    ctx.strokeStyle = clr.stroke;
                     ctx.lineWidth = 0.7;
-                    drawRoundedRect(ctx, x, y, w, h, 3);
+                    drawRoundedRect(ctx, x, y, w, h, 4);
                     ctx.stroke();
-                    ctx.fillStyle = 'rgba(255,255,255,0.3)';
-                    drawRoundedRect(ctx, x + 3, y + 2, w - 6, h / 2 - 1, 2);
+                    ctx.fillStyle = 'rgba(255,255,255,0.35)';
+                    drawRoundedRect(ctx, x + 3.5, y + 2.5, w - 7, h / 2 - 1, 3);
                     ctx.fill();
                 }
             }
 
             function drawAll(ctx, userSeat, pulse) {
                 ctx.clearRect(0, 0, LOGICAL_W, LOGICAL_H);
-                ctx.fillStyle = 'rgba(22,16,38,0.3)';
+                // 背景
+                const bgGrad = ctx.createRadialGradient(LOGICAL_W / 2, LOGICAL_H / 2, 50, LOGICAL_W / 2, LOGICAL_H / 2,
+                    LOGICAL_W);
+                bgGrad.addColorStop(0, 'rgba(30,22,50,0.25)');
+                bgGrad.addColorStop(1, 'rgba(15,10,30,0.55)');
+                ctx.fillStyle = bgGrad;
                 ctx.fillRect(0, 0, LOGICAL_W, LOGICAL_H);
 
                 const cx = LOGICAL_W / 2;
@@ -775,96 +853,113 @@
                 for (let row = 1; row <= 13; row++) {
                     const ry = guestStartY + (row - 1) * rowGap;
                     let section = row <= 4 ? 'front' : row <= 9 ? 'middle' : 'back';
-                    const clr = getSectionColor(section);
 
-                    // A区
                     for (let s = 1; s <= halfCount; s++) {
                         const sx = startX + (s - 1) * (seatW + seatGap);
                         const isUser = userSeat && userSeat.zoneLetter === 'A' && userSeat.row === row && userSeat
                             .seat === s;
-                        drawOneSeat(ctx, sx, ry, seatW, seatH, clr, isUser, pulse);
+                        drawOneSeat(ctx, sx, ry, seatW, seatH, section, isUser, pulse);
                     }
 
                     // 过道
                     const ax = startX + halfBlockW;
-                    ctx.fillStyle = 'rgba(180,190,200,0.3)';
+                    ctx.fillStyle = 'rgba(180,190,200,0.2)';
                     ctx.fillRect(ax + 1, ry, aisleW - 2, seatH);
                     if (row === 6) {
-                        ctx.fillStyle = 'rgba(200,210,220,0.7)';
-                        ctx.font = '8px "PingFang SC","Microsoft YaHei",sans-serif';
+                        ctx.fillStyle = 'rgba(210,220,230,0.65)';
+                        ctx.font = '9px "PingFang SC","Microsoft YaHei",sans-serif';
                         ctx.textAlign = 'center';
-                        ctx.fillText('过 道', ax + aisleW / 2, ry + seatH / 2 + 3);
+                        ctx.fillText('过  道', ax + aisleW / 2, ry + seatH / 2 + 4);
                     }
 
-                    // B区
                     for (let s = 1; s <= halfCount; s++) {
                         const sx = startX + halfBlockW + aisleW + (s - 1) * (seatW + seatGap);
                         const isUser = userSeat && userSeat.zoneLetter === 'B' && userSeat.row === row && userSeat
                             .seat === s;
-                        drawOneSeat(ctx, sx, ry, seatW, seatH, clr, isUser, pulse);
+                        drawOneSeat(ctx, sx, ry, seatW, seatH, section, isUser, pulse);
                     }
                 }
 
-                // 分区标签
-                ctx.fillStyle = 'rgba(255,255,255,0.75)';
-                ctx.font = 'bold 10px "PingFang SC","Microsoft YaHei",sans-serif';
+                // 区域大标签
+                const labelBgH = 22;
+                const labelBgW = 50;
+                // A区标签
+                const aLx = startX + halfBlockW / 2 - labelBgW / 2;
+                ctx.fillStyle = 'rgba(0,0,0,0.3)';
+                drawRoundedRect(ctx, aLx, guestStartY - 30, labelBgW, labelBgH, 8);
+                ctx.fill();
+                ctx.fillStyle = '#fff';
+                ctx.font = 'bold 11px "PingFang SC","Microsoft YaHei",sans-serif';
                 ctx.textAlign = 'center';
-                ctx.fillText('A区', startX + halfBlockW / 2, guestStartY - 10);
-                ctx.fillText('B区', startX + halfBlockW + aisleW + halfBlockW / 2, guestStartY - 10);
+                ctx.fillText('A 区', aLx + labelBgW / 2, guestStartY - 15);
 
-                const labelX = 12;
-                ctx.font = '8px "PingFang SC","Microsoft YaHei",sans-serif';
+                // B区标签
+                const bLx = startX + halfBlockW + aisleW + halfBlockW / 2 - labelBgW / 2;
+                ctx.fillStyle = 'rgba(0,0,0,0.3)';
+                drawRoundedRect(ctx, bLx, guestStartY - 30, labelBgW, labelBgH, 8);
+                ctx.fill();
+                ctx.fillText('B 区', bLx + labelBgW / 2, guestStartY - 15);
+
+                // 左侧分区标签
+                const lx = 18;
+                ctx.font = 'bold 8.5px "PingFang SC","Microsoft YaHei",sans-serif';
                 ctx.textAlign = 'left';
-                const frontLabelY = guestStartY + 2 * rowGap;
-                const middleLabelY = guestStartY + 7 * rowGap;
-                const backLabelY = guestStartY + 11.5 * rowGap;
-                ctx.fillStyle = 'rgba(240,160,75,0.9)';
-                ctx.fillText('前排 1~4排', labelX, frontLabelY);
-                ctx.fillStyle = 'rgba(74,144,217,0.9)';
-                ctx.fillText('中排 5~9排', labelX, middleLabelY);
-                ctx.fillStyle = 'rgba(91,168,125,0.9)';
-                ctx.fillText('后排 10~13排', labelX, backLabelY);
+                const fY = guestStartY + 2.2 * rowGap;
+                const mY = guestStartY + 7.2 * rowGap;
+                const bY = guestStartY + 11.8 * rowGap;
+                ctx.fillStyle = 'rgba(240,160,75,0.95)';
+                ctx.fillText('前 排', lx, fY);
+                ctx.fillText('1 ~ 4排', lx, fY + 11);
+                ctx.fillStyle = 'rgba(74,144,217,0.95)';
+                ctx.fillText('中 排', lx, mY);
+                ctx.fillText('5 ~ 9排', lx, mY + 11);
+                ctx.fillStyle = 'rgba(91,168,125,0.95)';
+                ctx.fillText('后 排', lx, bY);
+                ctx.fillText('10~13排', lx, bY + 11);
 
                 // 分隔虚线
-                ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+                ctx.strokeStyle = 'rgba(255,255,255,0.28)';
                 ctx.lineWidth = 0.6;
-                ctx.setLineDash([5, 6]);
+                ctx.setLineDash([6, 7]);
                 [guestStartY + 4 * rowGap - 1, guestStartY + 9 * rowGap - 1].forEach(sy => {
                     ctx.beginPath();
-                    ctx.moveTo(15, sy);
-                    ctx.lineTo(LOGICAL_W - 15, sy);
+                    ctx.moveTo(25, sy);
+                    ctx.lineTo(LOGICAL_W - 25, sy);
                     ctx.stroke();
                 });
                 ctx.setLineDash([]);
 
                 // 控台
-                const cy = guestStartY + 13 * rowGap + 14;
-                ctx.fillStyle = 'rgba(180,185,200,0.35)';
-                drawRoundedRect(ctx, cx - 110, cy, 220, 22, 5);
+                const ctrlY = guestStartY + 13 * rowGap + 18;
+                ctx.fillStyle = 'rgba(180,185,200,0.3)';
+                drawRoundedRect(ctx, cx - 120, ctrlY, 240, 24, 6);
                 ctx.fill();
-                ctx.fillStyle = 'rgba(210,215,225,0.75)';
-                ctx.font = '9px "PingFang SC","Microsoft YaHei",sans-serif';
+                ctx.strokeStyle = 'rgba(200,205,215,0.5)';
+                ctx.lineWidth = 0.8;
+                drawRoundedRect(ctx, cx - 120, ctrlY, 240, 24, 6);
+                ctx.stroke();
+                ctx.fillStyle = 'rgba(220,225,235,0.7)';
+                ctx.font = '10px "PingFang SC","Microsoft YaHei",sans-serif';
                 ctx.textAlign = 'center';
-                ctx.fillText('控台工作区', cx, cy + 15);
+                ctx.fillText('控台工作区', cx, ctrlY + 16);
             }
 
-            // ============ 渲染循环 ============
+            // ============ 渲染 ============
             let animId = null;
             let currentSeat = null;
             let pulseVal = 0;
-            let needsRedraw = true;
 
             function renderToCanvas() {
-                ctx.setTransform(1, 0, 0, 1, 0, 0);
                 const dpr = Math.min(window.devicePixelRatio || 1, 2);
-                canvas.width = canvasWrapper.clientWidth * dpr;
-                canvas.height = (canvasWrapper.clientWidth * LOGICAL_H / LOGICAL_W) * dpr;
-                canvas.style.width = canvasWrapper.clientWidth + 'px';
-                canvas.style.height = (canvasWrapper.clientWidth * LOGICAL_H / LOGICAL_W) + 'px';
+                const displayW = canvasCard.clientWidth;
+                const displayH = displayW * LOGICAL_H / LOGICAL_W;
+                canvas.width = displayW * dpr;
+                canvas.height = displayH * dpr;
+                canvas.style.width = displayW + 'px';
+                canvas.style.height = displayH + 'px';
+                ctx.setTransform(1, 0, 0, 1, 0, 0);
                 ctx.scale(dpr, dpr);
 
-                // 应用缩放平移
-                const displayW = canvasWrapper.clientWidth;
                 const baseScale = displayW / LOGICAL_W;
                 const totalScale = baseScale * scale;
 
@@ -877,7 +972,6 @@
 
             function startAnimation(userSeat) {
                 currentSeat = userSeat;
-                // 重置缩放
                 scale = 1;
                 offsetX = 0;
                 offsetY = 0;
@@ -902,97 +996,54 @@
                 zoomIndicator.textContent = Math.round(scale * 100) + '%';
             }
 
-            // ============ 触摸事件（缩放+平移）============
-            function getCanvasPos(e) {
-                const rect = canvas.getBoundingClientRect();
-                return {
-                    x: e.clientX - rect.left,
-                    y: e.clientY - rect.top
-                };
-            }
-
+            // ============ 触摸事件 ============
             function getPinchDistance(t1, t2) {
-                const dx = t1.clientX - t2.clientX;
-                const dy = t1.clientY - t2.clientY;
-                return Math.sqrt(dx * dx + dy * dy);
-            }
-
-            function getPinchCenter(t1, t2) {
-                return {
-                    x: (t1.clientX + t2.clientX) / 2,
-                    y: (t1.clientY + t2.clientY) / 2
-                };
+                return Math.sqrt((t1.clientX - t2.clientX) ** 2 + (t1.clientY - t2.clientY) ** 2);
             }
 
             canvas.addEventListener('touchstart', function(e) {
                 e.preventDefault();
-                const touchesList = e.touches;
-                if (touchesList.length === 2) {
-                    // 双指开始
+                if (e.touches.length === 2) {
                     isDragging = false;
-                    lastPinchDist = getPinchDistance(touchesList[0], touchesList[1]);
-                    lastPinchCenter = getPinchCenter(touchesList[0], touchesList[1]);
-                } else if (touchesList.length === 1) {
-                    // 单指开始
+                    lastPinchDist = getPinchDistance(e.touches[0], e.touches[1]);
+                } else if (e.touches.length === 1) {
                     isDragging = true;
-                    lastSingleTouch = {
-                        x: touchesList[0].clientX,
-                        y: touchesList[0].clientY
-                    };
+                    lastSingleTouch = { x: e.touches[0].clientX, y: e.touches[0].clientY };
                 }
             }, { passive: false });
 
             canvas.addEventListener('touchmove', function(e) {
                 e.preventDefault();
-                const touchesList = e.touches;
-                if (touchesList.length === 2) {
-                    // 双指缩放
+                if (e.touches.length === 2) {
                     isDragging = false;
-                    const newDist = getPinchDistance(touchesList[0], touchesList[1]);
-                    const newCenter = getPinchCenter(touchesList[0], touchesList[1]);
+                    const newDist = getPinchDistance(e.touches[0], e.touches[1]);
+                    const cx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - canvas.getBoundingClientRect()
+                        .left;
+                    const cy = (e.touches[0].clientY + e.touches[1].clientY) / 2 - canvas.getBoundingClientRect()
+                        .top;
                     if (lastPinchDist > 0) {
                         const ratio = newDist / lastPinchDist;
                         const newScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, scale * ratio));
-
-                        // 以双指中心为缩放原点
-                        const rect = canvas.getBoundingClientRect();
-                        const cx = newCenter.x - rect.left;
-                        const cy = newCenter.y - rect.top;
-
                         offsetX = cx - (cx - offsetX) * (newScale / scale);
                         offsetY = cy - (cy - offsetY) * (newScale / scale);
                         scale = newScale;
                         updateZoomIndicator();
                     }
                     lastPinchDist = newDist;
-                    lastPinchCenter = newCenter;
-                } else if (touchesList.length === 1 && isDragging) {
-                    // 单指拖动
-                    const dx = touchesList[0].clientX - lastSingleTouch.x;
-                    const dy = touchesList[0].clientY - lastSingleTouch.y;
+                } else if (e.touches.length === 1 && isDragging) {
+                    const dx = e.touches[0].clientX - lastSingleTouch.x;
+                    const dy = e.touches[0].clientY - lastSingleTouch.y;
                     offsetX += dx;
                     offsetY += dy;
-                    lastSingleTouch = {
-                        x: touchesList[0].clientX,
-                        y: touchesList[0].clientY
-                    };
+                    lastSingleTouch = { x: e.touches[0].clientX, y: e.touches[0].clientY };
                 }
             }, { passive: false });
 
             canvas.addEventListener('touchend', function(e) {
-                if (e.touches.length === 0) {
-                    isDragging = false;
-                    lastPinchDist = 0;
-                } else if (e.touches.length === 1) {
-                    isDragging = true;
-                    lastSingleTouch = {
-                        x: e.touches[0].clientX,
-                        y: e.touches[0].clientY
-                    };
-                }
+                if (e.touches.length === 0) { isDragging = false;
+                    lastPinchDist = 0; }
             });
 
-            // 鼠标滚轮缩放（桌面调试）
             canvas.addEventListener('wheel', function(e) {
                 e.preventDefault();
                 const rect = canvas.getBoundingClientRect();
@@ -1006,51 +1057,42 @@
                 updateZoomIndicator();
             }, { passive: false });
 
-            // 缩放按钮
-            document.getElementById('zoomInBtn').addEventListener('click', function() {
-                const newScale = Math.min(MAX_SCALE, scale * 1.3);
-                const displayW = canvasWrapper.clientWidth;
-                const displayH = canvasWrapper.clientWidth * LOGICAL_H / LOGICAL_W;
-                const cx = displayW / 2;
-                const cy = displayH / 2;
-                offsetX = cx - (cx - offsetX) * (newScale / scale);
-                offsetY = cy - (cy - offsetY) * (newScale / scale);
+            document.getElementById('zoomInBtn').addEventListener('click', () => {
+                const newScale = Math.min(MAX_SCALE, scale * 1.35);
+                const dw = canvasCard.clientWidth;
+                const dh = dw * LOGICAL_H / LOGICAL_W;
+                offsetX = dw / 2 - (dw / 2 - offsetX) * (newScale / scale);
+                offsetY = dh / 2 - (dh / 2 - offsetY) * (newScale / scale);
                 scale = newScale;
                 updateZoomIndicator();
             });
-            document.getElementById('zoomOutBtn').addEventListener('click', function() {
-                const newScale = Math.max(MIN_SCALE, scale / 1.3);
-                const displayW = canvasWrapper.clientWidth;
-                const displayH = canvasWrapper.clientWidth * LOGICAL_H / LOGICAL_W;
-                const cx = displayW / 2;
-                const cy = displayH / 2;
-                offsetX = cx - (cx - offsetX) * (newScale / scale);
-                offsetY = cy - (cy - offsetY) * (newScale / scale);
+            document.getElementById('zoomOutBtn').addEventListener('click', () => {
+                const newScale = Math.max(MIN_SCALE, scale / 1.35);
+                const dw = canvasCard.clientWidth;
+                const dh = dw * LOGICAL_H / LOGICAL_W;
+                offsetX = dw / 2 - (dw / 2 - offsetX) * (newScale / scale);
+                offsetY = dh / 2 - (dh / 2 - offsetY) * (newScale / scale);
                 scale = newScale;
                 updateZoomIndicator();
             });
-            document.getElementById('zoomResetBtn').addEventListener('click', function() {
+            document.getElementById('zoomResetBtn').addEventListener('click', () => {
                 scale = 1;
                 offsetX = 0;
                 offsetY = 0;
                 updateZoomIndicator();
             });
 
-            // ============ 窗口resize ============
             let resizeTimer;
             window.addEventListener('resize', () => {
                 clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(() => {
-                    if (currentSeat) {
-                        renderToCanvas();
-                    }
-                }, 200);
+                resizeTimer = setTimeout(() => { if (currentSeat) renderToCanvas(); }, 200);
             });
 
             // ============ UI逻辑 ============
             function buildBigInfoHTML(seat) {
                 const sectionClass = seat.section;
-                const sectionText = seat.section === 'front' ? '前排' : seat.section === 'middle' ? '中排' : '后排';
+                const sectionText = seat.section === 'front' ? '前排' : seat.section === 'middle' ? '中排' :
+                '后排';
                 return `
                     <div class="seat-zone-display">
                         <span class="zone-badge ${sectionClass}">${seat.zoneLetter}</span>
@@ -1065,8 +1107,8 @@
                 `;
             }
 
-            function showError(message) {
-                errorMessage.textContent = message;
+            function showError(msg) {
+                errorMessage.textContent = msg;
                 errorMessage.classList.add('show');
                 nameInput.style.borderColor = 'rgba(255,138,138,0.9)';
                 setTimeout(() => {
@@ -1075,66 +1117,70 @@
                 }, 2000);
             }
 
-            function showHome() {
-                stopAnimation();
-                pageResult.classList.add('hidden');
-                pageResult.classList.remove('active');
-                pageHome.classList.remove('hidden');
-                pageHome.classList.add('active');
-                nameInput.focus();
-                if (window.location.search.includes('name=')) {
-                    history.pushState(null, '', window.location.pathname);
-                }
+            let savedSeat = null;
+
+            function showPage(page) {
+                [pageHome, pageResult, pageMap].forEach(p => p.classList.add('hidden'));
+                page.classList.remove('hidden');
             }
 
             function showResult(name, seat) {
-                pageHome.classList.add('hidden');
-                pageHome.classList.remove('active');
-                pageResult.classList.remove('hidden');
-                pageResult.classList.add('active');
+                savedSeat = seat;
                 displayName.textContent = name.trim();
                 seatBigInfo.innerHTML = buildBigInfoHTML(seat);
-                startAnimation(seat);
+                showPage(pageResult);
                 const url = new URL(window.location);
                 url.searchParams.set('name', name.trim());
                 history.pushState(null, '', url.toString());
                 pageResult.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
 
-            function handleFind() {
+            function openMapPage() {
+                showPage(pageMap);
+                if (savedSeat) startAnimation(savedSeat);
+                else renderToCanvas();
+                pageMap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            function backFromMap() {
+                stopAnimation();
+                if (savedSeat) showPage(pageResult);
+                else showPage(pageHome);
+            }
+
+            btnFindSeat.addEventListener('click', () => {
                 const name = nameInput.value.trim();
                 if (!name) { showError('请输入姓名'); return; }
                 const seat = getSeatByName(name);
                 if (!seat) { showError('未找到对应座位，请重试'); return; }
                 showResult(name, seat);
-            }
-
-            btnFindSeat.addEventListener('click', handleFind);
+            });
             nameInput.addEventListener('keydown', e => {
                 if (e.key === 'Enter') { e.preventDefault();
-                    handleFind(); }
+                    btnFindSeat.click(); }
             });
-            btnBack.addEventListener('click', e => { e.preventDefault();
-                showHome(); });
+            btnBack.addEventListener('click', () => {
+                stopAnimation();
+                savedSeat = null;
+                showPage(pageHome);
+                nameInput.focus();
+                if (window.location.search.includes('name=')) history.pushState(null, '', window.location
+                .pathname);
+            });
+            btnOpenMap.addEventListener('click', openMapPage);
+            btnBackFromMap.addEventListener('click', backFromMap);
 
             window.addEventListener('popstate', () => {
                 const params = new URLSearchParams(window.location.search);
                 const nameParam = params.get('name');
                 if (nameParam && nameParam.trim()) {
                     const seat = getSeatByName(nameParam);
-                    if (seat) {
-                        stopAnimation();
-                        pageHome.classList.add('hidden');
-                        pageHome.classList.remove('active');
-                        pageResult.classList.remove('hidden');
-                        pageResult.classList.add('active');
-                        displayName.textContent = nameParam.trim();
-                        seatBigInfo.innerHTML = buildBigInfoHTML(seat);
-                        startAnimation(seat);
-                        return;
-                    }
+                    if (seat) { showResult(nameParam, seat); return; }
                 }
-                showHome();
+                stopAnimation();
+                savedSeat = null;
+                showPage(pageHome);
+                nameInput.focus();
             });
 
             function init() {
@@ -1142,18 +1188,9 @@
                 const nameParam = params.get('name');
                 if (nameParam && nameParam.trim()) {
                     const seat = getSeatByName(nameParam);
-                    if (seat) {
-                        pageHome.classList.add('hidden');
-                        pageHome.classList.remove('active');
-                        pageResult.classList.remove('hidden');
-                        pageResult.classList.add('active');
-                        displayName.textContent = nameParam.trim();
-                        seatBigInfo.innerHTML = buildBigInfoHTML(seat);
-                        startAnimation(seat);
-                        return;
-                    }
+                    if (seat) { showResult(nameParam, seat); return; }
                 }
-                showHome();
+                showPage(pageHome);
                 nameInput.focus();
             }
             init();

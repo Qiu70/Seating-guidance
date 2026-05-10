@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>区域座位导航</title>
+    <style>
+        :root {
+            --card-max-width: 360px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* 独立背景层，固定定位，参考左海大会方案 */
+        .bg-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('背景.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -2;
+        }
+
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Segoe UI', system-ui, sans-serif;
+            background-color: #4c1d95; /* 图片未加载时的后备色 */
+            color: #f0eaff;
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5vw;
+            overflow-x: hidden;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 页面容器 */
+        .page {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .page.hidden {
+            display: none;
+            opacity: 0;
+            transform: translateY(12px);
+        }
+        .page.active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 毛玻璃卡片 */
+        .glass-card {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 5vw;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            padding: 7vw 6vw;
+            text-align: center;
+        }
+
+        /* 首页元素 */
+        .home-icon {
+            width: 13vw;
+            height: 13vw;
+            max-width: 50px;
+            max-height: 50px;
+            margin: 0 auto 4vw;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 3.5vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+        .home-icon svg {
+            width: 55%;
+            height: 55%;
+            stroke: #fff;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .home-title {
+            font-size: 5.5vw;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.5px;
+            margin-bottom: 1.5vw;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+        .home-subtitle {
+            font-size: 3.6vw;
+            color: rgba(255, 255, 255, 0.78);
+            margin-bottom: 6vw;
+        }
+
+        /* 输入区域 */
+        .input-wrap {
+            position: relative;
+            margin-bottom: 3vw;
+        }
+        .input-wrap input {
+            width: 100%;
+            padding: 3.8vw 10vw 3.8vw 4vw;
+            font-size: 4vw;
+            border: 2px solid rgba(255, 255, 255, 0.35);
+            border-radius: 10vw;
+            outline: none;
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+            text-align: center;
+            letter-spacing: 0.5px;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .input-wrap input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        .input-wrap input:focus {
+            border-color: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.22);
+        }
+        .input-icon {
+            position: absolute;
+            right: 4vw;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: rgba(255, 255, 255, 0.55);
+            width: 4.5vw;
+            height: 4.5vw;
+        }
+
+        /* 错误提示 */
+        .error-message {
+            display: block;
+            height: 4.5vw;
+            line-height: 4.5vw;
+            font-size: 3.2vw;
+            color: #ffaaaa;
+            margin-bottom: 3vw;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .error-message.show {
+            opacity: 1;
+        }
+
+        /* 按钮 */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2vw;
+            padding: 3.8vw 6vw;
+            font-size: 4.2vw;
+            font-weight: 600;
+            border: none;
+            border-radius: 10vw;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            outline: none;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            color: #5b21b6;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+            touch-action: manipulation;
+        }
+        .btn:active {
+            transform: scale(0.97);
+            background: #fff;
+        }
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            border: 1.5px solid rgba(255, 255, 255, 0.4);
+            width: auto;
+            padding: 2.5vw 5vw;
+            font-size: 3.5vw;
+            border-radius: 8vw;
+            box-shadow: none;
+        }
+        .home-hint {
+            margin-top: 3vw;
+            font-size: 3vw;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* 二级页面 */
+        .result-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 4vw;
+        }
+        .result-greeting {
+            font-size: 4.5vw;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        .result-greeting .name-em {
+            color: #fff;
+            font-weight: 800;
+        }
+
+        .seat-big-info {
+            margin: 4vw 0;
+            padding: 5vw 4vw;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3.5vw;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .seat-zone-display {
+            display: inline-flex;
+            align-items: center;
+            gap: 3vw;
+            background: rgba(255, 255, 255, 0.14);
+            border-radius: 10vw;
+            padding: 2.5vw 5vw;
+            margin-bottom: 3vw;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+        }
+        .zone-badge {
+            width: 10vw;
+            height: 10vw;
+            max-width: 38px;
+            max-height: 38px;
+            border-radius: 50%;
+            font-size: 5vw;
+            font-weight: 800;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .zone-badge.zone-a { background: #f0a04b; }
+        .zone-badge.zone-b { background: #4a90d9; }
+        .zone-badge.zone-c { background: #5ba87d; }
+        .zone-text {
+            font-size: 4vw;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            text-align: left;
+        }
+        .seat-detail-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3vw;
+            justify-content: center;
+            align-items: center;
+            margin: 1vw 0;
+        }
+        .seat-detail-item {
+            font-size: 6vw;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+        .seat-detail-divider {
+            font-size: 4vw;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 300;
+        }
+        .seat-code {
+            font-size: 3.8vw;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.12);
+            padding: 2vw 5vw;
+            border-radius: 6vw;
+            letter-spacing: 1px;
+            margin-top: 2vw;
+            display: inline-block;
+        }
+
+        /* 示意图占位 */
+        .map-placeholder {
+            margin: 4vw 0 2vw;
+            padding: 6vw 4vw;
+            border: 2px dashed rgba(255, 255, 255, 0.45);
+            border-radius: 3.5vw;
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 3.5vw;
+            font-weight: 500;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2vw;
+        }
+        .map-placeholder svg {
+            width: 8vw;
+            height: 8vw;
+            stroke: rgba(255, 255, 255, 0.55);
+            fill: none;
+            stroke-width: 2;
+        }
+        .map-placeholder small {
+            font-size: 2.8vw;
+            opacity: 0.55;
+        }
+
+        /* 针对小屏微调 */
+        @media (max-width: 360px) {
+            .home-title { font-size: 6vw; }
+            .home-subtitle { font-size: 4vw; }
+            .input-wrap input { padding: 4.5vw 12vw 4.5vw 5vw; font-size: 4.2vw; }
+            .btn { padding: 4.5vw 7vw; font-size: 4.5vw; }
+            .seat-detail-item { font-size: 6.5vw; }
+            .zone-text { font-size: 4.2vw; }
+        }
+
+        /* 略大屏幕恢复px单位 */
+        @media (min-width: 400px) {
+            .glass-card {
+                border-radius: 20px;
+                padding: 28px 22px;
+            }
+            .home-title { font-size: 1.3rem; }
+            .home-subtitle { font-size: 0.85rem; }
+            .input-wrap input { padding: 14px 42px 14px 16px; font-size: 0.95rem; }
+            .btn { padding: 14px 28px; font-size: 0.95rem; }
+            .seat-detail-item { font-size: 1.5rem; }
+            .zone-text { font-size: 0.9rem; }
+            .map-placeholder { font-size: 0.85rem; }
+            .error-message { height: 20px; line-height: 20px; font-size: 0.7rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 固定背景层 -->
+    <div class="bg-fixed"></div>
+
+    <div class="app-container">
+        <!-- 首页 -->
+        <div class="page active" id="page-home">
+            <div class="glass-card">
+                <div class="home-icon">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="3" y="5" width="18" height="2.5" rx="1" />
+                        <rect x="5.5" y="10" width="3.5" height="3.5" rx="0.8" />
+                        <rect x="11" y="10" width="3.5" height="3.5" rx="0.8" />
+                        <rect x="16.5" y="10" width="3.5" height="3.5" rx="0.8" />
+                        <rect x="5.5" y="16" width="3.5" height="3.5" rx="0.8" />
+                        <rect x="11" y="16" width="5" height="3.5" rx="0.8" fill="currentColor" stroke="none" opacity="0.35" />
+                        <circle cx="13.5" cy="17.75" r="1" fill="#fff" />
+                    </svg>
+                </div>
+                <h1 class="home-title">区域座位导航</h1>
+                <p class="home-subtitle">输入姓名，查看您的专属座位</p>
+                <div class="input-wrap">
+                    <input type="text" id="nameInput" placeholder="请输入姓名" autocomplete="name" maxlength="30" aria-label="姓名输入框">
+                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="8" r="4" />
+                        <path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" />
+                    </svg>
+                </div>
+                <span class="error-message" id="errorMessage">请输入姓名</span>
+                <button class="btn" id="btnFindSeat" type="button">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:4.5vw;height:4.5vw;">
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                    查找座位
+                </button>
+                <p class="home-hint">试试输入“张三”或“李小明”</p>
+            </div>
+        </div>
+
+        <!-- 二级页面 -->
+        <div class="page hidden" id="page-result">
+            <div class="glass-card">
+                <div class="result-header">
+                    <div class="result-greeting">
+                        👋 <span class="name-em" id="displayName">---</span> 的座位
+                    </div>
+                    <button class="btn btn-outline" id="btnBack" type="button">← 返回</button>
+                </div>
+                <div class="seat-big-info" id="seatBigInfo"></div>
+                <div class="map-placeholder">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="3" y="4" width="18" height="3" rx="1" />
+                        <rect x="5" y="9" width="4" height="4" rx="0.8" />
+                        <rect x="11" y="9" width="4" height="4" rx="0.8" />
+                        <rect x="17" y="9" width="4" height="4" rx="0.8" />
+                        <rect x="5" y="15" width="4" height="4" rx="0.8" />
+                        <rect x="11" y="15" width="6" height="4" rx="0.8" fill="currentColor" stroke="none" opacity="0.4" />
+                        <circle cx="14" cy="17" r="1.2" fill="#fff" />
+                    </svg>
+                    <span>此处为全局座位示意图位置</span>
+                    <small>（图片或示意图可在此区域展示）</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const pageHome = document.getElementById('page-home');
+            const pageResult = document.getElementById('page-result');
+            const nameInput = document.getElementById('nameInput');
+            const btnFindSeat = document.getElementById('btnFindSeat');
+            const btnBack = document.getElementById('btnBack');
+            const displayName = document.getElementById('displayName');
+            const seatBigInfo = document.getElementById('seatBigInfo');
+            const errorMessage = document.getElementById('errorMessage');
+
+            // 座位数据（无描述文字）
+            const zoneDefs = [
+                { zone: 'A', rows: 2, seatsPerRow: 8, label: 'A区 · 前排VIP' },
+                { zone: 'B', rows: 4, seatsPerRow: 10, label: 'B区 · 中排' },
+                { zone: 'C', rows: 3, seatsPerRow: 8, label: 'C区 · 后排' }
+            ];
+
+            const allSeats = [];
+            zoneDefs.forEach(zoneDef => {
+                for (let row = 1; row <= zoneDef.rows; row++) {
+                    for (let seat = 1; seat <= zoneDef.seatsPerRow; seat++) {
+                        allSeats.push({
+                            zone: zoneDef.zone,
+                            row,
+                            seat,
+                            zoneLabel: zoneDef.label
+                        });
+                    }
+                }
+            });
+            const totalSeats = allSeats.length;
+
+            function hashString(str) {
+                let hash = 5381;
+                for (let i = 0; i < str.length; i++) {
+                    hash = ((hash << 5) + hash) + str.charCodeAt(i);
+                    hash = hash & 0x7fffffff;
+                }
+                return hash;
+            }
+
+            function getSeatByName(name) {
+                const trimmed = name.trim();
+                if (!trimmed) return null;
+                return allSeats[hashString(trimmed) % totalSeats];
+            }
+
+            function buildBigInfoHTML(seat) {
+                const zoneClass = 'zone-' + seat.zone.toLowerCase();
+                return `
+                    <div class="seat-zone-display">
+                        <span class="zone-badge ${zoneClass}">${seat.zone}</span>
+                        <span class="zone-text">${seat.zoneLabel}</span>
+                    </div>
+                    <div class="seat-detail-row">
+                        <span class="seat-detail-item">第 ${seat.row} 排</span>
+                        <span class="seat-detail-divider">·</span>
+                        <span class="seat-detail-item">第 ${seat.seat} 座</span>
+                    </div>
+                    <span class="seat-code">🏷️ 编号：${seat.zone}${seat.row}-${String(seat.seat).padStart(2,'0')}</span>
+                `;
+            }
+
+            function showError(message) {
+                errorMessage.textContent = message;
+                errorMessage.classList.add('show');
+                nameInput.style.borderColor = 'rgba(255,138,138,0.9)';
+                setTimeout(() => {
+                    errorMessage.classList.remove('show');
+                    nameInput.style.borderColor = 'rgba(255,255,255,0.35)';
+                }, 2000);
+            }
+
+            function showHome() {
+                pageResult.classList.add('hidden');
+                pageResult.classList.remove('active');
+                pageHome.classList.remove('hidden');
+                pageHome.classList.add('active');
+                nameInput.focus();
+                if (window.location.search.includes('name=')) {
+                    history.pushState(null, '', window.location.pathname);
+                }
+            }
+
+            function showResult(name, seat) {
+                pageHome.classList.add('hidden');
+                pageHome.classList.remove('active');
+                pageResult.classList.remove('hidden');
+                pageResult.classList.add('active');
+                displayName.textContent = name.trim();
+                seatBigInfo.innerHTML = buildBigInfoHTML(seat);
+                const url = new URL(window.location);
+                url.searchParams.set('name', name.trim());
+                history.pushState(null, '', url.toString());
+            }
+
+            function handleFind() {
+                const name = nameInput.value.trim();
+                if (!name) { showError('请输入姓名'); return; }
+                const seat = getSeatByName(name);
+                if (!seat) { showError('未找到对应座位，请重试'); return; }
+                showResult(name, seat);
+            }
+
+            btnFindSeat.addEventListener('click', handleFind);
+            nameInput.addEventListener('keydown', e => {
+                if (e.key === 'Enter') { e.preventDefault(); handleFind(); }
+            });
+            btnBack.addEventListener('click', e => { e.preventDefault(); showHome(); });
+
+            window.addEventListener('popstate', () => {
+                const params = new URLSearchParams(window.location.search);
+                const nameParam = params.get('name');
+                if (nameParam && nameParam.trim()) {
+                    const seat = getSeatByName(nameParam);
+                    if (seat) {
+                        pageHome.classList.add('hidden');
+                        pageHome.classList.remove('active');
+                        pageResult.classList.remove('hidden');
+                        pageResult.classList.add('active');
+                        displayName.textContent = nameParam.trim();
+                        seatBigInfo.innerHTML = buildBigInfoHTML(seat);
+                        return;
+                    }
+                }
+                showHome();
+            });
+
+            function init() {
+                const params = new URLSearchParams(window.location.search);
+                const nameParam = params.get('name');
+                if (nameParam && nameParam.trim()) {
+                    const seat = getSeatByName(nameParam);
+                    if (seat) {
+                        pageHome.classList.add('hidden');
+                        pageHome.classList.remove('active');
+                        pageResult.classList.remove('hidden');
+                        pageResult.classList.add('active');
+                        displayName.textContent = nameParam.trim();
+                        seatBigInfo.innerHTML = buildBigInfoHTML(seat);
+                        return;
+                    }
+                }
+                showHome();
+                nameInput.focus();
+            }
+            init();
+        })();
+    </script>
+</body>
+</html>

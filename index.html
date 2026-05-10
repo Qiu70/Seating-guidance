@@ -38,7 +38,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 3vw;
+            padding: 2vw;
             overflow-x: hidden;
             -webkit-user-select: none;
             user-select: none;
@@ -46,7 +46,7 @@
 
         .app-container {
             width: 100%;
-            max-width: 420px;
+            max-width: 440px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -77,26 +77,27 @@
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 5vw;
+            border-radius: 4vw;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-            padding: 5vw 4vw;
+            padding: 4vw 3.5vw;
             text-align: center;
         }
 
+        /* 首页 */
         .home-icon {
-            width: 56px;
-            height: 56px;
+            width: 52px;
+            height: 52px;
             margin: 0 auto 3vw;
             background: rgba(255, 255, 255, 0.15);
-            border-radius: 16px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             border: 1px solid rgba(255, 255, 255, 0.25);
         }
         .home-icon svg {
-            width: 30px;
-            height: 30px;
+            width: 28px;
+            height: 28px;
             stroke: #fff;
             fill: none;
             stroke-width: 2;
@@ -198,6 +199,31 @@
             font-size: 3.2vw;
             border-radius: 8vw;
             box-shadow: none;
+        }
+        .btn-zoom {
+            background: rgba(255, 255, 255, 0.18);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            padding: 1.5vw 3vw;
+            font-size: 3.2vw;
+            border-radius: 6vw;
+            flex: 0 0 auto;
+            min-width: 8vw;
+            text-align: center;
+        }
+        .btn-zoom-row {
+            display: flex;
+            gap: 2vw;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2vw;
+            flex-wrap: wrap;
+        }
+        .zoom-indicator {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 2.8vw;
+            min-width: 12vw;
+            text-align: center;
         }
         .home-hint {
             margin-top: 2.5vw;
@@ -302,10 +328,16 @@
         /* Canvas容器 */
         .canvas-wrapper {
             margin: 3vw 0 1vw;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.25);
             border-radius: 2.5vw;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            position: relative;
+            touch-action: none;
+            cursor: grab;
+        }
+        .canvas-wrapper:active {
+            cursor: grabbing;
         }
         .canvas-wrapper canvas {
             display: block;
@@ -346,7 +378,7 @@
             background: #b8ddc4;
         }
         .legend-dot.lead-seat {
-            background: #c0b8c8;
+            background: #d5cde0;
         }
         .legend-dot.your-seat {
             background: #e8455b;
@@ -379,37 +411,44 @@
                 font-size: 2.8vw;
                 gap: 2vw;
             }
+            .btn-zoom {
+                padding: 2vw 3.5vw;
+                font-size: 3.5vw;
+            }
+            .zoom-indicator {
+                font-size: 3vw;
+            }
         }
 
         @media (min-width: 400px) {
             .glass-card {
-                border-radius: 18px;
+                border-radius: 16px;
                 padding: 22px 18px;
             }
             .home-title {
-                font-size: 1.25rem;
+                font-size: 1.22rem;
             }
             .home-subtitle {
-                font-size: 0.82rem;
+                font-size: 0.8rem;
             }
             .input-wrap input {
                 padding: 13px 38px 13px 14px;
-                font-size: 0.9rem;
+                font-size: 0.88rem;
             }
             .btn {
                 padding: 13px 24px;
-                font-size: 0.9rem;
+                font-size: 0.88rem;
             }
             .seat-detail-item {
-                font-size: 1.4rem;
+                font-size: 1.35rem;
             }
             .zone-text {
-                font-size: 0.85rem;
+                font-size: 0.82rem;
             }
             .error-message {
                 height: 18px;
                 line-height: 18px;
-                font-size: 0.7rem;
+                font-size: 0.68rem;
             }
             .legend-row {
                 font-size: 0.7rem;
@@ -421,6 +460,15 @@
             }
             .canvas-wrapper {
                 border-radius: 10px;
+            }
+            .btn-zoom {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+                border-radius: 20px;
+            }
+            .zoom-indicator {
+                font-size: 0.75rem;
+                min-width: 50px;
             }
         }
     </style>
@@ -474,13 +522,26 @@
                 </div>
                 <div class="seat-big-info" id="seatBigInfo"></div>
 
+                <!-- 缩放提示 -->
+                <div style="font-size:2.6vw;color:rgba(255,255,255,0.5);margin-bottom:1vw;">
+                    👆 双指缩放 · 单指拖动查看全图
+                </div>
+
                 <!-- 全局座位示意图 -->
                 <div class="canvas-wrapper" id="canvasWrapper">
                     <canvas id="seatCanvas" aria-label="全局座位示意图"></canvas>
                 </div>
 
+                <!-- 缩放按钮 -->
+                <div class="btn-zoom-row">
+                    <button class="btn-zoom" id="zoomOutBtn" type="button">−</button>
+                    <span class="zoom-indicator" id="zoomIndicator">100%</span>
+                    <button class="btn-zoom" id="zoomInBtn" type="button">+</button>
+                    <button class="btn-zoom" id="zoomResetBtn" type="button" style="margin-left:2vw;">↺ 重置</button>
+                </div>
+
                 <!-- 图例 -->
-                <div class="legend-row">
+                <div class="legend-row" style="margin-top:2vw;">
                     <span class="legend-item"><span class="legend-dot lead-seat"></span> 主席台</span>
                     <span class="legend-item"><span class="legend-dot front-seat"></span> 前排</span>
                     <span class="legend-item"><span class="legend-dot middle-seat"></span> 中排</span>
@@ -493,6 +554,7 @@
 
     <script>
         (function() {
+            // ============ DOM ============
             const pageHome = document.getElementById('page-home');
             const pageResult = document.getElementById('page-result');
             const nameInput = document.getElementById('nameInput');
@@ -504,19 +566,18 @@
             const canvas = document.getElementById('seatCanvas');
             const canvasWrapper = document.getElementById('canvasWrapper');
             const ctx = canvas.getContext('2d');
+            const zoomIndicator = document.getElementById('zoomIndicator');
 
-            // 构建座位表
+            // ============ 座位数据 ============
             const allSeats = [];
             for (let row = 1; row <= 13; row++) {
                 let section = row <= 4 ? 'front' : row <= 9 ? 'middle' : 'back';
                 for (let seat = 1; seat <= 10; seat++) {
-                    allSeats.push({ zoneLetter: 'A', row, seat, section,
-                        code: `A${row}-${seat}` });
-                    allSeats.push({ zoneLetter: 'B', row, seat, section,
-                        code: `B${row}-${seat}` });
+                    allSeats.push({ zoneLetter: 'A', row, seat, section, code: `A${row}-${seat}` });
+                    allSeats.push({ zoneLetter: 'B', row, seat, section, code: `B${row}-${seat}` });
                 }
             }
-            const totalGuestSeats = allSeats.length; // 260
+            const totalGuestSeats = allSeats.length;
 
             function hashString(str) {
                 let hash = 5381;
@@ -533,45 +594,56 @@
                 return allSeats[hashString(trimmed) % totalGuestSeats];
             }
 
-            // ============ Canvas绘制 ============
-            const CANVAS_W = 520;
-            const CANVAS_H = 440;
+            // ============ Canvas 缩放状态 ============
+            const LOGICAL_W = 600;
+            const LOGICAL_H = 480;
 
-            // 布局参数
-            const marginLeft = 55;
-            const marginRight = 20;
-            const seatW = 14;
-            const seatH = 12;
+            // 变换状态
+            let scale = 1;
+            let offsetX = 0;
+            let offsetY = 0;
+            const MIN_SCALE = 0.5;
+            const MAX_SCALE = 4;
+
+            // 触摸状态
+            let touches = {};
+            let lastPinchDist = 0;
+            let lastPinchCenter = { x: 0, y: 0 };
+            let lastSingleTouch = { x: 0, y: 0 };
+            let isDragging = false;
+
+            // ============ Canvas 绘制函数 ============
+            const seatW = 16;
+            const seatH = 13;
             const seatGap = 2;
-            const aisleW = 44;
-            const rowGap = 16; // 排间距（含座位高度）
-            const halfCount = 10; // 每半区10座
+            const aisleW = 52;
+            const rowGap = 18;
+            const halfCount = 10;
             const halfBlockW = halfCount * seatW + (halfCount - 1) * seatGap;
 
-            const stageY = 8;
-            const stageH = 20;
-            const stageW = 300;
+            const stageY = 6;
+            const stageH = 24;
+            const stageW = 360;
 
-            const leadY = 38;
+            const leadY = 40;
             const leadRows = 3;
             const leadSeatsPerRow = 10;
-            const leadSeatW = 12;
-            const leadSeatH = 10;
+            const leadSeatW = 14;
+            const leadSeatH = 11;
             const leadSeatGap = 2;
-            const leadRowGap = 13;
+            const leadRowGap = 15;
             const leadBlockW = leadSeatsPerRow * leadSeatW + (leadSeatsPerRow - 1) * leadSeatGap;
 
-            const guestStartY = 90;
-            const guestRows = 13;
+            const guestStartY = 100;
 
-            let animId = null;
-            let currentSeat = null;
-            let pulseVal = 0;
+            const colors = {
+                front: { fill: '#f5d4a8', stroke: '#d4944a' },
+                middle: { fill: '#b3d1f0', stroke: '#4a7db5' },
+                back: { fill: '#b8ddc4', stroke: '#4a8d60' }
+            };
 
             function getSectionColor(section) {
-                if (section === 'front') return { fill: '#f5d4a8', stroke: '#d4944a' };
-                if (section === 'middle') return { fill: '#b3d1f0', stroke: '#4a7db5' };
-                return { fill: '#b8ddc4', stroke: '#4a8d60' };
+                return colors[section];
             }
 
             function drawRoundedRect(ctx, x, y, w, h, r) {
@@ -589,7 +661,6 @@
             }
 
             function drawStage(ctx, cx) {
-                // 舞台渐变
                 const sx = cx - stageW / 2;
                 const sy = stageY;
                 const grad = ctx.createLinearGradient(sx, sy, sx, sy + stageH);
@@ -597,26 +668,23 @@
                 grad.addColorStop(0.5, '#3a3d4a');
                 grad.addColorStop(1, '#2a2d38');
                 ctx.fillStyle = grad;
-                drawRoundedRect(ctx, sx, sy, stageW, stageH, 4);
+                drawRoundedRect(ctx, sx, sy, stageW, stageH, 5);
                 ctx.fill();
-                // 高光
                 ctx.fillStyle = 'rgba(255,255,255,0.06)';
-                drawRoundedRect(ctx, sx + 10, sy + 2, stageW - 20, stageH / 2 - 1, 2);
+                drawRoundedRect(ctx, sx + 12, sy + 3, stageW - 24, stageH / 2 - 1, 3);
                 ctx.fill();
-                // 标签
-                ctx.fillStyle = '#e0e2e8';
-                ctx.font = 'bold 10px "PingFang SC","Microsoft YaHei",sans-serif';
+                ctx.fillStyle = '#e8eaf0';
+                ctx.font = 'bold 12px "PingFang SC","Microsoft YaHei",sans-serif';
                 ctx.textAlign = 'center';
-                ctx.fillText('舞 台', cx, sy - 4);
-                // 两侧线
-                ctx.strokeStyle = '#c0c4d0';
-                ctx.lineWidth = 0.6;
-                ctx.setLineDash([3, 4]);
+                ctx.fillText('舞 台', cx, sy - 5);
+                ctx.strokeStyle = '#c8ccd6';
+                ctx.lineWidth = 0.7;
+                ctx.setLineDash([4, 5]);
                 ctx.beginPath();
-                ctx.moveTo(sx - 50, sy + stageH / 2);
+                ctx.moveTo(sx - 60, sy + stageH / 2);
                 ctx.lineTo(sx - 5, sy + stageH / 2);
                 ctx.moveTo(sx + stageW + 5, sy + stageH / 2);
-                ctx.lineTo(sx + stageW + 50, sy + stageH / 2);
+                ctx.lineTo(sx + stageW + 60, sy + stageH / 2);
                 ctx.stroke();
                 ctx.setLineDash([]);
             }
@@ -628,211 +696,197 @@
                     const ry = ly + r * leadRowGap;
                     for (let s = 0; s < leadSeatsPerRow; s++) {
                         const sx = lx + s * (leadSeatW + leadSeatGap);
-                        ctx.fillStyle = '#d5cde0';
-                        drawRoundedRect(ctx, sx, ry, leadSeatW, leadSeatH, 2);
+                        ctx.fillStyle = '#e0d8ea';
+                        drawRoundedRect(ctx, sx, ry, leadSeatW, leadSeatH, 3);
                         ctx.fill();
-                        ctx.strokeStyle = '#a898b8';
-                        ctx.lineWidth = 0.5;
-                        drawRoundedRect(ctx, sx, ry, leadSeatW, leadSeatH, 2);
+                        ctx.strokeStyle = '#b0a0be';
+                        ctx.lineWidth = 0.6;
+                        drawRoundedRect(ctx, sx, ry, leadSeatW, leadSeatH, 3);
                         ctx.stroke();
+                        ctx.fillStyle = 'rgba(255,255,255,0.3)';
+                        drawRoundedRect(ctx, sx + 3, ry + 2, leadSeatW - 6, leadSeatH / 2 - 1, 2);
+                        ctx.fill();
                     }
                 }
-                // 标签
-                ctx.fillStyle = '#c0b8c8';
-                ctx.font = '8px "PingFang SC","Microsoft YaHei",sans-serif';
+                ctx.fillStyle = '#c8bfd4';
+                ctx.font = '9px "PingFang SC","Microsoft YaHei",sans-serif';
                 ctx.textAlign = 'center';
-                ctx.fillText('主席台（领导席·30人）', cx, ly - 6);
+                ctx.fillText('主席台（领导席·30人）', cx, ly - 7);
             }
 
-            function drawGuestSeats(ctx, cx, userSeat, pulse) {
+            function drawOneSeat(ctx, x, y, w, h, colors, isUser, pulse) {
+                if (isUser) {
+                    const glowSize = 5 + 3 * Math.sin(pulse);
+                    ctx.save();
+                    ctx.shadowColor = 'rgba(232,69,91,0.85)';
+                    ctx.shadowBlur = 8 + glowSize;
+                    ctx.fillStyle = '#e8455b';
+                    drawRoundedRect(ctx, x, y, w, h, 3);
+                    ctx.fill();
+                    ctx.restore();
+                    const grad = ctx.createLinearGradient(x, y, x, y + h);
+                    grad.addColorStop(0, '#ff5c72');
+                    grad.addColorStop(1, '#d63850');
+                    ctx.fillStyle = grad;
+                    drawRoundedRect(ctx, x, y, w, h, 3);
+                    ctx.fill();
+                    ctx.strokeStyle = '#a02030';
+                    ctx.lineWidth = 2;
+                    drawRoundedRect(ctx, x, y, w, h, 3);
+                    ctx.stroke();
+                    const mx = x + w / 2;
+                    const my = y + h / 2;
+                    ctx.strokeStyle = '#fff';
+                    ctx.lineWidth = 1.4;
+                    ctx.lineCap = 'round';
+                    ctx.beginPath();
+                    ctx.moveTo(mx - 3, my);
+                    ctx.lineTo(mx - 0.5, my + 2.5);
+                    ctx.lineTo(mx + 3, my - 2.5);
+                    ctx.stroke();
+                    ctx.lineCap = 'butt';
+                } else {
+                    ctx.fillStyle = colors.fill;
+                    drawRoundedRect(ctx, x, y, w, h, 3);
+                    ctx.fill();
+                    ctx.strokeStyle = colors.stroke;
+                    ctx.lineWidth = 0.7;
+                    drawRoundedRect(ctx, x, y, w, h, 3);
+                    ctx.stroke();
+                    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+                    drawRoundedRect(ctx, x + 3, y + 2, w - 6, h / 2 - 1, 2);
+                    ctx.fill();
+                }
+            }
+
+            function drawAll(ctx, userSeat, pulse) {
+                ctx.clearRect(0, 0, LOGICAL_W, LOGICAL_H);
+                ctx.fillStyle = 'rgba(22,16,38,0.3)';
+                ctx.fillRect(0, 0, LOGICAL_W, LOGICAL_H);
+
+                const cx = LOGICAL_W / 2;
                 const groupW = halfBlockW * 2 + aisleW;
                 const startX = cx - groupW / 2;
 
-                for (let row = 1; row <= guestRows; row++) {
+                drawStage(ctx, cx);
+                drawLeadSeats(ctx, cx);
+
+                // 嘉宾席
+                for (let row = 1; row <= 13; row++) {
                     const ry = guestStartY + (row - 1) * rowGap;
                     let section = row <= 4 ? 'front' : row <= 9 ? 'middle' : 'back';
-                    const colors = getSectionColor(section);
+                    const clr = getSectionColor(section);
 
-                    // A区（左）
+                    // A区
                     for (let s = 1; s <= halfCount; s++) {
                         const sx = startX + (s - 1) * (seatW + seatGap);
-                        const isUser = userSeat && userSeat.zoneLetter === 'A' && userSeat.row ===
-                            row && userSeat.seat === s;
-                        drawOneSeat(ctx, sx, ry, seatW, seatH, colors, isUser, pulse);
+                        const isUser = userSeat && userSeat.zoneLetter === 'A' && userSeat.row === row && userSeat
+                            .seat === s;
+                        drawOneSeat(ctx, sx, ry, seatW, seatH, clr, isUser, pulse);
                     }
 
                     // 过道
                     const ax = startX + halfBlockW;
                     ctx.fillStyle = 'rgba(180,190,200,0.3)';
                     ctx.fillRect(ax + 1, ry, aisleW - 2, seatH);
-                    ctx.strokeStyle = 'rgba(160,170,180,0.5)';
-                    ctx.lineWidth = 0.4;
-                    ctx.setLineDash([2, 3]);
-                    ctx.beginPath();
-                    ctx.moveTo(ax + 3, ry);
-                    ctx.lineTo(ax + aisleW - 3, ry + seatH);
-                    ctx.moveTo(ax + 3, ry + seatH);
-                    ctx.lineTo(ax + aisleW - 3, ry);
-                    ctx.stroke();
-                    ctx.setLineDash([]);
-                    // 过道标签（仅第6排）
                     if (row === 6) {
                         ctx.fillStyle = 'rgba(200,210,220,0.7)';
-                        ctx.font = '7px "PingFang SC","Microsoft YaHei",sans-serif';
+                        ctx.font = '8px "PingFang SC","Microsoft YaHei",sans-serif';
                         ctx.textAlign = 'center';
-                        ctx.fillText('过', ax + aisleW / 2, ry + seatH / 2 + 3);
-                        ctx.fillText('道', ax + aisleW / 2, ry + seatH / 2 + 11);
+                        ctx.fillText('过 道', ax + aisleW / 2, ry + seatH / 2 + 3);
                     }
 
-                    // B区（右）
+                    // B区
                     for (let s = 1; s <= halfCount; s++) {
                         const sx = startX + halfBlockW + aisleW + (s - 1) * (seatW + seatGap);
-                        const isUser = userSeat && userSeat.zoneLetter === 'B' && userSeat.row ===
-                            row && userSeat.seat === s;
-                        drawOneSeat(ctx, sx, ry, seatW, seatH, colors, isUser, pulse);
+                        const isUser = userSeat && userSeat.zoneLetter === 'B' && userSeat.row === row && userSeat
+                            .seat === s;
+                        drawOneSeat(ctx, sx, ry, seatW, seatH, clr, isUser, pulse);
                     }
                 }
-            }
 
-            function drawOneSeat(ctx, x, y, w, h, colors, isUser, pulse) {
-                if (isUser) {
-                    // 光晕
-                    const glowSize = 4 + 2 * Math.sin(pulse);
-                    ctx.save();
-                    ctx.shadowColor = 'rgba(232,69,91,0.8)';
-                    ctx.shadowBlur = 6 + glowSize;
-                    ctx.fillStyle = '#e8455b';
-                    drawRoundedRect(ctx, x, y, w, h, 2);
-                    ctx.fill();
-                    ctx.restore();
-                    // 主体
-                    const grad = ctx.createLinearGradient(x, y, x, y + h);
-                    grad.addColorStop(0, '#ff5c72');
-                    grad.addColorStop(1, '#d63850');
-                    ctx.fillStyle = grad;
-                    drawRoundedRect(ctx, x, y, w, h, 2);
-                    ctx.fill();
-                    ctx.strokeStyle = '#a02030';
-                    ctx.lineWidth = 1.5;
-                    drawRoundedRect(ctx, x, y, w, h, 2);
-                    ctx.stroke();
-                    // 对勾
-                    const mx = x + w / 2;
-                    const my = y + h / 2;
-                    ctx.strokeStyle = '#fff';
-                    ctx.lineWidth = 1.2;
-                    ctx.lineCap = 'round';
-                    ctx.beginPath();
-                    ctx.moveTo(mx - 2.5, my);
-                    ctx.lineTo(mx - 0.5, my + 2);
-                    ctx.lineTo(mx + 2.5, my - 2);
-                    ctx.stroke();
-                    ctx.lineCap = 'butt';
-                } else {
-                    ctx.fillStyle = colors.fill;
-                    drawRoundedRect(ctx, x, y, w, h, 2);
-                    ctx.fill();
-                    ctx.strokeStyle = colors.stroke;
-                    ctx.lineWidth = 0.6;
-                    drawRoundedRect(ctx, x, y, w, h, 2);
-                    ctx.stroke();
-                    ctx.fillStyle = 'rgba(255,255,255,0.25)';
-                    drawRoundedRect(ctx, x + 2, y + 1.5, w - 4, h / 2 - 1, 1);
-                    ctx.fill();
-                }
-            }
-
-            function drawZoneLabels(ctx, cx) {
-                const groupW = halfBlockW * 2 + aisleW;
-                const startX = cx - groupW / 2;
-                // A区标签
+                // 分区标签
                 ctx.fillStyle = 'rgba(255,255,255,0.75)';
-                ctx.font = 'bold 9px "PingFang SC","Microsoft YaHei",sans-serif';
+                ctx.font = 'bold 10px "PingFang SC","Microsoft YaHei",sans-serif';
                 ctx.textAlign = 'center';
-                const aCenterX = startX + halfBlockW / 2;
-                ctx.fillText('A区', aCenterX, guestStartY - 8);
-                // B区标签
-                const bCenterX = startX + halfBlockW + aisleW + halfBlockW / 2;
-                ctx.fillText('B区', bCenterX, guestStartY - 8);
+                ctx.fillText('A区', startX + halfBlockW / 2, guestStartY - 10);
+                ctx.fillText('B区', startX + halfBlockW + aisleW + halfBlockW / 2, guestStartY - 10);
 
-                // 分区标签（左侧）
-                const labelX = 8;
-                ctx.font = '7px "PingFang SC","Microsoft YaHei",sans-serif';
+                const labelX = 12;
+                ctx.font = '8px "PingFang SC","Microsoft YaHei",sans-serif';
                 ctx.textAlign = 'left';
-                const frontY = guestStartY + 1.5 * rowGap;
-                const middleY = guestStartY + 6 * rowGap;
-                const backY = guestStartY + 11 * rowGap;
-                ctx.fillStyle = 'rgba(240,160,75,0.85)';
-                ctx.fillText('前排', labelX, frontY);
-                ctx.fillText('1~4排', labelX, frontY + 10);
-                ctx.fillStyle = 'rgba(74,144,217,0.85)';
-                ctx.fillText('中排', labelX, middleY);
-                ctx.fillText('5~9排', labelX, middleY + 10);
-                ctx.fillStyle = 'rgba(91,168,125,0.85)';
-                ctx.fillText('后排', labelX, backY);
-                ctx.fillText('10~13排', labelX, backY + 10);
+                const frontLabelY = guestStartY + 2 * rowGap;
+                const middleLabelY = guestStartY + 7 * rowGap;
+                const backLabelY = guestStartY + 11.5 * rowGap;
+                ctx.fillStyle = 'rgba(240,160,75,0.9)';
+                ctx.fillText('前排 1~4排', labelX, frontLabelY);
+                ctx.fillStyle = 'rgba(74,144,217,0.9)';
+                ctx.fillText('中排 5~9排', labelX, middleLabelY);
+                ctx.fillStyle = 'rgba(91,168,125,0.9)';
+                ctx.fillText('后排 10~13排', labelX, backLabelY);
 
                 // 分隔虚线
-                ctx.strokeStyle = 'rgba(255,255,255,0.4)';
-                ctx.lineWidth = 0.5;
-                ctx.setLineDash([4, 5]);
-                const sepY1 = guestStartY + 4 * rowGap - 2;
-                const sepY2 = guestStartY + 9 * rowGap - 2;
-                [sepY1, sepY2].forEach(sy => {
+                ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+                ctx.lineWidth = 0.6;
+                ctx.setLineDash([5, 6]);
+                [guestStartY + 4 * rowGap - 1, guestStartY + 9 * rowGap - 1].forEach(sy => {
                     ctx.beginPath();
-                    ctx.moveTo(marginLeft - 6, sy);
-                    ctx.lineTo(CANVAS_W - marginRight, sy);
+                    ctx.moveTo(15, sy);
+                    ctx.lineTo(LOGICAL_W - 15, sy);
                     ctx.stroke();
                 });
                 ctx.setLineDash([]);
-            }
 
-            function drawControlArea(ctx, cx) {
-                const cy = guestStartY + guestRows * rowGap + 12;
-                ctx.fillStyle = 'rgba(180,185,200,0.3)';
-                drawRoundedRect(ctx, cx - 100, cy, 200, 18, 4);
+                // 控台
+                const cy = guestStartY + 13 * rowGap + 14;
+                ctx.fillStyle = 'rgba(180,185,200,0.35)';
+                drawRoundedRect(ctx, cx - 110, cy, 220, 22, 5);
                 ctx.fill();
-                ctx.fillStyle = 'rgba(200,205,215,0.7)';
-                ctx.font = '8px "PingFang SC","Microsoft YaHei",sans-serif';
+                ctx.fillStyle = 'rgba(210,215,225,0.75)';
+                ctx.font = '9px "PingFang SC","Microsoft YaHei",sans-serif';
                 ctx.textAlign = 'center';
-                ctx.fillText('控台工作区', cx, cy + 12);
+                ctx.fillText('控台工作区', cx, cy + 15);
             }
 
-            function drawAll(ctx, userSeat, pulse) {
-                ctx.clearRect(0, 0, CANVAS_W, CANVAS_H);
-                // 背景
-                ctx.fillStyle = 'rgba(30,20,50,0.25)';
-                ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
+            // ============ 渲染循环 ============
+            let animId = null;
+            let currentSeat = null;
+            let pulseVal = 0;
+            let needsRedraw = true;
 
-                const cx = CANVAS_W / 2;
-                drawStage(ctx, cx);
-                drawLeadSeats(ctx, cx);
-                drawGuestSeats(ctx, cx, userSeat, pulse);
-                drawZoneLabels(ctx, cx);
-                drawControlArea(ctx, cx);
-            }
-
-            function resizeCanvas() {
-                const wrapperW = canvasWrapper.clientWidth;
-                const displayW = Math.min(wrapperW, 500);
-                const scale = displayW / CANVAS_W;
-                const displayH = CANVAS_H * scale;
-                const dpr = Math.min(window.devicePixelRatio || 1, 2);
-                canvas.width = CANVAS_W * dpr;
-                canvas.height = CANVAS_H * dpr;
-                canvas.style.width = displayW + 'px';
-                canvas.style.height = displayH + 'px';
+            function renderToCanvas() {
                 ctx.setTransform(1, 0, 0, 1, 0, 0);
+                const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                canvas.width = canvasWrapper.clientWidth * dpr;
+                canvas.height = (canvasWrapper.clientWidth * LOGICAL_H / LOGICAL_W) * dpr;
+                canvas.style.width = canvasWrapper.clientWidth + 'px';
+                canvas.style.height = (canvasWrapper.clientWidth * LOGICAL_H / LOGICAL_W) + 'px';
                 ctx.scale(dpr, dpr);
+
+                // 应用缩放平移
+                const displayW = canvasWrapper.clientWidth;
+                const baseScale = displayW / LOGICAL_W;
+                const totalScale = baseScale * scale;
+
+                ctx.save();
+                ctx.translate(offsetX, offsetY);
+                ctx.scale(totalScale, totalScale);
+                drawAll(ctx, currentSeat, pulseVal);
+                ctx.restore();
             }
 
             function startAnimation(userSeat) {
                 currentSeat = userSeat;
+                // 重置缩放
+                scale = 1;
+                offsetX = 0;
+                offsetY = 0;
+                updateZoomIndicator();
                 if (animId) cancelAnimationFrame(animId);
 
                 function loop(ts) {
                     pulseVal = (ts / 700) * Math.PI * 2;
-                    drawAll(ctx, currentSeat, pulseVal);
+                    renderToCanvas();
                     animId = requestAnimationFrame(loop);
                 }
                 animId = requestAnimationFrame(loop);
@@ -844,11 +898,159 @@
                 currentSeat = null;
             }
 
-            // ============ UI ============
+            function updateZoomIndicator() {
+                zoomIndicator.textContent = Math.round(scale * 100) + '%';
+            }
+
+            // ============ 触摸事件（缩放+平移）============
+            function getCanvasPos(e) {
+                const rect = canvas.getBoundingClientRect();
+                return {
+                    x: e.clientX - rect.left,
+                    y: e.clientY - rect.top
+                };
+            }
+
+            function getPinchDistance(t1, t2) {
+                const dx = t1.clientX - t2.clientX;
+                const dy = t1.clientY - t2.clientY;
+                return Math.sqrt(dx * dx + dy * dy);
+            }
+
+            function getPinchCenter(t1, t2) {
+                return {
+                    x: (t1.clientX + t2.clientX) / 2,
+                    y: (t1.clientY + t2.clientY) / 2
+                };
+            }
+
+            canvas.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                const touchesList = e.touches;
+                if (touchesList.length === 2) {
+                    // 双指开始
+                    isDragging = false;
+                    lastPinchDist = getPinchDistance(touchesList[0], touchesList[1]);
+                    lastPinchCenter = getPinchCenter(touchesList[0], touchesList[1]);
+                } else if (touchesList.length === 1) {
+                    // 单指开始
+                    isDragging = true;
+                    lastSingleTouch = {
+                        x: touchesList[0].clientX,
+                        y: touchesList[0].clientY
+                    };
+                }
+            }, { passive: false });
+
+            canvas.addEventListener('touchmove', function(e) {
+                e.preventDefault();
+                const touchesList = e.touches;
+                if (touchesList.length === 2) {
+                    // 双指缩放
+                    isDragging = false;
+                    const newDist = getPinchDistance(touchesList[0], touchesList[1]);
+                    const newCenter = getPinchCenter(touchesList[0], touchesList[1]);
+                    if (lastPinchDist > 0) {
+                        const ratio = newDist / lastPinchDist;
+                        const newScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, scale * ratio));
+
+                        // 以双指中心为缩放原点
+                        const rect = canvas.getBoundingClientRect();
+                        const cx = newCenter.x - rect.left;
+                        const cy = newCenter.y - rect.top;
+
+                        offsetX = cx - (cx - offsetX) * (newScale / scale);
+                        offsetY = cy - (cy - offsetY) * (newScale / scale);
+                        scale = newScale;
+                        updateZoomIndicator();
+                    }
+                    lastPinchDist = newDist;
+                    lastPinchCenter = newCenter;
+                } else if (touchesList.length === 1 && isDragging) {
+                    // 单指拖动
+                    const dx = touchesList[0].clientX - lastSingleTouch.x;
+                    const dy = touchesList[0].clientY - lastSingleTouch.y;
+                    offsetX += dx;
+                    offsetY += dy;
+                    lastSingleTouch = {
+                        x: touchesList[0].clientX,
+                        y: touchesList[0].clientY
+                    };
+                }
+            }, { passive: false });
+
+            canvas.addEventListener('touchend', function(e) {
+                if (e.touches.length === 0) {
+                    isDragging = false;
+                    lastPinchDist = 0;
+                } else if (e.touches.length === 1) {
+                    isDragging = true;
+                    lastSingleTouch = {
+                        x: e.touches[0].clientX,
+                        y: e.touches[0].clientY
+                    };
+                }
+            });
+
+            // 鼠标滚轮缩放（桌面调试）
+            canvas.addEventListener('wheel', function(e) {
+                e.preventDefault();
+                const rect = canvas.getBoundingClientRect();
+                const mx = e.clientX - rect.left;
+                const my = e.clientY - rect.top;
+                const delta = e.deltaY > 0 ? 0.9 : 1.1;
+                const newScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, scale * delta));
+                offsetX = mx - (mx - offsetX) * (newScale / scale);
+                offsetY = my - (my - offsetY) * (newScale / scale);
+                scale = newScale;
+                updateZoomIndicator();
+            }, { passive: false });
+
+            // 缩放按钮
+            document.getElementById('zoomInBtn').addEventListener('click', function() {
+                const newScale = Math.min(MAX_SCALE, scale * 1.3);
+                const displayW = canvasWrapper.clientWidth;
+                const displayH = canvasWrapper.clientWidth * LOGICAL_H / LOGICAL_W;
+                const cx = displayW / 2;
+                const cy = displayH / 2;
+                offsetX = cx - (cx - offsetX) * (newScale / scale);
+                offsetY = cy - (cy - offsetY) * (newScale / scale);
+                scale = newScale;
+                updateZoomIndicator();
+            });
+            document.getElementById('zoomOutBtn').addEventListener('click', function() {
+                const newScale = Math.max(MIN_SCALE, scale / 1.3);
+                const displayW = canvasWrapper.clientWidth;
+                const displayH = canvasWrapper.clientWidth * LOGICAL_H / LOGICAL_W;
+                const cx = displayW / 2;
+                const cy = displayH / 2;
+                offsetX = cx - (cx - offsetX) * (newScale / scale);
+                offsetY = cy - (cy - offsetY) * (newScale / scale);
+                scale = newScale;
+                updateZoomIndicator();
+            });
+            document.getElementById('zoomResetBtn').addEventListener('click', function() {
+                scale = 1;
+                offsetX = 0;
+                offsetY = 0;
+                updateZoomIndicator();
+            });
+
+            // ============ 窗口resize ============
+            let resizeTimer;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    if (currentSeat) {
+                        renderToCanvas();
+                    }
+                }, 200);
+            });
+
+            // ============ UI逻辑 ============
             function buildBigInfoHTML(seat) {
                 const sectionClass = seat.section;
-                const sectionText = seat.section === 'front' ? '前排' : seat.section === 'middle' ? '中排' :
-                    '后排';
+                const sectionText = seat.section === 'front' ? '前排' : seat.section === 'middle' ? '中排' : '后排';
                 return `
                     <div class="seat-zone-display">
                         <span class="zone-badge ${sectionClass}">${seat.zoneLetter}</span>
@@ -892,7 +1094,6 @@
                 pageResult.classList.add('active');
                 displayName.textContent = name.trim();
                 seatBigInfo.innerHTML = buildBigInfoHTML(seat);
-                resizeCanvas();
                 startAnimation(seat);
                 const url = new URL(window.location);
                 url.searchParams.set('name', name.trim());
@@ -929,23 +1130,11 @@
                         pageResult.classList.add('active');
                         displayName.textContent = nameParam.trim();
                         seatBigInfo.innerHTML = buildBigInfoHTML(seat);
-                        resizeCanvas();
                         startAnimation(seat);
                         return;
                     }
                 }
                 showHome();
-            });
-
-            let resizeTimer;
-            window.addEventListener('resize', () => {
-                clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(() => {
-                    if (currentSeat) {
-                        resizeCanvas();
-                        drawAll(ctx, currentSeat, pulseVal);
-                    }
-                }, 200);
             });
 
             function init() {
@@ -960,7 +1149,6 @@
                         pageResult.classList.add('active');
                         displayName.textContent = nameParam.trim();
                         seatBigInfo.innerHTML = buildBigInfoHTML(seat);
-                        resizeCanvas();
                         startAnimation(seat);
                         return;
                     }

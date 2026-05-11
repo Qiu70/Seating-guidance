@@ -46,7 +46,7 @@
 
         .app-container {
             width: 100%;
-            max-width: 420px;
+            max-width: 440px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -195,6 +195,11 @@
             border-radius: 7vw;
             box-shadow: none;
         }
+        .home-hint {
+            margin-top: 2.2vw;
+            font-size: 2.6vw;
+            color: rgba(255, 255, 255, 0.5);
+        }
 
         /* 结果页 */
         .result-header {
@@ -244,15 +249,9 @@
             justify-content: center;
             flex-shrink: 0;
         }
-        .zone-badge.front {
-            background: #c98a3a;
-        }
-        .zone-badge.middle {
-            background: #3b72b5;
-        }
-        .zone-badge.back {
-            background: #4a9068;
-        }
+        .zone-badge.front { background: #c98a3a; }
+        .zone-badge.middle { background: #3b72b5; }
+        .zone-badge.back { background: #4a9068; }
         .zone-text {
             font-size: 3.4vw;
             font-weight: 600;
@@ -289,109 +288,155 @@
             margin-top: 1.2vw;
             display: inline-block;
         }
-        .btn-map {
-            margin-top: 2.5vw;
-            background: rgba(255, 255, 255, 0.25);
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            padding: 2.5vw 4vw;
-            font-size: 3.5vw;
-            border-radius: 8vw;
-            width: 100%;
-            font-weight: 600;
+
+        /* 图片区域放大 */
+        .image-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin-top: 2vw;
         }
-        .btn-map:active {
-            background: rgba(255, 255, 255, 0.4);
+        .image-section-title {
+            font-size: 3.2vw;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 1.5vw;
+        }
+        .image-viewer {
+            flex: 1;
+            width: 100%;
+            min-height: 45vw;
+            background: rgba(20, 15, 35, 0.45);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 2.5vw;
+            overflow: hidden;
+            position: relative;
+            touch-action: none;
+            cursor: pointer;
+        }
+        .image-viewer img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transform-origin: 0 0;
+            pointer-events: none;
+        }
+        .zoom-controls {
+            display: flex;
+            gap: 2.2vw;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2vw;
+        }
+        .btn-ctrl {
+            background: rgba(255, 255, 255, 0.16);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            padding: 1.8vw 3.2vw;
+            font-size: 3vw;
+            border-radius: 6vw;
+            cursor: pointer;
+            font-weight: 600;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .btn-ctrl:active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .zoom-pct {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 2.8vw;
+            min-width: 9vw;
+            text-align: center;
+        }
+        .zoom-hint {
+            text-align: center;
+            font-size: 2.2vw;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 1vw;
         }
 
-        /* 图片三级页面 */
-        .image-fullscreen {
+        /* 全屏预览层 */
+        .fullscreen-overlay {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(10, 5, 20, 0.95);
-            z-index: 200;
-            display: flex;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             touch-action: none;
         }
-        .image-top-bar {
+        .fullscreen-overlay.active {
+            display: flex;
+        }
+        .fullscreen-close {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 4vw;
+            right: 4vw;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            width: 10vw;
+            height: 10vw;
+            max-width: 40px;
+            max-height: 40px;
+            border-radius: 50%;
+            font-size: 5vw;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 3vw 4vw;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(12px);
-            z-index: 10;
-        }
-        .btn-image-back {
-            background: rgba(255, 255, 255, 0.2);
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 2vw 4vw;
-            border-radius: 6vw;
-            font-size: 3.2vw;
-            font-weight: 600;
+            justify-content: center;
             cursor: pointer;
+            z-index: 1001;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
-        .btn-image-back:active {
-            background: rgba(255, 255, 255, 0.4);
-        }
-        .image-viewer-container {
-            flex: 1;
+        .fullscreen-image-container {
             width: 100%;
-            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             overflow: hidden;
             touch-action: none;
         }
-        .image-viewer-container img {
-            position: absolute;
-            max-width: none;
-            max-height: none;
+        .fullscreen-image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
             transform-origin: 0 0;
             pointer-events: none;
         }
 
         @media (max-width: 360px) {
-            .home-title {
-                font-size: 5.5vw;
-            }
+            .home-title { font-size: 5.5vw; }
+            .home-subtitle { font-size: 3.6vw; }
+            .input-wrap input { padding: 3.8vw 9vw 3.8vw 3.8vw; font-size: 3.8vw; }
+            .btn { padding: 3.8vw 5vw; font-size: 4vw; }
+            .seat-detail-item { font-size: 5.5vw; }
+            .btn-ctrl { padding: 2.2vw 3.8vw; font-size: 3.2vw; }
         }
         @media (min-width: 420px) {
-            .glass-card {
-                border-radius: 16px;
-                padding: 22px 18px;
-            }
-            .home-title {
-                font-size: 1.2rem;
-            }
-            .home-subtitle {
-                font-size: 0.78rem;
-            }
-            .input-wrap input {
-                padding: 12px 36px 12px 14px;
-                font-size: 0.85rem;
-            }
-            .btn {
-                padding: 12px 22px;
-                font-size: 0.85rem;
-            }
-            .seat-detail-item {
-                font-size: 1.3rem;
-            }
-            .error-message {
-                height: 16px;
-                line-height: 16px;
-                font-size: 0.65rem;
-            }
+            .glass-card { border-radius: 16px; padding: 22px 18px; }
+            .home-title { font-size: 1.2rem; }
+            .home-subtitle { font-size: 0.78rem; }
+            .input-wrap input { padding: 12px 36px 12px 14px; font-size: 0.85rem; }
+            .btn { padding: 12px 22px; font-size: 0.85rem; }
+            .seat-detail-item { font-size: 1.3rem; }
+            .zone-text { font-size: 0.8rem; }
+            .error-message { height: 16px; line-height: 16px; font-size: 0.65rem; }
+            .btn-ctrl { padding: 7px 13px; font-size: 0.78rem; border-radius: 20px; }
+            .zoom-pct { font-size: 0.75rem; }
+            .zoom-hint { font-size: 0.62rem; }
+            .image-section-title { font-size: 0.8rem; }
+            .image-viewer { min-height: 200px; }
         }
     </style>
 </head>
@@ -422,7 +467,13 @@
                     </svg>
                 </div>
                 <span class="error-message" id="errorMessage">请输入姓名</span>
-                <button class="btn" id="btnFindSeat" type="button">查找座位</button>
+                <button class="btn" id="btnFindSeat" type="button">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:3.8vw;height:3.8vw;">
+                        <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                    查找座位
+                </button>
+                <p class="home-hint">试试输入"张三"或"李小明"</p>
             </div>
         </div>
 
@@ -434,24 +485,31 @@
                     <button class="btn btn-outline-sm" id="btnBack" type="button">← 返回</button>
                 </div>
                 <div class="seat-big-info" id="seatBigInfo"></div>
-                <button class="btn btn-map" id="btnOpenMap" type="button">
-                    查看全局座位图
-                </button>
+
+                <!-- 图片区域 -->
+                <div class="image-section">
+                    <div class="image-section-title">会场座位示意图</div>
+                    <div class="image-viewer" id="imageViewer">
+                        <!-- 替换 src 为你的高清座位图地址 -->
+                        <img id="seatImage" src="座位示意图.png" alt="会场座位示意图">
+                    </div>
+                    <div class="zoom-controls">
+                        <button class="btn-ctrl" id="zoomOutBtn" type="button">−</button>
+                        <span class="zoom-pct" id="zoomPct">100%</span>
+                        <button class="btn-ctrl" id="zoomInBtn" type="button">+</button>
+                        <button class="btn-ctrl" id="zoomResetBtn" type="button">↺</button>
+                    </div>
+                    <p class="zoom-hint">点击图片全屏查看</p>
+                </div>
             </div>
         </div>
+    </div>
 
-        <!-- 三级页面（全屏高清图） -->
-        <div class="page hidden" id="page-map">
-            <div class="image-fullscreen" id="imageFullscreen">
-                <div class="image-top-bar">
-                    <span style="color:#fff; font-weight:600; font-size:3.5vw;">会场座位示意图</span>
-                    <button class="btn-image-back" id="btnImageBack" type="button">← 返回</button>
-                </div>
-                <div class="image-viewer-container" id="imageViewerContainer">
-                    <!-- ★ 将 src 替换为你自己的高清座位图地址 ★ -->
-                    <img id="seatImage" src="座位示意图.png" alt="会场座位示意图">
-                </div>
-            </div>
+    <!-- 全屏预览 -->
+    <div class="fullscreen-overlay" id="fullscreenOverlay">
+        <div class="fullscreen-close" id="fullscreenClose">✕</div>
+        <div class="fullscreen-image-container" id="fullscreenImageContainer">
+            <img id="fullscreenImage" src="" alt="全屏座位图">
         </div>
     </div>
 
@@ -459,17 +517,21 @@
         (function() {
             const pageHome = document.getElementById('page-home');
             const pageResult = document.getElementById('page-result');
-            const pageMap = document.getElementById('page-map');
             const nameInput = document.getElementById('nameInput');
             const btnFindSeat = document.getElementById('btnFindSeat');
             const btnBack = document.getElementById('btnBack');
-            const btnOpenMap = document.getElementById('btnOpenMap');
-            const btnImageBack = document.getElementById('btnImageBack');
             const displayName = document.getElementById('displayName');
             const seatBigInfo = document.getElementById('seatBigInfo');
             const errorMessage = document.getElementById('errorMessage');
+
+            const imageViewer = document.getElementById('imageViewer');
             const seatImage = document.getElementById('seatImage');
-            const imageViewerContainer = document.getElementById('imageViewerContainer');
+            const zoomPct = document.getElementById('zoomPct');
+
+            const fullscreenOverlay = document.getElementById('fullscreenOverlay');
+            const fullscreenImage = document.getElementById('fullscreenImage');
+            const fullscreenClose = document.getElementById('fullscreenClose');
+            const fullscreenImageContainer = document.getElementById('fullscreenImageContainer');
 
             // 座位数据
             const allSeats = [];
@@ -486,180 +548,179 @@
                 for (let i = 0; i < str.length; i++) h = ((h << 5) + h) + str.charCodeAt(i) & 0x7fffffff;
                 return h;
             }
-
             function getSeatByName(name) {
                 const t = name.trim();
                 if (!t) return null;
                 return allSeats[hashString(t) % allSeats.length];
             }
 
-            // 图片缩放拖动状态
-            let imgScale = 1,
-                imgOffX = 0,
-                imgOffY = 0;
-            const IMG_MIN = 0.5,
-                IMG_MAX = 5;
-            let lastPinch = 0,
-                lastTx = 0,
-                lastTy = 0,
-                dragging = false;
-            let baseOffsetX = 0,
-                baseOffsetY = 0; // 居中基准偏移
-            let isImageReady = false;
+            // 内嵌图片缩放
+            let scale = 1, offX = 0, offY = 0;
+            const MIN_S = 0.5, MAX_S = 5;
+            let lastPinch = 0, lastTx = 0, lastTy = 0, dragging = false;
 
-            function updateImageTransform() {
-                if (!isImageReady) return;
-                seatImage.style.transform = `translate(${imgOffX}px, ${imgOffY}px) scale(${imgScale})`;
+            function updateEmbedImg() {
+                seatImage.style.transform = `translate(${offX}px, ${offY}px) scale(${scale})`;
+                zoomPct.textContent = Math.round(scale * 100) + '%';
+            }
+            function resetEmbedImg() { scale = 1; offX = 0; offY = 0; updateEmbedImg(); }
+
+            // 全屏图片缩放
+            let fsScale = 1, fsOffX = 0, fsOffY = 0;
+            let fsLastPinch = 0, fsLastTx = 0, fsLastTy = 0, fsDragging = false;
+
+            function updateFsImg() {
+                fullscreenImage.style.transform = `translate(${fsOffX}px, ${fsOffY}px) scale(${fsScale})`;
+            }
+            function resetFsImg() { fsScale = 1; fsOffX = 0; fsOffY = 0; updateFsImg(); }
+
+            function openFullscreen() {
+                fullscreenImage.src = seatImage.src;
+                fullscreenOverlay.classList.add('active');
+                resetFsImg();
+                document.body.style.overflow = 'hidden';
+            }
+            function closeFullscreen() {
+                fullscreenOverlay.classList.remove('active');
+                document.body.style.overflow = '';
             }
 
-            // 计算图片居中位置作为基准偏移
-            function calcCenterOffset() {
-                const containerW = imageViewerContainer.clientWidth;
-                const containerH = imageViewerContainer.clientHeight;
-                const imgW = seatImage.naturalWidth || seatImage.width;
-                const imgH = seatImage.naturalHeight || seatImage.height;
+            // 内嵌图片触摸事件
+            function pinchDist(t1, t2) { return Math.sqrt((t1.clientX - t2.clientX) ** 2 + (t1.clientY - t2.clientY) ** 2); }
 
-                if (!imgW || !imgH || !containerW || !containerH) return;
-
-                const imgAspect = imgW / imgH;
-                const containerAspect = containerW / containerH;
-                let displayW, displayH;
-
-                if (containerAspect > imgAspect) {
-                    displayH = containerH;
-                    displayW = displayH * imgAspect;
-                } else {
-                    displayW = containerW;
-                    displayH = displayW / imgAspect;
-                }
-
-                // 设置图片显示尺寸
-                seatImage.style.width = displayW + 'px';
-                seatImage.style.height = displayH + 'px';
-
-                // 居中偏移
-                baseOffsetX = (containerW - displayW) / 2;
-                baseOffsetY = (containerH - displayH) / 2;
-                imgOffX = baseOffsetX;
-                imgOffY = baseOffsetY;
-                imgScale = 1;
-                isImageReady = true;
-                updateImageTransform();
-            }
-
-            function resetImage() {
-                if (isImageReady) {
-                    imgScale = 1;
-                    imgOffX = baseOffsetX;
-                    imgOffY = baseOffsetY;
-                    updateImageTransform();
-                } else {
-                    // 图片还没准备好，等加载完再处理
-                    imgScale = 1;
-                    imgOffX = 0;
-                    imgOffY = 0;
-                }
-            }
-
-            // 图片加载完成后计算居中位置
-            seatImage.addEventListener('load', function() {
-                if (!pageMap.classList.contains('hidden')) {
-                    calcCenterOffset();
-                }
-            });
-
-            // 如果图片已缓存（load事件已触发），手动调用
-            if (seatImage.complete && seatImage.naturalWidth) {
-                // 页面初次加载时可能还没显示，延迟处理
-            }
-
-            function pinchDist(t1, t2) {
-                return Math.sqrt((t1.clientX - t2.clientX) ** 2 + (t1.clientY - t2.clientY) ** 2);
-            }
-
-            imageViewerContainer.addEventListener('touchstart', function(e) {
-                if (!isImageReady) return;
-                e.preventDefault();
-                if (e.touches.length === 2) {
-                    dragging = false;
-                    lastPinch = pinchDist(e.touches[0], e.touches[1]);
-                } else if (e.touches.length === 1) {
-                    dragging = true;
-                    lastTx = e.touches[0].clientX;
-                    lastTy = e.touches[0].clientY;
-                }
+            imageViewer.addEventListener('touchstart', function(e) {
+                if (e.touches.length === 2) { dragging = false; lastPinch = pinchDist(e.touches[0], e.touches[1]); }
+                else if (e.touches.length === 1) { dragging = true; lastTx = e.touches[0].clientX; lastTy = e.touches[0].clientY; }
             }, { passive: false });
 
-            imageViewerContainer.addEventListener('touchmove', function(e) {
-                if (!isImageReady) return;
+            imageViewer.addEventListener('touchmove', function(e) {
                 e.preventDefault();
                 if (e.touches.length === 2) {
                     dragging = false;
                     const nd = pinchDist(e.touches[0], e.touches[1]);
-                    const rect = imageViewerContainer.getBoundingClientRect();
+                    const rect = imageViewer.getBoundingClientRect();
                     const cx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
                     const cy = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
                     if (lastPinch > 0) {
                         const r = nd / lastPinch;
-                        const ns = Math.min(IMG_MAX, Math.max(IMG_MIN, imgScale * r));
-                        // 以手势中心为原点缩放
-                        imgOffX = cx - (cx - imgOffX) * (ns / imgScale);
-                        imgOffY = cy - (cy - imgOffY) * (ns / imgScale);
-                        imgScale = ns;
-                        updateImageTransform();
+                        const ns = Math.min(MAX_S, Math.max(MIN_S, scale * r));
+                        offX = cx - (cx - offX) * (ns / scale);
+                        offY = cy - (cy - offY) * (ns / scale);
+                        scale = ns;
+                        updateEmbedImg();
                     }
                     lastPinch = nd;
                 } else if (e.touches.length === 1 && dragging) {
-                    imgOffX += e.touches[0].clientX - lastTx;
-                    imgOffY += e.touches[0].clientY - lastTy;
+                    offX += e.touches[0].clientX - lastTx;
+                    offY += e.touches[0].clientY - lastTy;
                     lastTx = e.touches[0].clientX;
                     lastTy = e.touches[0].clientY;
-                    updateImageTransform();
+                    updateEmbedImg();
                 }
             }, { passive: false });
 
-            imageViewerContainer.addEventListener('touchend', function(e) {
-                if (e.touches.length === 0) {
-                    dragging = false;
-                    lastPinch = 0;
+            imageViewer.addEventListener('touchend', function(e) { if (e.touches.length === 0) { dragging = false; lastPinch = 0; } });
+            imageViewer.addEventListener('wheel', function(e) {
+                e.preventDefault();
+                const rect = imageViewer.getBoundingClientRect();
+                const mx = e.clientX - rect.left, my = e.clientY - rect.top;
+                const ns = Math.min(MAX_S, Math.max(MIN_S, scale * (e.deltaY > 0 ? 0.9 : 1.1)));
+                offX = mx - (mx - offX) * (ns / scale);
+                offY = my - (my - offY) * (ns / scale);
+                scale = ns;
+                updateEmbedImg();
+            }, { passive: false });
+
+            // 全屏触摸事件
+            fullscreenImageContainer.addEventListener('touchstart', function(e) {
+                if (e.touches.length === 2) { fsDragging = false; fsLastPinch = pinchDist(e.touches[0], e.touches[1]); }
+                else if (e.touches.length === 1) { fsDragging = true; fsLastTx = e.touches[0].clientX; fsLastTy = e.touches[0].clientY; }
+            }, { passive: false });
+
+            fullscreenImageContainer.addEventListener('touchmove', function(e) {
+                e.preventDefault();
+                if (e.touches.length === 2) {
+                    fsDragging = false;
+                    const nd = pinchDist(e.touches[0], e.touches[1]);
+                    const rect = fullscreenImageContainer.getBoundingClientRect();
+                    const cx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
+                    const cy = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
+                    if (fsLastPinch > 0) {
+                        const r = nd / fsLastPinch;
+                        const ns = Math.min(MAX_S, Math.max(MIN_S, fsScale * r));
+                        fsOffX = cx - (cx - fsOffX) * (ns / fsScale);
+                        fsOffY = cy - (cy - fsOffY) * (ns / fsScale);
+                        fsScale = ns;
+                        updateFsImg();
+                    }
+                    fsLastPinch = nd;
+                } else if (e.touches.length === 1 && fsDragging) {
+                    fsOffX += e.touches[0].clientX - fsLastTx;
+                    fsOffY += e.touches[0].clientY - fsLastTy;
+                    fsLastTx = e.touches[0].clientX;
+                    fsLastTy = e.touches[0].clientY;
+                    updateFsImg();
                 }
+            }, { passive: false });
+
+            fullscreenImageContainer.addEventListener('touchend', function(e) { if (e.touches.length === 0) { fsDragging = false; fsLastPinch = 0; } });
+
+            // 点击图片打开全屏
+            imageViewer.addEventListener('click', function(e) {
+                if (Math.abs(offX) < 2 && Math.abs(offY) < 2 && scale === 1) openFullscreen();
             });
 
-            imageViewerContainer.addEventListener('wheel', function(e) {
-                if (!isImageReady) return;
-                e.preventDefault();
-                const rect = imageViewerContainer.getBoundingClientRect();
-                const mx = e.clientX - rect.left,
-                    my = e.clientY - rect.top;
-                const ns = Math.min(IMG_MAX, Math.max(IMG_MIN, imgScale * (e.deltaY > 0 ? 0.9 : 1.1)));
-                imgOffX = mx - (mx - imgOffX) * (ns / imgScale);
-                imgOffY = my - (my - imgOffY) * (ns / imgScale);
-                imgScale = ns;
-                updateImageTransform();
-            }, { passive: false });
+            // 全屏关闭按钮
+            fullscreenClose.addEventListener('click', closeFullscreen);
+            fullscreenOverlay.addEventListener('click', function(e) {
+                if (e.target === fullscreenOverlay) closeFullscreen();
+            });
 
-            // UI 逻辑
-            let savedSeat = null;
+            // 缩放按钮
+            document.getElementById('zoomInBtn').addEventListener('click', () => {
+                const ns = Math.min(MAX_S, scale * 1.35);
+                const dw = imageViewer.clientWidth, dh = imageViewer.clientHeight;
+                offX = dw / 2 - (dw / 2 - offX) * (ns / scale);
+                offY = dh / 2 - (dh / 2 - offY) * (ns / scale);
+                scale = ns;
+                updateEmbedImg();
+            });
+            document.getElementById('zoomOutBtn').addEventListener('click', () => {
+                const ns = Math.max(MIN_S, scale / 1.35);
+                const dw = imageViewer.clientWidth, dh = imageViewer.clientHeight;
+                offX = dw / 2 - (dw / 2 - offX) * (ns / scale);
+                offY = dh / 2 - (dh / 2 - offY) * (ns / scale);
+                scale = ns;
+                updateEmbedImg();
+            });
+            document.getElementById('zoomResetBtn').addEventListener('click', resetEmbedImg);
 
-            function showPage(page) {
-                [pageHome, pageResult, pageMap].forEach(p => p.classList.add('hidden'));
-                page.classList.remove('hidden');
-            }
-
+            // UI
             function buildBigInfoHTML(seat) {
                 const sc = seat.section;
                 const st = sc === 'front' ? '前排' : sc === 'middle' ? '中排' : '后排';
-                return `<div class="seat-zone-display"><span class="zone-badge ${sc}">${seat.zoneLetter}</span><span class="zone-text">${seat.zoneLetter}区 · ${st}</span></div><div class="seat-detail-row"><span class="seat-detail-item">第 ${seat.row} 排</span><span class="seat-detail-divider">·</span><span class="seat-detail-item">第 ${seat.seat} 座</span></div><span class="seat-code">🏷️ 编号：${seat.code}</span>`;
+                return `
+                    <div class="seat-zone-display"><span class="zone-badge ${sc}">${seat.zoneLetter}</span><span class="zone-text">${seat.zoneLetter}区 · ${st}</span></div>
+                    <div class="seat-detail-row"><span class="seat-detail-item">第 ${seat.row} 排</span><span class="seat-detail-divider">·</span><span class="seat-detail-item">第 ${seat.seat} 座</span></div>
+                    <span class="seat-code">🏷️ 编号：${seat.code}</span>`;
             }
-
             function showError(msg) {
                 errorMessage.textContent = msg;
                 errorMessage.classList.add('show');
                 nameInput.style.borderColor = 'rgba(255,138,138,0.9)';
-                setTimeout(() => {
-                    errorMessage.classList.remove('show');
-                    nameInput.style.borderColor = 'rgba(255,255,255,0.35)';
-                }, 2000);
+                setTimeout(() => { errorMessage.classList.remove('show'); nameInput.style.borderColor = 'rgba(255,255,255,0.35)'; }, 2000);
+            }
+            function showPage(p) { [pageHome, pageResult].forEach(x => x.classList.add('hidden')); p.classList.remove('hidden'); }
+
+            function showResult(name, seat) {
+                displayName.textContent = name.trim();
+                seatBigInfo.innerHTML = buildBigInfoHTML(seat);
+                showPage(pageResult);
+                resetEmbedImg();
+                const url = new URL(window.location);
+                url.searchParams.set('name', name.trim());
+                history.pushState(null, '', url.toString());
+                pageResult.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
 
             btnFindSeat.addEventListener('click', () => {
@@ -667,80 +728,23 @@
                 if (!name) { showError('请输入姓名'); return; }
                 const seat = getSeatByName(name);
                 if (!seat) { showError('未找到对应座位，请重试'); return; }
-                savedSeat = seat;
-                displayName.textContent = name.trim();
-                seatBigInfo.innerHTML = buildBigInfoHTML(seat);
-                showPage(pageResult);
-                const url = new URL(window.location);
-                url.searchParams.set('name', name.trim());
-                history.pushState(null, '', url.toString());
+                showResult(name, seat);
             });
-            nameInput.addEventListener('keydown', e => {
-                if (e.key === 'Enter') { e.preventDefault();
-                    btnFindSeat.click(); }
-            });
-            btnBack.addEventListener('click', () => {
-                showPage(pageHome);
-                nameInput.focus();
-                if (window.location.search.includes('name=')) history.pushState(null, '', window.location
-            .pathname);
-            });
-
-            btnOpenMap.addEventListener('click', () => {
-                showPage(pageMap);
-                isImageReady = false;
-                // 重新计算居中位置（容器尺寸可能已变化）
-                if (seatImage.complete && seatImage.naturalWidth) {
-                    setTimeout(calcCenterOffset, 80);
-                } else {
-                    // 等待load事件
-                    imgScale = 1;
-                    imgOffX = 0;
-                    imgOffY = 0;
-                }
-            });
-
-            btnImageBack.addEventListener('click', () => {
-                showPage(pageResult);
-            });
+            nameInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); btnFindSeat.click(); } });
+            btnBack.addEventListener('click', () => { showPage(pageHome); nameInput.focus(); if (window.location.search.includes('name=')) history.pushState(null, '', window.location.pathname); });
 
             window.addEventListener('popstate', () => {
-                const params = new URLSearchParams(window.location.search);
-                const nameParam = params.get('name');
-                if (nameParam && nameParam.trim()) {
-                    const seat = getSeatByName(nameParam);
-                    if (seat) {
-                        savedSeat = seat;
-                        displayName.textContent = nameParam.trim();
-                        seatBigInfo.innerHTML = buildBigInfoHTML(seat);
-                        showPage(pageResult);
-                        return;
-                    }
-                }
+                const p = new URLSearchParams(window.location.search);
+                const nm = p.get('name');
+                if (nm && nm.trim()) { const seat = getSeatByName(nm); if (seat) { showResult(nm, seat); return; } }
                 showPage(pageHome);
                 nameInput.focus();
-            });
-
-            // 窗口大小变化时重新计算图片居中位置
-            window.addEventListener('resize', () => {
-                if (pageMap.classList.contains('active') && seatImage.complete && seatImage.naturalWidth) {
-                    calcCenterOffset();
-                }
             });
 
             function init() {
-                const params = new URLSearchParams(window.location.search);
-                const nameParam = params.get('name');
-                if (nameParam && nameParam.trim()) {
-                    const seat = getSeatByName(nameParam);
-                    if (seat) {
-                        savedSeat = seat;
-                        displayName.textContent = nameParam.trim();
-                        seatBigInfo.innerHTML = buildBigInfoHTML(seat);
-                        showPage(pageResult);
-                        return;
-                    }
-                }
+                const p = new URLSearchParams(window.location.search);
+                const nm = p.get('name');
+                if (nm && nm.trim()) { const seat = getSeatByName(nm); if (seat) { showResult(nm, seat); return; } }
                 showPage(pageHome);
                 nameInput.focus();
             }

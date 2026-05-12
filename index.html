@@ -83,37 +83,43 @@
 
         .seat-result-card {
             margin: 2vw 0; padding: 3vw;
-            background: none; /* 去掉背景 */
+            background: none;
             border-radius: 3vw; border: none; text-align: center;
         }
         .seat-info-box {
-            background: none; /* 去掉背景 */
-            border: none; /* 去掉边框 */
+            background: none;
+            border: none;
             border-radius: 0;
-            padding: 1.5vw 0; /* 只保留上下内边距 */
+            padding: 1.5vw 0;
             text-align: center;
         }
-     .seat-code-big {
-    font-size: 6vw;
-    font-weight: 800;
-    color: #fff;
-    background: rgba(255,255,255,0.18);
-    border: 2px solid rgba(255,255,255,0.6);
-    border-radius: 2.5vw;
-    padding: 2vw 4vw;
-    display: inline-block;
-    letter-spacing: 2px;
-    text-shadow: 0 0 20px rgba(255,255,255,0.5), 0 2px 8px rgba(0,0,0,0.3);
-    box-shadow: 0 0 18px rgba(255,255,255,0.25), 0 4px 12px rgba(0,0,0,0.2);
-}
-       .seat-detail {
-    font-size: 3.8vw;
-    color: rgba(255,255,255,0.85);
-    margin-top: 1.5vw;
-    letter-spacing: 1px;
-    font-weight: 500;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.2);
-}
+        .seat-code-big {
+            font-size: 6vw;
+            font-weight: 800;
+            color: #fff;
+            background: rgba(255,255,255,0.18);
+            border: 2px solid rgba(255,255,255,0.6);
+            border-radius: 2.5vw;
+            padding: 2vw 4vw;
+            display: inline-block;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(255,255,255,0.5), 0 2px 8px rgba(0,0,0,0.3);
+            box-shadow: 0 0 18px rgba(255,255,255,0.25), 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .seat-code-big.vip {
+            font-size: 5.5vw;
+            background: rgba(255,215,0,0.25);
+            border: 2px solid rgba(255,215,0,0.7);
+            box-shadow: 0 0 24px rgba(255,215,0,0.3), 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .seat-detail {
+            font-size: 3.8vw;
+            color: rgba(255,255,255,0.85);
+            margin-top: 1.5vw;
+            letter-spacing: 1px;
+            font-weight: 500;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+        }
 
         @media (max-width: 360px) {
             .home-title { font-size: 5.8vw; }
@@ -126,8 +132,9 @@
             .btn { padding: 14px 24px; font-size: 0.9rem; }
             .error-message { height: 18px; line-height: 18px; font-size: 0.7rem; }
             .checkin-text { font-size: 1.1rem; } .checkin-sub { font-size: 0.75rem; }
-           .seat-code-big { font-size: 1.5rem; padding: 10px 22px; letter-spacing: 2px; }
-           .seat-detail { font-size: 0.95rem; }
+            .seat-code-big { font-size: 1.5rem; padding: 10px 22px; letter-spacing: 2px; }
+            .seat-code-big.vip { font-size: 1.4rem; }
+            .seat-detail { font-size: 0.95rem; }
         }
     </style>
 </head>
@@ -178,7 +185,18 @@
         nameToSeats[n].push(code);
     }
 
-    // 第1排
+    // ==================== 重要嘉宾区（主席台 30人）====================
+    add("徐东亮", "VIP-1-1"); add("毛祚财", "VIP-1-2"); add("郑发鲲", "VIP-1-3"); add("张新怿", "VIP-1-4");
+    add("贺克斌", "VIP-1-5"); add("贺泓", "VIP-1-6"); add("张亚雷", "VIP-1-7"); add("吴晓杰", "VIP-1-8");
+    add("郑志东", "VIP-1-9"); add("陈旭标", "VIP-1-10");
+    add("齐琤", "VIP-2-1"); add("余桐", "VIP-2-2"); add("黄昌洪", "VIP-2-3"); add("胡雄伟", "VIP-2-4");
+    add("刘佳丽", "VIP-2-5"); add("黄敏", "VIP-2-6"); add("朱方", "VIP-2-7"); add("傅天龙", "VIP-2-8");
+    add("胡贤龙", "VIP-2-9"); add("陈海珠", "VIP-2-10");
+    add("谭雷", "VIP-3-1"); add("孙卫平", "VIP-3-2"); add("洪清填", "VIP-3-3"); add("何鑫强", "VIP-3-4");
+    add("林功波", "VIP-3-5"); add("邱金谋", "VIP-3-6"); add("陈建星", "VIP-3-7"); add("雷光美", "VIP-3-8");
+    add("黄羽", "VIP-3-9"); add("李路华", "VIP-3-10");
+
+    // ==================== 第1排（前排）====================
     add("项凤华", "A1-1"); add("黄为民", "A1-2"); add("祁麟", "A1-3"); add("辛军飞", "A1-4");
     add("卢文晶", "A1-5"); add("陈圣焜", "A1-6"); add("林贤华", "A1-7"); add("陈明东", "A1-8");
     add("杨学敏", "A1-9"); add("黄正洪", "A1-10");
@@ -186,7 +204,7 @@
     add("林金泉", "B1-5"); add("查恩尧", "B1-6"); add("刘芳", "B1-7"); add("赵鑫旸", "B1-8");
     add("林善和", "B1-9"); add("李亚亚", "B1-10");
 
-    // 第2排
+    // ==================== 第2排（前排）====================
     add("胡九龙", "A2-1"); add("黄福祥", "A2-2"); add("鲍光海", "A2-3"); add("黄萍", "A2-4");
     add("罗堪", "A2-5"); add("王丹琼", "A2-6"); add("陈芳", "A2-7"); add("陈学农", "A2-8");
     add("念保镖", "A2-9"); add("黄照琴", "A2-10");
@@ -194,7 +212,7 @@
     add("邹慧云", "B2-5"); add("龚凉红", "B2-6"); add("宋鹏军", "B2-7"); add("曹而超", "B2-8");
     add("卢米高", "B2-9"); add("邱小琴", "B2-10");
 
-    // 第3排
+    // ==================== 第3排（前排）====================
     add("翁磊", "A3-1"); add("骆华涛", "A3-2"); add("陈麦麟", "A3-3"); add("吴红洲", "A3-4");
     add("黄敬春", "A3-5"); add("李向红", "A3-6"); add("毕超", "A3-7"); add("张翼", "A3-8");
     add("董川", "A3-9"); add("谢风光", "A3-10");
@@ -202,52 +220,111 @@
     add("胡晓东", "B3-5"); add("吴小付", "B3-6"); add("张会东", "B3-7"); add("李殿魁", "B3-8");
     add("卞晓丽", "B3-9"); add("李元杰", "B3-10");
 
-    // 第4排
+    // ==================== 第4排（前排）====================
     add("郑和", "A4-1"); add("陈晓春", "A4-2"); add("童正群", "A4-3"); add("林而庄", "A4-4");
-    add("林超", "A4-5"); add("连若裴", "A4-6"); add("吴瑞敏", "A4-7"); add("余俊乐", "A4-8");
+    add("林超", "A4-5"); add("连若斐", "A4-6"); add("吴瑞敏", "A4-7"); add("余俊乐", "A4-8");
     add("钱磊", "A4-9"); add("谢威", "A4-10");
     add("苏天耀", "B4-1"); add("徐道煌", "B4-2"); add("熊凯宏", "B4-3"); add("蒋小军", "B4-4");
     add("潘守彬", "B4-5"); add("陈启", "B4-6"); add("何潇", "B4-7"); add("吴秀清", "B4-8");
     add("唐睿", "B4-9"); add("黄磊", "B4-10");
 
-    // 第5排
-    add("范祖洪", "A5-1"); add("张为东", "A5-2"); add("罗惠文", "A5-3"); add("黄黎明", "A5-4");
-    add("陈宁", "A5-5"); add("阳成虎", "A5-6"); add("廖熙阳", "A5-7"); add("林晞睿", "A5-8");
-    add("张利剑", "A5-10"); add("吴景红", "A5-11"); add("林建军", "A5-12"); add("钱媛", "A5-13");
-    add("胡海明", "A5-14"); add("陆观立", "A5-15");
-    add("李宣霈", "B5-1");
+    // ==================== 第5排（中排）====================
+    add("游桂远", "A5-1"); add("郑博华", "A5-2"); add("周林", "A5-3"); add("周杰", "A5-4");
+    add("陈麦麟", "A5-5"); add("刘清华", "A5-6"); add("陈洋", "A5-7"); add("范祖洪", "A5-8");
+    add("张为东", "A5-9"); add("罗惠文", "A5-10"); add("黄黎明", "A5-11"); add("陈宁", "A5-12");
+    add("阳成虎", "A5-13"); add("廖熙阳", "A5-14"); add("林晞睿", "A5-15");
+    add("张利剑", "B5-1"); add("吴景红", "B5-2"); add("林建军", "B5-3"); add("钱媛", "B5-4");
+    add("胡海明", "B5-5"); add("陆观立", "B5-6"); add("李宣霈", "B5-7"); add("梁观荣", "B5-8");
+    add("陈正华", "B5-9"); add("刘用鸿", "B5-10"); add("林清", "B5-11"); add("陈志杰", "B5-12");
+    add("朱先龙", "B5-13"); add("李琛", "B5-14"); add("林峥嵘", "B5-15");
 
-    // 第6排
-    add("郑晨行", "A6-1"); add("吕杨", "A6-2"); add("鄢仁武", "A6-3"); add("陈世光", "A6-4");
-    add("牛畅", "A6-5"); add("蔡浩威", "A6-7"); add("严璇", "A6-8"); add("赵素雅", "A6-9");
-    add("魏剑斌", "A6-10"); add("黄桦", "A6-11"); add("刘伟", "A6-12"); add("丁光振", "A6-13");
-    add("陈宗燕", "A6-14"); add("黄勤登", "A6-15");
-    add("朱爱虹", "B6-1"); add("黄山", "B6-2"); add("林智斌", "B6-3"); add("程文钊", "B6-4");
-    add("邱宏彬", "B6-5");
+    // ==================== 第6排（中排）====================
+    add("马祥", "A6-1"); add("王晓楠", "A6-2"); add("许晓明", "A6-3"); add("童正群", "A6-4");
+    add("吴松涛", "A6-5"); add("黄文龙", "A6-6"); add("阮琳薇", "A6-7"); add("郑炜", "A6-8");
+    add("殷海燕", "A6-9"); add("阮琳", "A6-10"); add("郑晨行", "A6-11"); add("吕杨", "A6-12");
+    add("鄢仁武", "A6-13"); add("陈世光", "A6-14"); add("牛畅", "A6-15");
+    add("蔡浩威", "B6-1"); add("严璇", "B6-2"); add("赵素雅", "B6-3"); add("魏剑斌", "B6-4");
+    add("黄桦", "B6-5"); add("刘伟", "B6-6"); add("丁光振", "B6-7"); add("陈宗燕", "B6-8");
+    add("黄勤登", "B6-9"); add("朱爱虹", "B6-10"); add("黄山", "B6-11"); add("林智斌", "B6-12");
+    add("程文钊", "B6-13"); add("邱宏彬", "B6-14"); add("周洪磊", "B6-15");
 
-    // 第7排
-    add("邓莉", "A7-1"); add("郭晓光", "A7-2"); add("邓一雄", "A7-3"); add("陈历历", "A7-4");
-    add("李渝", "A7-5");
+    // ==================== 第7排（中排）====================
+    add("黎忠和", "A7-1"); add("郑昭辉", "A7-2"); add("童敏进", "A7-3"); add("黄钟钊", "A7-4");
+    add("高典子", "A7-5"); add("许晓敏", "A7-6"); add("郑城煌", "A7-7"); add("柯文华", "A7-8");
+    add("张白霞", "A7-9"); add("林厚才", "A7-10"); add("邓莉", "A7-11"); add("郭晓光", "A7-12");
+    add("邓一雄", "A7-13"); add("陈历历", "A7-14"); add("李渝", "A7-15");
+    add("张宇坤", "B7-1"); add("林荣光", "B7-2"); add("陈棋龙", "B7-3"); add("陈熙", "B7-4");
+    add("赵银雷", "B7-5"); add("雷建华", "B7-6"); add("陈军霞", "B7-7"); add("张璐", "B7-8");
+    add("陈梓玲", "B7-9"); add("黄元信", "B7-10"); add("唐智勇", "B7-11"); add("施捷", "B7-12");
+    add("黄聿忠", "B7-13"); add("陈健康", "B7-14"); add("何小强", "B7-15");
 
-    // 第10排
+    // ==================== 第8排（中排）====================
+    add("谢孙华", "A8-1"); add("林烨", "A8-2"); add("潘总", "A8-3"); add("黄贵杰", "A8-4");
+    add("洪启銮", "A8-5"); add("黄海飞", "A8-6"); add("谢芳茗", "A8-7"); add("黄宁海", "A8-8");
+    add("赖树炎", "A8-9"); add("陈锐胜", "A8-10"); add("陈熙", "A8-11"); add("李莘莘", "A8-12");
+    add("林鸿丹", "A8-13"); add("卢伟煌", "A8-14"); add("彭小霖", "A8-15");
+    add("张朝漾", "B8-1"); add("陈功玉", "B8-2"); add("林凡伟", "B8-3"); add("林黎鑫", "B8-4");
+    add("丁鸿峰", "B8-5"); add("刘利铸", "B8-6"); add("陈泽锐", "B8-7"); add("王灿", "B8-8");
+    add("陈新宇", "B8-9"); add("杨二航", "B8-10"); add("邓明生", "B8-11"); add("江美娟", "B8-12");
+    add("陈华民", "B8-13"); add("黄玉彬", "B8-14"); add("张秋", "B8-15");
+
+    // ==================== 第9排（中排）====================
+    add("潘小岩", "A9-1"); add("林苏", "A9-2"); add("张承乡", "A9-3"); add("黄涛", "A9-4");
+    add("乐梅珍", "A9-5"); add("陈琴", "A9-6"); add("林靖", "A9-7"); add("林菁", "A9-8");
+    add("张金龙", "A9-9"); add("容建斌", "A9-10"); add("李佳琳", "A9-11"); add("胡伟鹏", "A9-12");
+    add("王传林", "A9-13"); add("王玲玉", "A9-14"); add("刘文杰", "A9-15");
+    add("孙宏伟", "B9-1"); add("郭文新", "B9-2"); add("吴伟", "B9-3"); add("胡勇强", "B9-4");
+    add("黄光海", "B9-5"); add("王静", "B9-6"); add("蔡宗荣", "B9-7"); add("程隽", "B9-8");
+    add("唐凌凡", "B9-9"); add("吴佳雨", "B9-10"); add("夏立", "B9-11"); add("李杰", "B9-12");
+    add("徐进炎", "B9-13"); add("詹传敦", "B9-14"); add("王来煌", "B9-15");
+
+    // ==================== 第10排（后排）====================
     add("林心舒", "A10-1"); add("张霞", "A10-2"); add("邱文真", "A10-3"); add("陈洋", "A10-4");
     add("沈磊", "A10-5"); add("毛丽华", "A10-6"); add("徐闻铭", "A10-7"); add("曾盘高", "A10-8");
     add("陈兆宝", "A10-9"); add("罗长裕", "A10-10"); add("赵雷", "A10-11"); add("林妮娜", "A10-12");
     add("何文馨", "A10-13"); add("卢金华", "A10-14"); add("钟辉", "A10-15");
-    add("孙宏伟", "B10-1"); add("郭文新", "B10-2"); add("吴伟", "B10-3"); add("胡勇强", "B10-4");
-    add("黄光海", "B10-5"); add("王静", "B10-6"); add("蔡宗荣", "B10-7"); add("程隽", "B10-8");
-    add("唐凌凡", "B10-9"); add("王小庄", "B10-10"); add("房祥凯", "B10-11"); add("胡达明", "B10-12");
+    add("郑烜平", "B10-1"); add("江昌政", "B10-2"); add("吴龙玉", "B10-3"); add("陈涛", "B10-4");
+    add("陈依芳", "B10-5"); add("黄作强", "B10-6"); add("李小平", "B10-7"); add("吴庆", "B10-8");
+    add("黄晓峰", "B10-9"); add("王小庄", "B10-10"); add("房祥凯", "B10-11"); add("胡达明", "B10-12");
     add("孙明春", "B10-13"); add("陈有章", "B10-14"); add("虞志轩", "B10-15");
 
-    // 第11排
+    // ==================== 第11排（后排）====================
     add("朱佑健", "A11-1"); add("张礼", "A11-2"); add("林彬龙", "A11-3"); add("沈晓芝", "A11-4");
-    add("林文杰", "A11-5");
+    add("林文杰", "A11-5"); add("陈祖锐", "A11-6"); add("张元贵", "A11-7"); add("游志豪", "A11-8");
+    add("王维炜", "A11-9"); add("张晓达", "A11-10"); add("叶怡佳", "A11-11"); add("秦松", "A11-12");
+    add("郑开华", "A11-13"); add("谢建平", "A11-14"); add("徐成", "A11-15");
+    add("朱治锦", "B11-1"); add("黄旼恺", "B11-2"); add("朱荣光", "B11-3"); add("曾华峰", "B11-4");
+    add("谢楚楚", "B11-5"); add("潘姐", "B11-6"); add("方佐来", "B11-7"); add("王微郑", "B11-8");
+    add("孝萍", "B11-9"); add("陈若欣", "B11-10"); add("陈博雅", "B11-11"); add("张子凡", "B11-12");
+    add("张涛", "B11-13"); add("赵芳", "B11-14"); add("林雨竹", "B11-15");
+
+    // ==================== 第12排（后排）====================
+    add("林小燕", "A12-7"); add("余镔", "A12-8"); add("柯龙", "A12-9"); add("章勇", "A12-10");
+    add("于石桥", "A12-11"); add("钟德旺", "A12-12"); add("叶伟权", "A12-13"); add("叶兰妹", "A12-14");
+    add("周烈", "A12-15");
+    add("巴全龙", "B12-1"); add("林嗣雄", "B12-2"); add("张丽娜", "B12-3"); add("丁静", "B12-4");
+    add("林伟平", "B12-5"); add("肖剑仁", "B12-6"); add("钱胜利", "B12-7"); add("黄礼荣", "B12-8");
+    add("刘昆铭", "B12-9");
 
     function parseSeatCode(code) {
+        const vipMatch = code.match(/^VIP-(\d+)-(\d+)$/);
+        if (vipMatch) {
+            return {
+                zone: 'VIP',
+                row: parseInt(vipMatch[1]),
+                seat: parseInt(vipMatch[2]),
+                section: '重要嘉宾区'
+            };
+        }
         const match = code.match(/^([AB])(\d+)-(\d+)$/);
         if (!match) return null;
         const row = parseInt(match[2]);
-        return { zone: match[1], row: row, seat: parseInt(match[3]), section: row <= 4 ? '前排' : row <= 9 ? '中排' : '后排' };
+        return {
+            zone: match[1],
+            row: row,
+            seat: parseInt(match[3]),
+            section: row <= 4 ? '前排' : row <= 9 ? '中排' : '后排'
+        };
     }
 
     function findSeatByNameExact(name) {
@@ -255,7 +332,10 @@
         if (!trimmed) return null;
         if (!nameToSeats.hasOwnProperty(trimmed)) return null;
         const codes = nameToSeats[trimmed];
-        const parsed = codes.map(c => ({ code: c, info: parseSeatCode(c) })).filter(x => x.info);
+        const parsed = codes.map(c => {
+            const info = parseSeatCode(c);
+            return { code: c, info };
+        }).filter(x => x.info);
         if (parsed.length === 0) return null;
         parsed.sort((a, b) => a.info.row - b.info.row || a.info.seat - b.info.seat);
         return { name: trimmed, seats: parsed, count: parsed.length };
@@ -282,13 +362,23 @@
         let html = '';
         data.seats.forEach(s => {
             const { zone, row, seat, section } = s.info;
-            html += `
-                <div class="seat-info-box">
-                    <div class="seat-code-big">${s.code}</div>
-                    <div class="seat-detail">${zone}区 ${section} 第${row}排 第${seat}座</div>
-                </div>
-                <div style="height:2vw;"></div>
-            `;
+            if (zone === 'VIP') {
+                html += `
+                    <div class="seat-info-box">
+                        <div class="seat-code-big vip">重要嘉宾区</div>
+                        <div class="seat-detail">第${row}排 第${seat}座</div>
+                    </div>
+                    <div style="height:2vw;"></div>
+                `;
+            } else {
+                html += `
+                    <div class="seat-info-box">
+                        <div class="seat-code-big">${s.code}</div>
+                        <div class="seat-detail">${zone}区 ${section} 第${row}排 第${seat}座</div>
+                    </div>
+                    <div style="height:2vw;"></div>
+                `;
+            }
         });
         seatResultCard.innerHTML = html;
         showPage(pageResult);

@@ -358,7 +358,8 @@
     function showPage(p) { [pageHome, pageResult].forEach(x => x.classList.add('hidden')); p.classList.remove('hidden'); }
 
     function showResult(data) {
-        resultGreeting.innerHTML = `👋 <span class="name-em">${data.name}</span> 的座位`;
+        const displayName = data.name.replace(/\((.+)\)/, '<br><small>$1</small>');
+resultGreeting.innerHTML = `👋 <span class="name-em">${displayName}</span> 的座位`;
         let html = '';
         data.seats.forEach(s => {
             const { zone, row, seat, section } = s.info;

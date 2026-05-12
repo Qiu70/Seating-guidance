@@ -72,12 +72,34 @@
         .seat-detail-item { font-size: 5.2vw; font-weight: 800; color: #fff; }
         .seat-detail-divider { font-size: 3.2vw; color: rgba(255,255,255,0.5); }
         .seat-code { font-size: 3.2vw; font-weight: 700; color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.12); padding: 1.3vw 3.5vw; border-radius: 4.5vw; letter-spacing: 1px; margin-top: 1.2vw; display: inline-block; }
-        .canvas-card {
-            margin-top: 2vw; width: 100%; background: rgba(255,255,255,0.1); border-radius: 2.5vw;
-            border: 1px solid rgba(255,255,255,0.2); overflow: hidden; touch-action: none; cursor: grab;
+        
+        /* Canvas容器 - 修复空白 */
+        .canvas-wrapper {
+            margin-top: 2vw;
+            width: 100%;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2.5vw;
+            border: 1px solid rgba(255,255,255,0.2);
+            overflow: hidden;
+            touch-action: none;
+            cursor: grab;
+            /* 关键：设置固定宽高比，避免下方空白 */
+            aspect-ratio: 700 / 480;
         }
-        .canvas-card canvas { display: block; width: 100%; height: auto; transform-origin: 0 0; }
-        .zoom-hint { font-size: 2.2vw; color: rgba(255,255,255,0.4); margin-top: 1vw; }
+        .canvas-wrapper canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            transform-origin: 0 0;
+        }
+        .zoom-hint {
+            text-align: center;
+            font-size: 2.2vw;
+            color: rgba(255,255,255,0.4);
+            margin-top: 1.5vw;
+            margin-bottom: 0;
+        }
+
         @media (max-width: 360px) { .home-title { font-size: 5.5vw; } }
         @media (min-width: 420px) {
             .glass-card { border-radius: 16px; padding: 22px 18px; }
@@ -85,6 +107,7 @@
             .input-wrap input { padding: 12px 36px 12px 14px; font-size: 0.85rem; }
             .btn { padding: 12px 22px; font-size: 0.85rem; } .seat-detail-item { font-size: 1.3rem; }
             .error-message { height: 16px; line-height: 16px; font-size: 0.65rem; }
+            .canvas-wrapper { border-radius: 10px; }
         }
     </style>
 </head>
@@ -108,7 +131,7 @@
         <div class="glass-card">
             <div class="result-header"><div class="result-greeting">👋 <span class="name-em" id="displayName">---</span> 的座位</div><button class="btn btn-outline-sm" id="btnBack" type="button">← 返回</button></div>
             <div class="seat-big-info" id="seatBigInfo"></div>
-            <div class="canvas-card" id="canvasCard"><canvas id="seatCanvas"></canvas></div>
+            <div class="canvas-wrapper" id="canvasWrapper"><canvas id="seatCanvas"></canvas></div>
             <p class="zoom-hint">双指缩放查看</p>
         </div>
     </div>
@@ -119,7 +142,7 @@
     const nameInput = document.getElementById('nameInput'), btnFindSeat = document.getElementById('btnFindSeat');
     const btnBack = document.getElementById('btnBack'), displayName = document.getElementById('displayName');
     const seatBigInfo = document.getElementById('seatBigInfo'), errorMessage = document.getElementById('errorMessage');
-    const canvas = document.getElementById('seatCanvas'), canvasCard = document.getElementById('canvasCard');
+    const canvas = document.getElementById('seatCanvas'), canvasWrapper = document.getElementById('canvasWrapper');
     const ctx = canvas.getContext('2d');
 
     const allSeats = [];
@@ -136,8 +159,8 @@
 
     const LW = 700, LH = 480;
     const seatW = 14, seatH = 11, seatGap = 2;
-    const half10 = 10 * seatW + 9 * seatGap; // 宽度10座
-    const half15 = 15 * seatW + 14 * seatGap; // 宽度15座
+    const half10 = 10 * seatW + 9 * seatGap;
+    const half15 = 15 * seatW + 14 * seatGap;
     const aisleW = 40;
     const groupW = half15 * 2 + aisleW;
     const startX = (LW - groupW) / 2;
@@ -176,31 +199,27 @@
         ctx.fillStyle = 'rgba(255,255,255,0.12)'; ctx.fillRect(0, 0, LW, LH);
 
         const cx = LW / 2;
-        // 舞台
         const sx = cx - stageW / 2;
         ctx.fillStyle = '#4a4c56'; rr(ctx, sx, stageY, stageW, stageH, 5); ctx.fill();
         ctx.fillStyle = '#dddde4'; ctx.font = 'bold 10px "PingFang SC","Microsoft YaHei",sans-serif'; ctx.textAlign = 'center'; ctx.fillText('舞 台', cx, stageY - 3);
 
-        // A/B区标签
         ctx.fillStyle = 'rgba(80,60,120,0.85)'; ctx.font = 'bold 9px "PingFang SC","Microsoft YaHei",sans-serif';
         const aCenter = startX + half15 / 2, bCenter = startX + half15 + aisleW + half15 / 2;
         ctx.fillText('A区', aCenter, seatsTop - 6); ctx.fillText('B区', bCenter, seatsTop - 6);
 
-        // 座位
         for (let row = 1; row <= 13; row++) {
             const ry = seatsTop + (row - 1) * rowGap;
             const section = row <= 4 ? 'front' : row <= 9 ? 'middle' : 'back';
             const clr = colors[section];
             const seatsPerHalf = row <= 4 ? 10 : 15;
             const halfWidth = seatsPerHalf === 10 ? half10 : half15;
-            const rowStartX = startX + (half15 - halfWidth) / 2; // 短排居中
+            const rowStartX = startX + (half15 - halfWidth) / 2;
 
             for (let s = 1; s <= seatsPerHalf; s++) {
                 const sx2 = rowStartX + (s - 1) * (seatW + seatGap);
                 const isUser = userSeat && userSeat.zoneLetter === 'A' && userSeat.row === row && userSeat.seat === s;
                 drawSeat(ctx, sx2, ry, seatW, seatH, clr, isUser, pulse);
             }
-            // 过道
             const ax = startX + half15;
             ctx.fillStyle = 'rgba(180,190,200,0.25)'; ctx.fillRect(ax, ry, aisleW, seatH);
             if (row === 6) { ctx.fillStyle = 'rgba(100,110,130,0.6)'; ctx.font = '7px "PingFang SC","Microsoft YaHei",sans-serif'; ctx.textAlign = 'center'; ctx.fillText('过道', ax + aisleW / 2, ry + seatH / 2 + 3); }
@@ -211,14 +230,12 @@
             }
         }
 
-        // 左侧分区标签
         ctx.font = 'bold 7px "PingFang SC","Microsoft YaHei",sans-serif'; ctx.textAlign = 'left';
         ctx.fillStyle = 'rgba(180,130,60,0.85)'; ctx.fillText('前排1-4排', 10, seatsTop + 2 * rowGap);
         ctx.fillStyle = 'rgba(60,100,160,0.85)'; ctx.fillText('中排5-9排', 8, seatsTop + 7 * rowGap);
         ctx.fillStyle = 'rgba(60,130,90,0.85)'; ctx.fillText('后排10-13排', 8, seatsTop + 11.5 * rowGap);
     }
 
-    // 缩放状态
     let scale = 1, offX = 0, offY = 0;
     const MIN_S = 0.5, MAX_S = 4;
     let lastPinch = 0, lastTx = 0, lastTy = 0, dragging = false;
@@ -226,13 +243,18 @@
 
     function render() {
         const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        const dw = canvasCard.clientWidth, dh = Math.min(dw * LH / LW, window.innerHeight * 0.5);
-        canvas.width = dw * dpr; canvas.height = dh * dpr;
-        canvas.style.width = dw + 'px'; canvas.style.height = dh + 'px';
-        ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.scale(dpr, dpr);
+        const dw = canvasWrapper.clientWidth;
+        const dh = canvasWrapper.clientHeight;
+        canvas.width = dw * dpr;
+        canvas.height = dh * dpr;
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.scale(dpr, dpr);
         const bs = dw / LW;
-        ctx.save(); ctx.translate(offX, offY); ctx.scale(bs * scale, bs * scale);
-        drawAll(ctx, curSeat, pulseVal); ctx.restore();
+        ctx.save();
+        ctx.translate(offX, offY);
+        ctx.scale(bs * scale, bs * scale);
+        drawAll(ctx, curSeat, pulseVal);
+        ctx.restore();
     }
 
     function startAnim(seat) {
@@ -260,12 +282,14 @@
             if (lastPinch > 0) {
                 const r = nd / lastPinch;
                 const ns = Math.min(MAX_S, Math.max(MIN_S, scale * r));
-                offX = cx - (cx - offX) * (ns / scale); offY = cy - (cy - offY) * (ns / scale);
+                offX = cx - (cx - offX) * (ns / scale);
+                offY = cy - (cy - offY) * (ns / scale);
                 scale = ns;
             }
             lastPinch = nd;
         } else if (e.touches.length === 1 && dragging) {
-            offX += e.touches[0].clientX - lastTx; offY += e.touches[0].clientY - lastTy;
+            offX += e.touches[0].clientX - lastTx;
+            offY += e.touches[0].clientY - lastTy;
             lastTx = e.touches[0].clientX; lastTy = e.touches[0].clientY;
         }
     }, { passive: false });

@@ -5,751 +5,314 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>座位导航 · 左海产业生态大会</title>
     <style>
-        :root {
-            --card-max-width: 400px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
+        :root { --card-max-width: 400px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         .bg-fixed {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url('背景.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            z-index: -2;
+            background-size: cover; background-position: center; background-repeat: no-repeat; z-index: -2;
         }
-
         body {
-            font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Segoe UI', system-ui, sans-serif;
-            background-color: #3c1a6e;
-            color: #f0eaff;
-            min-height: 100vh;
-            min-height: -webkit-fill-available;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2vw;
-            overflow-x: hidden;
-            -webkit-user-select: none;
-            user-select: none;
+            font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif;
+            background-color: #3c1a6e; color: #f0eaff; min-height: 100vh; min-height: -webkit-fill-available;
+            display: flex; align-items: center; justify-content: center; padding: 2vw; overflow-x: hidden;
+            -webkit-user-select: none; user-select: none;
         }
-
-        .app-container {
-            width: 100%;
-            max-width: 440px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .page {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            transition: opacity 0.35s ease;
-        }
-        .page.hidden {
-            display: none !important;
-        }
-        .page.active {
-            display: flex;
-        }
-
+        .app-container { width: 100%; max-width: 420px; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
+        .page { width: 100%; display: flex; justify-content: center; transition: opacity 0.35s ease; }
+        .page.hidden { display: none !important; }
+        .page.active { display: flex; }
         .glass-card {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(28px);
-            -webkit-backdrop-filter: blur(28px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 3.5vw;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.18);
-            padding: 4vw 3.5vw;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
+            width: 100%; background: rgba(255,255,255,0.2); backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px);
+            border: 1px solid rgba(255,255,255,0.3); border-radius: 3.5vw; box-shadow: 0 10px 40px rgba(0,0,0,0.18);
+            padding: 4vw 3.5vw; text-align: center; display: flex; flex-direction: column;
         }
-
-        /* 首页 */
         .home-icon {
-            width: 52px;
-            height: 52px;
-            margin: 0 auto 2.5vw;
-            background: rgba(255, 255, 255, 0.18);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(255, 255, 255, 0.28);
+            width: 52px; height: 52px; margin: 0 auto 2.5vw; background: rgba(255,255,255,0.18); border-radius: 15px;
+            display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.28);
         }
-        .home-icon svg {
-            width: 28px;
-            height: 28px;
-            stroke: #fff;
-            fill: none;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-        .home-title {
-            font-size: 5vw;
-            font-weight: 700;
-            color: #fff;
-            letter-spacing: 0.5px;
-            margin-bottom: 1.2vw;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-        }
-        .home-subtitle {
-            font-size: 3.2vw;
-            color: rgba(255, 255, 255, 0.78);
-            margin-bottom: 5vw;
-        }
-        .input-wrap {
-            position: relative;
-            margin-bottom: 1.5vw;
-        }
+        .home-icon svg { width: 28px; height: 28px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .home-title { font-size: 5vw; font-weight: 700; color: #fff; margin-bottom: 1.5vw; }
+        .home-subtitle { font-size: 3.2vw; color: rgba(255,255,255,0.78); margin-bottom: 5vw; }
+        .input-wrap { position: relative; margin-bottom: 1.5vw; }
         .input-wrap input {
-            width: 100%;
-            padding: 3.4vw 8vw 3.4vw 3.4vw;
-            font-size: 3.6vw;
-            border: 2px solid rgba(255, 255, 255, 0.35);
-            border-radius: 10vw;
-            outline: none;
-            background: rgba(255, 255, 255, 0.14);
-            color: #fff;
-            text-align: center;
-            letter-spacing: 0.5px;
+            width: 100%; padding: 3.4vw 8vw 3.4vw 3.4vw; font-size: 3.6vw; border: 2px solid rgba(255,255,255,0.35);
+            border-radius: 10vw; outline: none; background: rgba(255,255,255,0.14); color: #fff; text-align: center;
             transition: background 0.2s, border-color 0.2s;
         }
-        .input-wrap input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-        .input-wrap input:focus {
-            border-color: rgba(255, 255, 255, 0.7);
-            background: rgba(255, 255, 255, 0.24);
-        }
+        .input-wrap input::placeholder { color: rgba(255,255,255,0.5); }
+        .input-wrap input:focus { border-color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.24); }
         .input-icon {
-            position: absolute;
-            right: 3.2vw;
-            top: 50%;
-            transform: translateY(-50%);
-            pointer-events: none;
-            color: rgba(255, 255, 255, 0.55);
-            width: 3.8vw;
-            height: 3.8vw;
+            position: absolute; right: 3.2vw; top: 50%; transform: translateY(-50%); pointer-events: none;
+            color: rgba(255,255,255,0.55); width: 3.8vw; height: 3.8vw;
         }
-        .error-message {
-            display: block;
-            height: 4vw;
-            line-height: 4vw;
-            font-size: 2.8vw;
-            color: #ffaaaa;
-            margin-bottom: 1.5vw;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-        .error-message.show {
-            opacity: 1;
-        }
+        .error-message { display: block; height: 4vw; line-height: 4vw; font-size: 2.8vw; color: #ffaaaa; margin-bottom: 1.5vw; opacity: 0; transition: opacity 0.2s; }
+        .error-message.show { opacity: 1; }
         .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 2vw;
-            padding: 3.4vw 5vw;
-            font-size: 3.8vw;
-            font-weight: 600;
-            border: none;
-            border-radius: 10vw;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.1s;
-            outline: none;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.9);
-            color: #5b21b6;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14);
-            touch-action: manipulation;
+            display: inline-flex; align-items: center; justify-content: center; padding: 3.4vw 5vw; font-size: 3.8vw;
+            font-weight: 600; border: none; border-radius: 10vw; cursor: pointer; width: 100%;
+            background: rgba(255,255,255,0.9); color: #5b21b6; box-shadow: 0 4px 16px rgba(0,0,0,0.14);
         }
-        .btn:active {
-            transform: scale(0.97);
-            background: #fff;
-        }
+        .btn:active { transform: scale(0.97); }
         .btn-outline-sm {
-            background: rgba(255, 255, 255, 0.15);
-            color: #fff;
-            border: 1.5px solid rgba(255, 255, 255, 0.4);
-            width: auto;
-            padding: 2vw 3.5vw;
-            font-size: 3vw;
-            border-radius: 7vw;
-            box-shadow: none;
+            background: rgba(255,255,255,0.15); color: #fff; border: 1.5px solid rgba(255,255,255,0.4);
+            width: auto; padding: 2vw 3.5vw; font-size: 3vw; border-radius: 7vw;
         }
-        .home-hint {
-            margin-top: 2.2vw;
-            font-size: 2.6vw;
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        /* 结果页 */
-        .result-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 2.5vw;
-        }
-        .result-greeting {
-            font-size: 4vw;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.9);
-        }
-        .result-greeting .name-em {
-            color: #fff;
-            font-weight: 800;
-        }
-
-        .seat-big-info {
-            margin: 2.5vw 0;
-            padding: 3.5vw 3vw;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 2.5vw;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .seat-zone-display {
-            display: inline-flex;
-            align-items: center;
-            gap: 2.2vw;
-            background: rgba(255, 255, 255, 0.14);
-            border-radius: 7vw;
-            padding: 1.8vw 3.5vw;
-            margin-bottom: 2vw;
-            border: 1px solid rgba(255, 255, 255, 0.22);
-        }
-        .zone-badge {
-            width: 8.5vw;
-            height: 8.5vw;
-            max-width: 36px;
-            max-height: 36px;
-            border-radius: 50%;
-            font-size: 4.2vw;
-            font-weight: 800;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
+        .result-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2.5vw; }
+        .result-greeting { font-size: 4vw; font-weight: 600; color: rgba(255,255,255,0.9); }
+        .result-greeting .name-em { color: #fff; font-weight: 800; }
+        .seat-big-info { margin: 2.5vw 0; padding: 3.5vw 3vw; background: rgba(255,255,255,0.1); border-radius: 2.5vw; border: 1px solid rgba(255,255,255,0.2); }
+        .seat-zone-display { display: inline-flex; align-items: center; gap: 2.2vw; background: rgba(255,255,255,0.14); border-radius: 7vw; padding: 1.8vw 3.5vw; margin-bottom: 2vw; border: 1px solid rgba(255,255,255,0.22); }
+        .zone-badge { width: 8.5vw; height: 8.5vw; max-width: 36px; max-height: 36px; border-radius: 50%; font-size: 4.2vw; font-weight: 800; color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .zone-badge.front { background: #c98a3a; }
         .zone-badge.middle { background: #3b72b5; }
         .zone-badge.back { background: #4a9068; }
-        .zone-text {
-            font-size: 3.4vw;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.9);
-            text-align: left;
+        .zone-text { font-size: 3.4vw; font-weight: 600; color: rgba(255,255,255,0.9); text-align: left; }
+        .seat-detail-row { display: flex; gap: 2.2vw; justify-content: center; align-items: center; margin: 1vw 0; }
+        .seat-detail-item { font-size: 5.2vw; font-weight: 800; color: #fff; }
+        .seat-detail-divider { font-size: 3.2vw; color: rgba(255,255,255,0.5); }
+        .seat-code { font-size: 3.2vw; font-weight: 700; color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.12); padding: 1.3vw 3.5vw; border-radius: 4.5vw; letter-spacing: 1px; margin-top: 1.2vw; display: inline-block; }
+        .canvas-card {
+            margin-top: 2vw; width: 100%; background: rgba(255,255,255,0.1); border-radius: 2.5vw;
+            border: 1px solid rgba(255,255,255,0.2); overflow: hidden; touch-action: none; cursor: grab;
         }
-        .seat-detail-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2.2vw;
-            justify-content: center;
-            align-items: center;
-            margin: 1vw 0;
-        }
-        .seat-detail-item {
-            font-size: 5.2vw;
-            font-weight: 800;
-            color: #fff;
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-        }
-        .seat-detail-divider {
-            font-size: 3.2vw;
-            color: rgba(255, 255, 255, 0.5);
-            font-weight: 300;
-        }
-        .seat-code {
-            font-size: 3.2vw;
-            font-weight: 700;
-            color: rgba(255, 255, 255, 0.85);
-            background: rgba(255, 255, 255, 0.12);
-            padding: 1.3vw 3.5vw;
-            border-radius: 4.5vw;
-            letter-spacing: 1px;
-            margin-top: 1.2vw;
-            display: inline-block;
-        }
-
-        /* 图片区域放大 */
-        .image-section {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            margin-top: 2vw;
-        }
-        .image-section-title {
-            font-size: 3.2vw;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.75);
-            margin-bottom: 1.5vw;
-        }
-        .image-viewer {
-            flex: 1;
-            width: 100%;
-            min-height: 45vw;
-            background: rgba(20, 15, 35, 0.45);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 2.5vw;
-            overflow: hidden;
-            position: relative;
-            touch-action: none;
-            cursor: pointer;
-        }
-        .image-viewer img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            transform-origin: 0 0;
-            pointer-events: none;
-        }
-        .zoom-controls {
-            display: flex;
-            gap: 2.2vw;
-            justify-content: center;
-            align-items: center;
-            margin-top: 2vw;
-        }
-        .btn-ctrl {
-            background: rgba(255, 255, 255, 0.16);
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.28);
-            padding: 1.8vw 3.2vw;
-            font-size: 3vw;
-            border-radius: 6vw;
-            cursor: pointer;
-            font-weight: 600;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-        }
-        .btn-ctrl:active {
-            background: rgba(255, 255, 255, 0.3);
-        }
-        .zoom-pct {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 2.8vw;
-            min-width: 9vw;
-            text-align: center;
-        }
-        .zoom-hint {
-            text-align: center;
-            font-size: 2.2vw;
-            color: rgba(255, 255, 255, 0.4);
-            margin-top: 1vw;
-        }
-
-        /* 全屏预览层 */
-        .fullscreen-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            touch-action: none;
-        }
-        .fullscreen-overlay.active {
-            display: flex;
-        }
-        .fullscreen-close {
-            position: absolute;
-            top: 4vw;
-            right: 4vw;
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: #fff;
-            width: 10vw;
-            height: 10vw;
-            max-width: 40px;
-            max-height: 40px;
-            border-radius: 50%;
-            font-size: 5vw;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 1001;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-        .fullscreen-image-container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            touch-action: none;
-        }
-        .fullscreen-image-container img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            transform-origin: 0 0;
-            pointer-events: none;
-        }
-
-        @media (max-width: 360px) {
-            .home-title { font-size: 5.5vw; }
-            .home-subtitle { font-size: 3.6vw; }
-            .input-wrap input { padding: 3.8vw 9vw 3.8vw 3.8vw; font-size: 3.8vw; }
-            .btn { padding: 3.8vw 5vw; font-size: 4vw; }
-            .seat-detail-item { font-size: 5.5vw; }
-            .btn-ctrl { padding: 2.2vw 3.8vw; font-size: 3.2vw; }
-        }
+        .canvas-card canvas { display: block; width: 100%; height: auto; transform-origin: 0 0; }
+        .zoom-hint { font-size: 2.2vw; color: rgba(255,255,255,0.4); margin-top: 1vw; }
+        @media (max-width: 360px) { .home-title { font-size: 5.5vw; } }
         @media (min-width: 420px) {
             .glass-card { border-radius: 16px; padding: 22px 18px; }
-            .home-title { font-size: 1.2rem; }
-            .home-subtitle { font-size: 0.78rem; }
+            .home-title { font-size: 1.2rem; } .home-subtitle { font-size: 0.78rem; }
             .input-wrap input { padding: 12px 36px 12px 14px; font-size: 0.85rem; }
-            .btn { padding: 12px 22px; font-size: 0.85rem; }
-            .seat-detail-item { font-size: 1.3rem; }
-            .zone-text { font-size: 0.8rem; }
+            .btn { padding: 12px 22px; font-size: 0.85rem; } .seat-detail-item { font-size: 1.3rem; }
             .error-message { height: 16px; line-height: 16px; font-size: 0.65rem; }
-            .btn-ctrl { padding: 7px 13px; font-size: 0.78rem; border-radius: 20px; }
-            .zoom-pct { font-size: 0.75rem; }
-            .zoom-hint { font-size: 0.62rem; }
-            .image-section-title { font-size: 0.8rem; }
-            .image-viewer { min-height: 200px; }
         }
     </style>
 </head>
 <body>
-    <div class="bg-fixed"></div>
-
-    <div class="app-container">
-        <!-- 首页 -->
-        <div class="page active" id="page-home">
-            <div class="glass-card">
-                <div class="home-icon">
-                    <svg viewBox="0 0 24 24">
-                        <rect x="3" y="5" width="18" height="2.5" rx="1" />
-                        <rect x="5.5" y="10" width="3.5" height="3.5" rx="0.8" />
-                        <rect x="11" y="10" width="3.5" height="3.5" rx="0.8" />
-                        <rect x="16.5" y="10" width="3.5" height="3.5" rx="0.8" />
-                        <rect x="5.5" y="16" width="3.5" height="3.5" rx="0.8" />
-                        <rect x="11" y="16" width="5" height="3.5" rx="0.8" fill="currentColor" stroke="none" opacity="0.35" />
-                        <circle cx="13.5" cy="17.75" r="1" fill="#fff" />
-                    </svg>
-                </div>
-                <h1 class="home-title">座位导航</h1>
-                <p class="home-subtitle">输入姓名，查看您的座位</p>
-                <div class="input-wrap">
-                    <input type="text" id="nameInput" placeholder="请输入姓名" autocomplete="name" maxlength="30">
-                    <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="8" r="4" /><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" />
-                    </svg>
-                </div>
-                <span class="error-message" id="errorMessage">请输入姓名</span>
-                <button class="btn" id="btnFindSeat" type="button">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:3.8vw;height:3.8vw;">
-                        <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
-                    </svg>
-                    查找座位
-                </button>
-                <p class="home-hint">试试输入"张三"或"李小明"</p>
+<div class="bg-fixed"></div>
+<div class="app-container">
+    <div class="page active" id="page-home">
+        <div class="glass-card">
+            <div class="home-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="2.5" rx="1"/><rect x="5.5" y="10" width="3.5" height="3.5" rx="0.8"/><rect x="11" y="10" width="3.5" height="3.5" rx="0.8"/><rect x="16.5" y="10" width="3.5" height="3.5" rx="0.8"/><rect x="5.5" y="16" width="3.5" height="3.5" rx="0.8"/><rect x="11" y="16" width="5" height="3.5" rx="0.8" fill="currentColor" stroke="none" opacity="0.35"/><circle cx="13.5" cy="17.75" r="1" fill="#fff"/></svg></div>
+            <h1 class="home-title">座位导航</h1>
+            <p class="home-subtitle">输入姓名，查看您的座位</p>
+            <div class="input-wrap">
+                <input type="text" id="nameInput" placeholder="请输入姓名" autocomplete="name" maxlength="30">
+                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
             </div>
-        </div>
-
-        <!-- 结果页 -->
-        <div class="page hidden" id="page-result">
-            <div class="glass-card">
-                <div class="result-header">
-                    <div class="result-greeting">👋 <span class="name-em" id="displayName">---</span> 的座位</div>
-                    <button class="btn btn-outline-sm" id="btnBack" type="button">← 返回</button>
-                </div>
-                <div class="seat-big-info" id="seatBigInfo"></div>
-
-                <!-- 图片区域 -->
-                <div class="image-section">
-                    <div class="image-section-title">会场座位示意图</div>
-                    <div class="image-viewer" id="imageViewer">
-                        <!-- 替换 src 为你的高清座位图地址 -->
-                        <img id="seatImage" src="座位示意图.png" alt="会场座位示意图">
-                    </div>
-                    <div class="zoom-controls">
-                        <button class="btn-ctrl" id="zoomOutBtn" type="button">−</button>
-                        <span class="zoom-pct" id="zoomPct">100%</span>
-                        <button class="btn-ctrl" id="zoomInBtn" type="button">+</button>
-                        <button class="btn-ctrl" id="zoomResetBtn" type="button">↺</button>
-                    </div>
-                    <p class="zoom-hint">点击图片全屏查看</p>
-                </div>
-            </div>
+            <span class="error-message" id="errorMessage">请输入姓名</span>
+            <button class="btn" id="btnFindSeat" type="button">查找座位</button>
         </div>
     </div>
-
-    <!-- 全屏预览 -->
-    <div class="fullscreen-overlay" id="fullscreenOverlay">
-        <div class="fullscreen-close" id="fullscreenClose">✕</div>
-        <div class="fullscreen-image-container" id="fullscreenImageContainer">
-            <img id="fullscreenImage" src="" alt="全屏座位图">
+    <div class="page hidden" id="page-result">
+        <div class="glass-card">
+            <div class="result-header"><div class="result-greeting">👋 <span class="name-em" id="displayName">---</span> 的座位</div><button class="btn btn-outline-sm" id="btnBack" type="button">← 返回</button></div>
+            <div class="seat-big-info" id="seatBigInfo"></div>
+            <div class="canvas-card" id="canvasCard"><canvas id="seatCanvas"></canvas></div>
+            <p class="zoom-hint">双指缩放查看</p>
         </div>
     </div>
+</div>
+<script>
+(function() {
+    const pageHome = document.getElementById('page-home'), pageResult = document.getElementById('page-result');
+    const nameInput = document.getElementById('nameInput'), btnFindSeat = document.getElementById('btnFindSeat');
+    const btnBack = document.getElementById('btnBack'), displayName = document.getElementById('displayName');
+    const seatBigInfo = document.getElementById('seatBigInfo'), errorMessage = document.getElementById('errorMessage');
+    const canvas = document.getElementById('seatCanvas'), canvasCard = document.getElementById('canvasCard');
+    const ctx = canvas.getContext('2d');
 
-    <script>
-        (function() {
-            const pageHome = document.getElementById('page-home');
-            const pageResult = document.getElementById('page-result');
-            const nameInput = document.getElementById('nameInput');
-            const btnFindSeat = document.getElementById('btnFindSeat');
-            const btnBack = document.getElementById('btnBack');
-            const displayName = document.getElementById('displayName');
-            const seatBigInfo = document.getElementById('seatBigInfo');
-            const errorMessage = document.getElementById('errorMessage');
+    const allSeats = [];
+    for (let row = 1; row <= 13; row++) {
+        let section = row <= 4 ? 'front' : row <= 9 ? 'middle' : 'back';
+        const seatsPerHalf = row <= 4 ? 10 : 15;
+        for (let seat = 1; seat <= seatsPerHalf; seat++) {
+            allSeats.push({ zoneLetter: 'A', row, seat, section, code: `A${row}-${seat}` });
+            allSeats.push({ zoneLetter: 'B', row, seat, section, code: `B${row}-${seat}` });
+        }
+    }
+    function hashString(str) { let h = 5381; for (let i = 0; i < str.length; i++) h = ((h << 5) + h) + str.charCodeAt(i) & 0x7fffffff; return h; }
+    function getSeatByName(name) { const t = name.trim(); if (!t) return null; return allSeats[hashString(t) % allSeats.length]; }
 
-            const imageViewer = document.getElementById('imageViewer');
-            const seatImage = document.getElementById('seatImage');
-            const zoomPct = document.getElementById('zoomPct');
+    const LW = 700, LH = 480;
+    const seatW = 14, seatH = 11, seatGap = 2;
+    const half10 = 10 * seatW + 9 * seatGap; // 宽度10座
+    const half15 = 15 * seatW + 14 * seatGap; // 宽度15座
+    const aisleW = 40;
+    const groupW = half15 * 2 + aisleW;
+    const startX = (LW - groupW) / 2;
+    const rowGap = 16, seatsTop = 70;
+    const stageW = 320, stageH = 22, stageY = 14;
 
-            const fullscreenOverlay = document.getElementById('fullscreenOverlay');
-            const fullscreenImage = document.getElementById('fullscreenImage');
-            const fullscreenClose = document.getElementById('fullscreenClose');
-            const fullscreenImageContainer = document.getElementById('fullscreenImageContainer');
+    const colors = {
+        front: { fill: '#eedbb8', stroke: '#c89850' },
+        middle: { fill: '#c4daf0', stroke: '#5088b8' },
+        back: { fill: '#b8d8c4', stroke: '#589868' }
+    };
 
-            // 座位数据
-            const allSeats = [];
-            for (let row = 1; row <= 13; row++) {
-                let section = row <= 4 ? 'front' : row <= 9 ? 'middle' : 'back';
-                for (let seat = 1; seat <= 10; seat++) {
-                    allSeats.push({ zoneLetter: 'A', row, seat, section, code: `A${row}-${seat}` });
-                    allSeats.push({ zoneLetter: 'B', row, seat, section, code: `B${row}-${seat}` });
-                }
+    function rr(ctx, x, y, w, h, r) {
+        ctx.beginPath(); ctx.moveTo(x + r, y); ctx.lineTo(x + w - r, y);
+        ctx.quadraticCurveTo(x + w, y, x + w, y + r); ctx.lineTo(x + w, y + h - r);
+        ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h); ctx.lineTo(x + r, y + h);
+        ctx.quadraticCurveTo(x, y + h, x, y + h - r); ctx.lineTo(x, y + r);
+        ctx.quadraticCurveTo(x, y, x + r, y); ctx.closePath();
+    }
+
+    function drawSeat(ctx, x, y, w, h, clr, isUser, pulse) {
+        if (isUser) {
+            const glow = 4 + 2 * Math.sin(pulse);
+            ctx.save(); ctx.shadowColor = 'rgba(232,69,91,0.8)'; ctx.shadowBlur = 6 + glow;
+            ctx.fillStyle = '#e8455b'; rr(ctx, x, y, w, h, 2.5); ctx.fill(); ctx.restore();
+            ctx.fillStyle = '#e8455b'; rr(ctx, x, y, w, h, 2.5); ctx.fill();
+            ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.4; rr(ctx, x, y, w, h, 2.5); ctx.stroke();
+        } else {
+            ctx.fillStyle = clr.fill; rr(ctx, x, y, w, h, 2.5); ctx.fill();
+            ctx.strokeStyle = clr.stroke; ctx.lineWidth = 0.5; rr(ctx, x, y, w, h, 2.5); ctx.stroke();
+        }
+    }
+
+    function drawAll(ctx, userSeat, pulse) {
+        ctx.clearRect(0, 0, LW, LH);
+        ctx.fillStyle = 'rgba(255,255,255,0.12)'; ctx.fillRect(0, 0, LW, LH);
+
+        const cx = LW / 2;
+        // 舞台
+        const sx = cx - stageW / 2;
+        ctx.fillStyle = '#4a4c56'; rr(ctx, sx, stageY, stageW, stageH, 5); ctx.fill();
+        ctx.fillStyle = '#dddde4'; ctx.font = 'bold 10px "PingFang SC","Microsoft YaHei",sans-serif'; ctx.textAlign = 'center'; ctx.fillText('舞 台', cx, stageY - 3);
+
+        // A/B区标签
+        ctx.fillStyle = 'rgba(80,60,120,0.85)'; ctx.font = 'bold 9px "PingFang SC","Microsoft YaHei",sans-serif';
+        const aCenter = startX + half15 / 2, bCenter = startX + half15 + aisleW + half15 / 2;
+        ctx.fillText('A区', aCenter, seatsTop - 6); ctx.fillText('B区', bCenter, seatsTop - 6);
+
+        // 座位
+        for (let row = 1; row <= 13; row++) {
+            const ry = seatsTop + (row - 1) * rowGap;
+            const section = row <= 4 ? 'front' : row <= 9 ? 'middle' : 'back';
+            const clr = colors[section];
+            const seatsPerHalf = row <= 4 ? 10 : 15;
+            const halfWidth = seatsPerHalf === 10 ? half10 : half15;
+            const rowStartX = startX + (half15 - halfWidth) / 2; // 短排居中
+
+            for (let s = 1; s <= seatsPerHalf; s++) {
+                const sx2 = rowStartX + (s - 1) * (seatW + seatGap);
+                const isUser = userSeat && userSeat.zoneLetter === 'A' && userSeat.row === row && userSeat.seat === s;
+                drawSeat(ctx, sx2, ry, seatW, seatH, clr, isUser, pulse);
             }
-
-            function hashString(str) {
-                let h = 5381;
-                for (let i = 0; i < str.length; i++) h = ((h << 5) + h) + str.charCodeAt(i) & 0x7fffffff;
-                return h;
+            // 过道
+            const ax = startX + half15;
+            ctx.fillStyle = 'rgba(180,190,200,0.25)'; ctx.fillRect(ax, ry, aisleW, seatH);
+            if (row === 6) { ctx.fillStyle = 'rgba(100,110,130,0.6)'; ctx.font = '7px "PingFang SC","Microsoft YaHei",sans-serif'; ctx.textAlign = 'center'; ctx.fillText('过道', ax + aisleW / 2, ry + seatH / 2 + 3); }
+            for (let s = 1; s <= seatsPerHalf; s++) {
+                const sx2 = rowStartX + half15 + aisleW + (s - 1) * (seatW + seatGap);
+                const isUser = userSeat && userSeat.zoneLetter === 'B' && userSeat.row === row && userSeat.seat === s;
+                drawSeat(ctx, sx2, ry, seatW, seatH, clr, isUser, pulse);
             }
-            function getSeatByName(name) {
-                const t = name.trim();
-                if (!t) return null;
-                return allSeats[hashString(t) % allSeats.length];
-            }
+        }
 
-            // 内嵌图片缩放
-            let scale = 1, offX = 0, offY = 0;
-            const MIN_S = 0.5, MAX_S = 5;
-            let lastPinch = 0, lastTx = 0, lastTy = 0, dragging = false;
+        // 左侧分区标签
+        ctx.font = 'bold 7px "PingFang SC","Microsoft YaHei",sans-serif'; ctx.textAlign = 'left';
+        ctx.fillStyle = 'rgba(180,130,60,0.85)'; ctx.fillText('前排1-4排', 10, seatsTop + 2 * rowGap);
+        ctx.fillStyle = 'rgba(60,100,160,0.85)'; ctx.fillText('中排5-9排', 8, seatsTop + 7 * rowGap);
+        ctx.fillStyle = 'rgba(60,130,90,0.85)'; ctx.fillText('后排10-13排', 8, seatsTop + 11.5 * rowGap);
+    }
 
-            function updateEmbedImg() {
-                seatImage.style.transform = `translate(${offX}px, ${offY}px) scale(${scale})`;
-                zoomPct.textContent = Math.round(scale * 100) + '%';
-            }
-            function resetEmbedImg() { scale = 1; offX = 0; offY = 0; updateEmbedImg(); }
+    // 缩放状态
+    let scale = 1, offX = 0, offY = 0;
+    const MIN_S = 0.5, MAX_S = 4;
+    let lastPinch = 0, lastTx = 0, lastTy = 0, dragging = false;
+    let animId = null, curSeat = null, pulseVal = 0;
 
-            // 全屏图片缩放
-            let fsScale = 1, fsOffX = 0, fsOffY = 0;
-            let fsLastPinch = 0, fsLastTx = 0, fsLastTy = 0, fsDragging = false;
+    function render() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const dw = canvasCard.clientWidth, dh = Math.min(dw * LH / LW, window.innerHeight * 0.5);
+        canvas.width = dw * dpr; canvas.height = dh * dpr;
+        canvas.style.width = dw + 'px'; canvas.style.height = dh + 'px';
+        ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.scale(dpr, dpr);
+        const bs = dw / LW;
+        ctx.save(); ctx.translate(offX, offY); ctx.scale(bs * scale, bs * scale);
+        drawAll(ctx, curSeat, pulseVal); ctx.restore();
+    }
 
-            function updateFsImg() {
-                fullscreenImage.style.transform = `translate(${fsOffX}px, ${fsOffY}px) scale(${fsScale})`;
-            }
-            function resetFsImg() { fsScale = 1; fsOffX = 0; fsOffY = 0; updateFsImg(); }
+    function startAnim(seat) {
+        curSeat = seat; scale = 1; offX = 0; offY = 0;
+        if (animId) cancelAnimationFrame(animId);
+        function loop(ts) { pulseVal = (ts / 700) * Math.PI * 2; render(); animId = requestAnimationFrame(loop); }
+        animId = requestAnimationFrame(loop);
+    }
+    function stopAnim() { if (animId) { cancelAnimationFrame(animId); animId = null; } curSeat = null; }
 
-            function openFullscreen() {
-                fullscreenImage.src = seatImage.src;
-                fullscreenOverlay.classList.add('active');
-                resetFsImg();
-                document.body.style.overflow = 'hidden';
-            }
-            function closeFullscreen() {
-                fullscreenOverlay.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-
-            // 内嵌图片触摸事件
-            function pinchDist(t1, t2) { return Math.sqrt((t1.clientX - t2.clientX) ** 2 + (t1.clientY - t2.clientY) ** 2); }
-
-            imageViewer.addEventListener('touchstart', function(e) {
-                if (e.touches.length === 2) { dragging = false; lastPinch = pinchDist(e.touches[0], e.touches[1]); }
-                else if (e.touches.length === 1) { dragging = true; lastTx = e.touches[0].clientX; lastTy = e.touches[0].clientY; }
-            }, { passive: false });
-
-            imageViewer.addEventListener('touchmove', function(e) {
-                e.preventDefault();
-                if (e.touches.length === 2) {
-                    dragging = false;
-                    const nd = pinchDist(e.touches[0], e.touches[1]);
-                    const rect = imageViewer.getBoundingClientRect();
-                    const cx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
-                    const cy = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
-                    if (lastPinch > 0) {
-                        const r = nd / lastPinch;
-                        const ns = Math.min(MAX_S, Math.max(MIN_S, scale * r));
-                        offX = cx - (cx - offX) * (ns / scale);
-                        offY = cy - (cy - offY) * (ns / scale);
-                        scale = ns;
-                        updateEmbedImg();
-                    }
-                    lastPinch = nd;
-                } else if (e.touches.length === 1 && dragging) {
-                    offX += e.touches[0].clientX - lastTx;
-                    offY += e.touches[0].clientY - lastTy;
-                    lastTx = e.touches[0].clientX;
-                    lastTy = e.touches[0].clientY;
-                    updateEmbedImg();
-                }
-            }, { passive: false });
-
-            imageViewer.addEventListener('touchend', function(e) { if (e.touches.length === 0) { dragging = false; lastPinch = 0; } });
-            imageViewer.addEventListener('wheel', function(e) {
-                e.preventDefault();
-                const rect = imageViewer.getBoundingClientRect();
-                const mx = e.clientX - rect.left, my = e.clientY - rect.top;
-                const ns = Math.min(MAX_S, Math.max(MIN_S, scale * (e.deltaY > 0 ? 0.9 : 1.1)));
-                offX = mx - (mx - offX) * (ns / scale);
-                offY = my - (my - offY) * (ns / scale);
+    function pinchDist(t1, t2) { return Math.sqrt((t1.clientX - t2.clientX) ** 2 + (t1.clientY - t2.clientY) ** 2); }
+    canvas.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        if (e.touches.length === 2) { dragging = false; lastPinch = pinchDist(e.touches[0], e.touches[1]); }
+        else if (e.touches.length === 1) { dragging = true; lastTx = e.touches[0].clientX; lastTy = e.touches[0].clientY; }
+    }, { passive: false });
+    canvas.addEventListener('touchmove', function(e) {
+        e.preventDefault();
+        if (e.touches.length === 2) {
+            dragging = false;
+            const nd = pinchDist(e.touches[0], e.touches[1]);
+            const rect = canvas.getBoundingClientRect();
+            const cx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
+            const cy = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
+            if (lastPinch > 0) {
+                const r = nd / lastPinch;
+                const ns = Math.min(MAX_S, Math.max(MIN_S, scale * r));
+                offX = cx - (cx - offX) * (ns / scale); offY = cy - (cy - offY) * (ns / scale);
                 scale = ns;
-                updateEmbedImg();
-            }, { passive: false });
-
-            // 全屏触摸事件
-            fullscreenImageContainer.addEventListener('touchstart', function(e) {
-                if (e.touches.length === 2) { fsDragging = false; fsLastPinch = pinchDist(e.touches[0], e.touches[1]); }
-                else if (e.touches.length === 1) { fsDragging = true; fsLastTx = e.touches[0].clientX; fsLastTy = e.touches[0].clientY; }
-            }, { passive: false });
-
-            fullscreenImageContainer.addEventListener('touchmove', function(e) {
-                e.preventDefault();
-                if (e.touches.length === 2) {
-                    fsDragging = false;
-                    const nd = pinchDist(e.touches[0], e.touches[1]);
-                    const rect = fullscreenImageContainer.getBoundingClientRect();
-                    const cx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
-                    const cy = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
-                    if (fsLastPinch > 0) {
-                        const r = nd / fsLastPinch;
-                        const ns = Math.min(MAX_S, Math.max(MIN_S, fsScale * r));
-                        fsOffX = cx - (cx - fsOffX) * (ns / fsScale);
-                        fsOffY = cy - (cy - fsOffY) * (ns / fsScale);
-                        fsScale = ns;
-                        updateFsImg();
-                    }
-                    fsLastPinch = nd;
-                } else if (e.touches.length === 1 && fsDragging) {
-                    fsOffX += e.touches[0].clientX - fsLastTx;
-                    fsOffY += e.touches[0].clientY - fsLastTy;
-                    fsLastTx = e.touches[0].clientX;
-                    fsLastTy = e.touches[0].clientY;
-                    updateFsImg();
-                }
-            }, { passive: false });
-
-            fullscreenImageContainer.addEventListener('touchend', function(e) { if (e.touches.length === 0) { fsDragging = false; fsLastPinch = 0; } });
-
-            // 点击图片打开全屏
-            imageViewer.addEventListener('click', function(e) {
-                if (Math.abs(offX) < 2 && Math.abs(offY) < 2 && scale === 1) openFullscreen();
-            });
-
-            // 全屏关闭按钮
-            fullscreenClose.addEventListener('click', closeFullscreen);
-            fullscreenOverlay.addEventListener('click', function(e) {
-                if (e.target === fullscreenOverlay) closeFullscreen();
-            });
-
-            // 缩放按钮
-            document.getElementById('zoomInBtn').addEventListener('click', () => {
-                const ns = Math.min(MAX_S, scale * 1.35);
-                const dw = imageViewer.clientWidth, dh = imageViewer.clientHeight;
-                offX = dw / 2 - (dw / 2 - offX) * (ns / scale);
-                offY = dh / 2 - (dh / 2 - offY) * (ns / scale);
-                scale = ns;
-                updateEmbedImg();
-            });
-            document.getElementById('zoomOutBtn').addEventListener('click', () => {
-                const ns = Math.max(MIN_S, scale / 1.35);
-                const dw = imageViewer.clientWidth, dh = imageViewer.clientHeight;
-                offX = dw / 2 - (dw / 2 - offX) * (ns / scale);
-                offY = dh / 2 - (dh / 2 - offY) * (ns / scale);
-                scale = ns;
-                updateEmbedImg();
-            });
-            document.getElementById('zoomResetBtn').addEventListener('click', resetEmbedImg);
-
-            // UI
-            function buildBigInfoHTML(seat) {
-                const sc = seat.section;
-                const st = sc === 'front' ? '前排' : sc === 'middle' ? '中排' : '后排';
-                return `
-                    <div class="seat-zone-display"><span class="zone-badge ${sc}">${seat.zoneLetter}</span><span class="zone-text">${seat.zoneLetter}区 · ${st}</span></div>
-                    <div class="seat-detail-row"><span class="seat-detail-item">第 ${seat.row} 排</span><span class="seat-detail-divider">·</span><span class="seat-detail-item">第 ${seat.seat} 座</span></div>
-                    <span class="seat-code">🏷️ 编号：${seat.code}</span>`;
             }
-            function showError(msg) {
-                errorMessage.textContent = msg;
-                errorMessage.classList.add('show');
-                nameInput.style.borderColor = 'rgba(255,138,138,0.9)';
-                setTimeout(() => { errorMessage.classList.remove('show'); nameInput.style.borderColor = 'rgba(255,255,255,0.35)'; }, 2000);
-            }
-            function showPage(p) { [pageHome, pageResult].forEach(x => x.classList.add('hidden')); p.classList.remove('hidden'); }
+            lastPinch = nd;
+        } else if (e.touches.length === 1 && dragging) {
+            offX += e.touches[0].clientX - lastTx; offY += e.touches[0].clientY - lastTy;
+            lastTx = e.touches[0].clientX; lastTy = e.touches[0].clientY;
+        }
+    }, { passive: false });
+    canvas.addEventListener('touchend', function(e) { if (e.touches.length === 0) { dragging = false; lastPinch = 0; } });
 
-            function showResult(name, seat) {
-                displayName.textContent = name.trim();
-                seatBigInfo.innerHTML = buildBigInfoHTML(seat);
-                showPage(pageResult);
-                resetEmbedImg();
-                const url = new URL(window.location);
-                url.searchParams.set('name', name.trim());
-                history.pushState(null, '', url.toString());
-                pageResult.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
+    function buildBigInfoHTML(seat) {
+        const sc = seat.section;
+        const st = sc === 'front' ? '前排' : sc === 'middle' ? '中排' : '后排';
+        return `<div class="seat-zone-display"><span class="zone-badge ${sc}">${seat.zoneLetter}</span><span class="zone-text">${seat.zoneLetter}区 · ${st}</span></div><div class="seat-detail-row"><span class="seat-detail-item">第 ${seat.row} 排</span><span class="seat-detail-divider">·</span><span class="seat-detail-item">第 ${seat.seat} 座</span></div><span class="seat-code">🏷️ 编号：${seat.code}</span>`;
+    }
+    function showError(msg) {
+        errorMessage.textContent = msg; errorMessage.classList.add('show');
+        nameInput.style.borderColor = 'rgba(255,138,138,0.9)';
+        setTimeout(() => { errorMessage.classList.remove('show'); nameInput.style.borderColor = 'rgba(255,255,255,0.35)'; }, 2000);
+    }
+    function showPage(p) { [pageHome, pageResult].forEach(x => x.classList.add('hidden')); p.classList.remove('hidden'); }
 
-            btnFindSeat.addEventListener('click', () => {
-                const name = nameInput.value.trim();
-                if (!name) { showError('请输入姓名'); return; }
-                const seat = getSeatByName(name);
-                if (!seat) { showError('未找到对应座位，请重试'); return; }
-                showResult(name, seat);
-            });
-            nameInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); btnFindSeat.click(); } });
-            btnBack.addEventListener('click', () => { showPage(pageHome); nameInput.focus(); if (window.location.search.includes('name=')) history.pushState(null, '', window.location.pathname); });
+    function showResult(name, seat) {
+        displayName.textContent = name.trim(); seatBigInfo.innerHTML = buildBigInfoHTML(seat);
+        showPage(pageResult); startAnim(seat);
+        const url = new URL(window.location); url.searchParams.set('name', name.trim());
+        history.pushState(null, '', url.toString());
+    }
 
-            window.addEventListener('popstate', () => {
-                const p = new URLSearchParams(window.location.search);
-                const nm = p.get('name');
-                if (nm && nm.trim()) { const seat = getSeatByName(nm); if (seat) { showResult(nm, seat); return; } }
-                showPage(pageHome);
-                nameInput.focus();
-            });
+    btnFindSeat.addEventListener('click', () => {
+        const name = nameInput.value.trim();
+        if (!name) { showError('请输入姓名'); return; }
+        const seat = getSeatByName(name);
+        if (!seat) { showError('未找到对应座位，请重试'); return; }
+        showResult(name, seat);
+    });
+    nameInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); btnFindSeat.click(); } });
+    btnBack.addEventListener('click', () => { stopAnim(); showPage(pageHome); nameInput.focus(); });
 
-            function init() {
-                const p = new URLSearchParams(window.location.search);
-                const nm = p.get('name');
-                if (nm && nm.trim()) { const seat = getSeatByName(nm); if (seat) { showResult(nm, seat); return; } }
-                showPage(pageHome);
-                nameInput.focus();
-            }
-            init();
-        })();
-    </script>
+    window.addEventListener('popstate', () => {
+        const p = new URLSearchParams(window.location.search), nm = p.get('name');
+        if (nm && nm.trim()) { const seat = getSeatByName(nm); if (seat) { showResult(nm, seat); return; } }
+        stopAnim(); showPage(pageHome); nameInput.focus();
+    });
+
+    function init() {
+        const p = new URLSearchParams(window.location.search), nm = p.get('name');
+        if (nm && nm.trim()) { const seat = getSeatByName(nm); if (seat) { showResult(nm, seat); return; } }
+        showPage(pageHome); nameInput.focus();
+    }
+    init();
+})();
+</script>
 </body>
 </html>

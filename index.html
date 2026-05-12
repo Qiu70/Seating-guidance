@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>座位导航 · 左海产业生态大会</title>
+    <title>签到座位导航 · 左海产业生态大会</title>
     <style>
-        :root { --card-max-width: 400px; }
+        :root { --card-max-width: 420px; }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         .bg-fixed {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -24,316 +24,370 @@
         .page.active { display: flex; }
         .glass-card {
             width: 100%; background: rgba(255,255,255,0.2); backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px);
-            border: 1px solid rgba(255,255,255,0.3); border-radius: 3.5vw; box-shadow: 0 10px 40px rgba(0,0,0,0.18);
-            padding: 4vw 3.5vw; text-align: center; display: flex; flex-direction: column;
+            border: 1px solid rgba(255,255,255,0.3); border-radius: 4vw; box-shadow: 0 10px 40px rgba(0,0,0,0.18);
+            padding: 5vw 4vw; text-align: center; display: flex; flex-direction: column;
         }
+        /* 签到成功提示 */
+        .checkin-banner {
+            background: linear-gradient(135deg, rgba(74,222,128,0.3) 0%, rgba(34,197,94,0.2) 100%);
+            border: 1px solid rgba(74,222,128,0.5); border-radius: 3vw; padding: 3vw 4vw;
+            margin-bottom: 3vw; display: flex; align-items: center; justify-content: center; gap: 2vw;
+            animation: checkinPulse 2s ease-in-out infinite;
+        }
+        @keyframes checkinPulse {
+            0%,100% { box-shadow: 0 0 0 0 rgba(74,222,128,0.4); }
+            50% { box-shadow: 0 0 0 12px rgba(74,222,128,0); }
+        }
+        .checkin-icon {
+            width: 10vw; height: 10vw; max-width: 42px; max-height: 42px;
+            background: rgba(74,222,128,0.4); border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; font-size: 6vw;
+        }
+        .checkin-text { font-size: 4.5vw; font-weight: 700; color: #fff; text-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+        .checkin-sub { font-size: 3vw; color: rgba(255,255,255,0.8); margin-top: 0.5vw; }
+
+        /* 首页 */
         .home-icon {
-            width: 52px; height: 52px; margin: 0 auto 2.5vw; background: rgba(255,255,255,0.18); border-radius: 15px;
+            width: 52px; height: 52px; margin: 0 auto 3vw; background: rgba(255,255,255,0.18); border-radius: 15px;
             display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.28);
         }
         .home-icon svg { width: 28px; height: 28px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-        .home-title { font-size: 5vw; font-weight: 700; color: #fff; margin-bottom: 1.5vw; }
-        .home-subtitle { font-size: 3.2vw; color: rgba(255,255,255,0.78); margin-bottom: 5vw; }
+        .home-title { font-size: 5.5vw; font-weight: 700; color: #fff; margin-bottom: 1.5vw; letter-spacing: 0.5px; }
+        .home-subtitle { font-size: 3.4vw; color: rgba(255,255,255,0.78); margin-bottom: 5.5vw; }
         .input-wrap { position: relative; margin-bottom: 1.5vw; }
         .input-wrap input {
-            width: 100%; padding: 3.4vw 8vw 3.4vw 3.4vw; font-size: 3.6vw; border: 2px solid rgba(255,255,255,0.35);
+            width: 100%; padding: 3.6vw 9vw 3.6vw 3.6vw; font-size: 3.8vw; border: 2px solid rgba(255,255,255,0.35);
             border-radius: 10vw; outline: none; background: rgba(255,255,255,0.14); color: #fff; text-align: center;
             transition: background 0.2s, border-color 0.2s;
         }
         .input-wrap input::placeholder { color: rgba(255,255,255,0.5); }
         .input-wrap input:focus { border-color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.24); }
         .input-icon {
-            position: absolute; right: 3.2vw; top: 50%; transform: translateY(-50%); pointer-events: none;
-            color: rgba(255,255,255,0.55); width: 3.8vw; height: 3.8vw;
+            position: absolute; right: 3.5vw; top: 50%; transform: translateY(-50%); pointer-events: none;
+            color: rgba(255,255,255,0.55); width: 4vw; height: 4vw;
         }
-        .error-message { display: block; height: 4vw; line-height: 4vw; font-size: 2.8vw; color: #ffaaaa; margin-bottom: 1.5vw; opacity: 0; transition: opacity 0.2s; }
+        .error-message { display: block; height: 4.5vw; line-height: 4.5vw; font-size: 3vw; color: #ffaaaa; margin-bottom: 1.5vw; opacity: 0; transition: opacity 0.2s; }
         .error-message.show { opacity: 1; }
         .btn {
-            display: inline-flex; align-items: center; justify-content: center; padding: 3.4vw 5vw; font-size: 3.8vw;
+            display: inline-flex; align-items: center; justify-content: center; padding: 3.6vw 5vw; font-size: 4vw;
             font-weight: 600; border: none; border-radius: 10vw; cursor: pointer; width: 100%;
             background: rgba(255,255,255,0.9); color: #5b21b6; box-shadow: 0 4px 16px rgba(0,0,0,0.14);
         }
         .btn:active { transform: scale(0.97); }
         .btn-outline-sm {
             background: rgba(255,255,255,0.15); color: #fff; border: 1.5px solid rgba(255,255,255,0.4);
-            width: auto; padding: 2vw 3.5vw; font-size: 3vw; border-radius: 7vw;
-        }
-        .result-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2.5vw; }
-        .result-greeting { font-size: 4vw; font-weight: 600; color: rgba(255,255,255,0.9); }
-        .result-greeting .name-em { color: #fff; font-weight: 800; }
-        .seat-big-info { margin: 2.5vw 0; padding: 3.5vw 3vw; background: rgba(255,255,255,0.1); border-radius: 2.5vw; border: 1px solid rgba(255,255,255,0.2); }
-        .seat-zone-display { display: inline-flex; align-items: center; gap: 2.2vw; background: rgba(255,255,255,0.14); border-radius: 7vw; padding: 1.8vw 3.5vw; margin-bottom: 2vw; border: 1px solid rgba(255,255,255,0.22); }
-        .zone-badge { width: 8.5vw; height: 8.5vw; max-width: 36px; max-height: 36px; border-radius: 50%; font-size: 4.2vw; font-weight: 800; color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .zone-badge.front { background: #c98a3a; }
-        .zone-badge.middle { background: #3b72b5; }
-        .zone-badge.back { background: #4a9068; }
-        .zone-text { font-size: 3.4vw; font-weight: 600; color: rgba(255,255,255,0.9); text-align: left; }
-        .seat-detail-row { display: flex; gap: 2.2vw; justify-content: center; align-items: center; margin: 1vw 0; }
-        .seat-detail-item { font-size: 5.2vw; font-weight: 800; color: #fff; }
-        .seat-detail-divider { font-size: 3.2vw; color: rgba(255,255,255,0.5); }
-        .seat-code { font-size: 3.2vw; font-weight: 700; color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.12); padding: 1.3vw 3.5vw; border-radius: 4.5vw; letter-spacing: 1px; margin-top: 1.2vw; display: inline-block; }
-        
-        /* Canvas容器 - 修复空白 */
-        .canvas-wrapper {
-            margin-top: 2vw;
-            width: 100%;
-            background: rgba(255,255,255,0.1);
-            border-radius: 2.5vw;
-            border: 1px solid rgba(255,255,255,0.2);
-            overflow: hidden;
-            touch-action: none;
-            cursor: grab;
-            /* 关键：设置固定宽高比，避免下方空白 */
-            aspect-ratio: 700 / 480;
-        }
-        .canvas-wrapper canvas {
-            display: block;
-            width: 100%;
-            height: 100%;
-            transform-origin: 0 0;
-        }
-        .zoom-hint {
-            text-align: center;
-            font-size: 2.2vw;
-            color: rgba(255,255,255,0.4);
-            margin-top: 1.5vw;
-            margin-bottom: 0;
+            width: auto; padding: 2.2vw 4vw; font-size: 3.2vw; border-radius: 8vw; box-shadow: none;
         }
 
-        @media (max-width: 360px) { .home-title { font-size: 5.5vw; } }
+        /* 结果页 */
+        .result-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2vw; }
+        .result-greeting { font-size: 4.2vw; font-weight: 600; color: rgba(255,255,255,0.9); text-align: left; }
+        .result-greeting .name-em { color: #fff; font-weight: 800; }
+
+        .seat-result-card {
+            margin: 2vw 0; padding: 3vw; background: rgba(255,255,255,0.12);
+            border-radius: 3vw; border: 1px solid rgba(255,255,255,0.22); text-align: center;
+        }
+        .seat-list { display: flex; flex-wrap: wrap; gap: 2vw; justify-content: center; }
+        .seat-item {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 3vw; padding: 2.5vw 3.5vw; text-align: center; min-width: 22vw;
+        }
+        .seat-item .code { font-size: 4vw; font-weight: 800; color: #fff; }
+        .seat-item .detail { font-size: 2.6vw; color: rgba(255,255,255,0.7); margin-top: 1vw; }
+        .seat-count { font-size: 3vw; color: rgba(255,255,255,0.6); margin-top: 2.5vw; }
+        .company-name-display { font-size: 4.2vw; font-weight: 700; color: #fff; margin-bottom: 2.5vw; }
+
+        @media (max-width: 360px) {
+            .home-title { font-size: 5.8vw; }
+            .checkin-text { font-size: 5vw; }
+            .seat-item { min-width: 26vw; padding: 3vw 4vw; }
+        }
         @media (min-width: 420px) {
-            .glass-card { border-radius: 16px; padding: 22px 18px; }
-            .home-title { font-size: 1.2rem; } .home-subtitle { font-size: 0.78rem; }
-            .input-wrap input { padding: 12px 36px 12px 14px; font-size: 0.85rem; }
-            .btn { padding: 12px 22px; font-size: 0.85rem; } .seat-detail-item { font-size: 1.3rem; }
-            .error-message { height: 16px; line-height: 16px; font-size: 0.65rem; }
-            .canvas-wrapper { border-radius: 10px; }
+            .glass-card { border-radius: 18px; padding: 24px 20px; }
+            .home-title { font-size: 1.3rem; } .home-subtitle { font-size: 0.82rem; }
+            .input-wrap input { padding: 14px 38px 14px 14px; font-size: 0.9rem; }
+            .btn { padding: 14px 24px; font-size: 0.9rem; }
+            .error-message { height: 18px; line-height: 18px; font-size: 0.7rem; }
+            .checkin-text { font-size: 1.1rem; } .checkin-sub { font-size: 0.75rem; }
+            .company-name-display { font-size: 1rem; }
+            .seat-item .code { font-size: 0.95rem; }
+            .seat-item .detail { font-size: 0.68rem; }
+            .seat-count { font-size: 0.75rem; }
         }
     </style>
 </head>
 <body>
 <div class="bg-fixed"></div>
 <div class="app-container">
+    <!-- 首页 / 搜索页 -->
     <div class="page active" id="page-home">
         <div class="glass-card">
             <div class="home-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="2.5" rx="1"/><rect x="5.5" y="10" width="3.5" height="3.5" rx="0.8"/><rect x="11" y="10" width="3.5" height="3.5" rx="0.8"/><rect x="16.5" y="10" width="3.5" height="3.5" rx="0.8"/><rect x="5.5" y="16" width="3.5" height="3.5" rx="0.8"/><rect x="11" y="16" width="5" height="3.5" rx="0.8" fill="currentColor" stroke="none" opacity="0.35"/><circle cx="13.5" cy="17.75" r="1" fill="#fff"/></svg></div>
             <h1 class="home-title">座位导航</h1>
-            <p class="home-subtitle">输入姓名，查看您的座位</p>
+            <p class="home-subtitle">输入公司名，查看座位安排</p>
             <div class="input-wrap">
-                <input type="text" id="nameInput" placeholder="请输入姓名" autocomplete="name" maxlength="30">
+                <input type="text" id="nameInput" placeholder="请输入公司名" autocomplete="off" maxlength="30">
                 <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
             </div>
-            <span class="error-message" id="errorMessage">请输入姓名</span>
+            <span class="error-message" id="errorMessage">请输入公司名</span>
             <button class="btn" id="btnFindSeat" type="button">查找座位</button>
         </div>
     </div>
+
+    <!-- 结果页 -->
     <div class="page hidden" id="page-result">
         <div class="glass-card">
-            <div class="result-header"><div class="result-greeting">👋 <span class="name-em" id="displayName">---</span> 的座位</div><button class="btn btn-outline-sm" id="btnBack" type="button">← 返回</button></div>
-            <div class="seat-big-info" id="seatBigInfo"></div>
-            <div class="canvas-wrapper" id="canvasWrapper"><canvas id="seatCanvas"></canvas></div>
-            <p class="zoom-hint">双指缩放查看</p>
+            <!-- 签到成功横幅 -->
+            <div class="checkin-banner">
+                <div class="checkin-icon">✓</div>
+                <div>
+                    <div class="checkin-text">签到成功</div>
+                    <div class="checkin-sub">欢迎参加左海产业生态大会</div>
+                </div>
+            </div>
+            <div class="result-header">
+                <div class="result-greeting" id="resultGreeting"></div>
+                <button class="btn btn-outline-sm" id="btnBack" type="button">← 返回</button>
+            </div>
+            <div class="seat-result-card" id="seatResultCard"></div>
         </div>
     </div>
 </div>
+
 <script>
 (function() {
-    const pageHome = document.getElementById('page-home'), pageResult = document.getElementById('page-result');
-    const nameInput = document.getElementById('nameInput'), btnFindSeat = document.getElementById('btnFindSeat');
-    const btnBack = document.getElementById('btnBack'), displayName = document.getElementById('displayName');
-    const seatBigInfo = document.getElementById('seatBigInfo'), errorMessage = document.getElementById('errorMessage');
-    const canvas = document.getElementById('seatCanvas'), canvasWrapper = document.getElementById('canvasWrapper');
-    const ctx = canvas.getContext('2d');
+    // ==================== 公司座位数据（请根据最终清单修改） ====================
+    // 格式：公司名 -> [座位编号数组]
+    const companySeats = {};
 
-    const allSeats = [];
-    for (let row = 1; row <= 13; row++) {
-        let section = row <= 4 ? 'front' : row <= 9 ? 'middle' : 'back';
-        const seatsPerHalf = row <= 4 ? 10 : 15;
-        for (let seat = 1; seat <= seatsPerHalf; seat++) {
-            allSeats.push({ zoneLetter: 'A', row, seat, section, code: `A${row}-${seat}` });
-            allSeats.push({ zoneLetter: 'B', row, seat, section, code: `B${row}-${seat}` });
-        }
-    }
-    function hashString(str) { let h = 5381; for (let i = 0; i < str.length; i++) h = ((h << 5) + h) + str.charCodeAt(i) & 0x7fffffff; return h; }
-    function getSeatByName(name) { const t = name.trim(); if (!t) return null; return allSeats[hashString(t) % allSeats.length]; }
-
-    const LW = 700, LH = 480;
-    const seatW = 22, seatH = 17, seatGap = 3;
-    const half10 = 10 * seatW + 9 * seatGap;
-    const half15 = 15 * seatW + 14 * seatGap;
-    const aisleW = 48;
-    const groupW = half15 * 2 + aisleW;
-    const startX = (LW - groupW) / 2;
-    const rowGap = 24, seatsTop = 70;
-    const stageW = 320, stageH = 22, stageY = 14;
-
-    const colors = {
-        front: { fill: '#eedbb8', stroke: '#c89850' },
-        middle: { fill: '#c4daf0', stroke: '#5088b8' },
-        back: { fill: '#b8d8c4', stroke: '#589868' }
-    };
-
-    function rr(ctx, x, y, w, h, r) {
-        ctx.beginPath(); ctx.moveTo(x + r, y); ctx.lineTo(x + w - r, y);
-        ctx.quadraticCurveTo(x + w, y, x + w, y + r); ctx.lineTo(x + w, y + h - r);
-        ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h); ctx.lineTo(x + r, y + h);
-        ctx.quadraticCurveTo(x, y + h, x, y + h - r); ctx.lineTo(x, y + r);
-        ctx.quadraticCurveTo(x, y, x + r, y); ctx.closePath();
+    function add(company, code) {
+        if (!company) return;
+        const c = company.trim();
+        if (!c) return;
+        if (!companySeats[c]) companySeats[c] = [];
+        if (!companySeats[c].includes(code)) companySeats[c].push(code);
     }
 
-    function drawSeat(ctx, x, y, w, h, clr, isUser, pulse) {
-        if (isUser) {
-            const glow = 4 + 2 * Math.sin(pulse);
-            ctx.save(); ctx.shadowColor = 'rgba(232,69,91,0.8)'; ctx.shadowBlur = 6 + glow;
-            ctx.fillStyle = '#e8455b'; rr(ctx, x, y, w, h, 2.5); ctx.fill(); ctx.restore();
-            ctx.fillStyle = '#e8455b'; rr(ctx, x, y, w, h, 2.5); ctx.fill();
-            ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.4; rr(ctx, x, y, w, h, 2.5); ctx.stroke();
-        } else {
-            ctx.fillStyle = clr.fill; rr(ctx, x, y, w, h, 2.5); ctx.fill();
-            ctx.strokeStyle = clr.stroke; ctx.lineWidth = 0.5; rr(ctx, x, y, w, h, 2.5); ctx.stroke();
-        }
+    // === 第1排 ===
+    add("宏龙海洋", "A1-1"); add("奇瑞商用车", "A1-2"); add("中景石化", "A1-3");
+    add("国家碳计量中心", "A1-5"); add("沐曦股份", "A1-6"); add("星网锐捷", "A1-7");
+    add("福州大学电气学院", "B1-5"); add("福州大学先进制造学院", "B1-6"); add("福建理工大学", "B1-7");
+
+    // === 第2排 ===
+    add("福州鸿瑞光电科技", "A2-8"); add("鸿生股份", "B2-5"); add("大东海", "B2-9");
+
+    // === 第3排 ===
+    add("丰大集团", "A3-1"); add("农林大学海洋学院", "A3-3"); add("福建空天碳科技集团有限公司", "A3-4");
+    add("中国科学院空天信息创新研究院", "A3-6");
+
+    // === 第4排 ===
+    add("金华夏建筑", "A4-1"); add("奋安铝业", "A4-2"); add("五谷丰登", "A4-3"); add("振凯实业", "A4-4");
+    add("中渔食品", "A4-5"); add("风暴渔供应链", "A4-6"); add("东南汽车", "A4-7"); add("安徽建工", "A4-8");
+    add("海康威视", "A4-9"); add("中建海峡", "A4-10"); add("仙芝楼", "B4-1"); add("亚通公司", "B4-2");
+    add("连江海洋渔业经济发展协会", "B4-6"); add("力美水产", "B4-7"); add("闽投深海", "B4-8");
+    add("乾动科技", "B4-9"); add("胜田食品", "B4-10"); add("盛丰集团", "B4-10");
+
+    // === 第5排 ===
+    add("盛丰集团", "A5-1"); add("福州农商银行", "A5-2"); add("金蝶天燕", "A5-3"); add("长沙盈芯", "A5-4");
+    add("阿石创", "A5-5"); add("海尔公司", "A5-6"); add("中铝瑞闽", "A5-8"); add("永荣控股", "A5-9");
+    add("中景石化", "A5-10"); add("易鹿供应链", "A5-12"); add("天马科技", "A5-13"); add("富轩科技", "A5-14");
+    add("福耀科技大学", "A5-15"); add("汉特云", "B5-1"); add("电管家", "B5-2"); add("中石化森美", "B5-6");
+    add("三峡海上风电", "B5-7"); add("中建海峡", "B5-8"); add("瑞凌新能", "B5-9"); add("金强（福建）建材", "B5-10");
+    add("奋安铝业", "B5-11"); add("春伦集团", "B5-12"); add("空天碳（福州）数字科技有限公司", "B5-14"); add("智行航空", "B5-15");
+
+    // === 第6排 ===
+    add("绿创投资", "A6-1"); add("福规院", "A6-2"); add("建科院", "A6-3"); add("福州易碳空天数字科技有限公司", "A6-5");
+    add("福建友谊集团", "A6-6"); add("中国铁建华东区域总部福建总部", "A6-7"); add("中铁（福建）投资有限公司", "A6-8");
+    add("奋安铝业", "A6-11"); add("中渔食品", "A6-12"); add("安徽建工", "A6-13"); add("亚通公司", "A6-14");
+    add("丰大集团", "A6-15"); add("宏龙海洋", "B6-1"); add("连江海洋渔业经济发展协会", "B6-2");
+    add("力美水产", "B6-4"); add("闽投深海", "B6-5"); add("乾动科技", "B6-7"); add("农林大学海洋学院", "B6-8");
+    add("海尔公司", "B6-9"); add("中铝瑞闽", "B6-11"); add("永荣控股", "B6-12"); add("鸿生股份", "B6-14");
+    add("易鹿供应链", "B6-15");
+
+    // === 第7排 ===
+    add("天马科技", "A7-1"); add("电管家", "A7-2"); add("星网锐捷", "A7-3"); add("福州鸿瑞光电科技", "A7-7");
+    add("中石化森美", "A7-10"); add("三峡海上风电", "A7-11"); add("中建海峡", "A7-12"); add("奋安铝业", "A7-14");
+    add("春伦集团", "A7-15"); add("武夷碳投", "B7-1"); add("福建空天碳科技集团有限公司", "B7-5");
+    add("智行航空", "B7-8"); add("福规院", "B7-9");
+
+    // === 第8排 ===
+    add("建科院", "A8-1"); add("中铁（福建）投资有限公司", "A8-2"); add("中交华中（海西）区域总部", "A8-3");
+    add("福建理工大学", "A8-5"); add("福州京东方", "A8-6"); add("冠捷电子", "A8-8"); add("阿石创新", "A8-10");
+    add("久策气体", "A8-11"); add("海尔智家福建分公司", "A8-12"); add("科慧能源", "A8-14"); add("汉特云", "B8-1");
+    add("中铝瑞闽", "B8-4"); add("新大陆慧创科技", "B8-4"); add("新大陆数字技术股份有限公司", "B8-6");
+    add("帝视科技", "B8-9"); add("中国电信福州分公司", "B8-10"); add("联通福州分公司", "B8-13");
+    add("福州万翔电子商务有限公司", "B8-15");
+
+    // === 第9排 ===
+    add("福建省五维智讯电气有限公司", "A9-1"); add("华为数字能源技术有限公司", "A9-3");
+    add("万帮数字能源股份有限公司", "A9-5"); add("超聚变数字技术有限公司", "A9-7"); add("万家智能科技", "A9-10");
+    add("金蝶天燕", "A9-11"); add("电管家", "A9-12"); add("星网锐捷", "A9-14"); add("星网锐捷", "B9-1");
+    add("中国联通福建公司", "B9-4"); add("海康威视（杭州）", "B9-5"); add("福昕软件", "B9-7");
+    add("福建省数据流通控股有限公司", "B9-8"); add("朴朴", "B9-9"); add("朗新科技", "B9-10");
+    add("沐曦股份", "B9-13"); add("奇瑞贵州万达客车股份有限公司", "B9-15");
+
+    // === 第10排 ===
+    add("福州鸿瑞光电科技", "A10-1"); add("国核（福建）", "A10-3"); add("福建奔驰", "A10-4");
+    add("宁德时代", "A10-5"); add("厦门金旅", "A10-7"); add("厦门金龙", "A10-8"); add("万润新能源", "A10-10");
+    add("东南汽车", "A10-12"); add("奇瑞商用车公司", "A10-13"); add("中国银行福州分行", "A10-15");
+    add("福建理工大学", "B10-1"); add("远致富海", "B10-3"); add("上海沪闽再生资源有限公司", "B10-5");
+    add("永荣控股", "B10-7"); add("福州晋安三创基金", "B10-10"); add("榕投基金", "B10-11");
+    add("万华化学", "B10-12"); add("中石化森美", "B10-13"); add("金风科技", "B10-14");
+
+    // === 第11排 ===
+    add("三峡海上风电", "A11-1"); add("新福兴玻璃", "A11-3"); add("中建海峡", "A11-6");
+    add("福建灵信信息科技有限公司", "A11-8"); add("深城交科技集团股份有限公司", "A11-10");
+    add("福建恒宇智能科技有限公司", "A11-11"); add("福建金华夏建筑发展", "A11-12"); add("福州华源混凝土", "A11-14");
+    add("春伦集团", "B11-1"); add("金牛水泥", "B11-2"); add("金强（福建）建材", "B11-4"); add("奋安铝业", "B11-5");
+    add("亚通新材料", "B11-6"); add("维锦纺织", "B11-7"); add("华东造船厂", "B11-9"); add("马尾造船", "B11-10");
+    add("安徽建工", "B11-11"); add("福建省冷冻食品协会", "B11-12"); add("御冠食品", "B11-13");
+    add("名成食品", "B11-15");
+
+    // === 第12排 ===
+    add("中闽杰仕", "A12-1"); add("仓廪衣食", "A12-3"); add("仙芝楼", "A12-4"); add("淼天汇食品", "A12-5");
+    add("宏龙海洋", "A12-7"); add("建科院", "A12-8"); add("罗源县鲍鱼协会", "A12-10");
+    add("福建省洋泽海洋生物科技有限公司", "A12-10"); add("连江海洋渔业经济发展协会", "A12-12");
+    add("福州上华防火设备", "A12-14"); add("深圳市盛弘电气股份有限公司", "B12-1"); add("富发水产", "B12-3");
+    add("源融鑫", "B12-4"); add("重庆七腾机器人有限公司", "B12-5"); add("闽投深海公司", "B12-7");
+    add("乾动科技", "B12-10"); add("胜田食品", "B12-12"); add("汉吉斯", "B12-13"); add("中交冷链", "B12-13");
+
+    // === 第13排 ===
+    add("福建贵安新天地", "A13-1"); add("福州振凯实业有限公司", "A13-2"); add("兆华水产", "A13-3");
+    add("中渔(福州)食品科技有限公司", "A13-4"); add("福建赛鸥农业发展有限公司", "A13-6");
+    add("风暴渔供应链", "A13-7"); add("福建省石油化工供销", "A13-8"); add("盛丰集团", "A13-9");
+    add("福州名城保护开发", "A13-10"); add("龙旺闽越水镇", "A13-11"); add("携程集团", "A13-12");
+    add("武夷碳投", "A13-14"); add("武夷碳投", "B13-1"); add("冶城集团", "B13-3");
+    add("天津南大通用数据技术股份有限公司", "B13-4"); add("智行航空", "B13-8"); add("绿创投资", "B13-10");
+    add("福晓律师事务所", "B13-11"); add("东海航运保险股份有限公司福建分公司", "B13-13");
+    add("福建恒宇智能科技有限公司", "B13-14");
+
+    // === 第14排 ===
+    add("上和（福州）服务有限公司", "A14-1"); add("肯信（福建）企业管理咨询有限公司", "A14-2");
+    add("福规院", "A14-4"); add("福建拓维律师事务所", "A14-11"); add("闽都创新实验室", "A14-12");
+    add("福州技术市场有限公司", "B14-1"); add("富轩科技", "B14-3"); add("中国科学院空天信息创新研究院", "B14-5");
+    add("福州嘉福电子科技有限公司", "B14-7"); add("福建省建筑设计研究院有限公司", "B14-10");
+
+    // === 第15排 ===
+    add("福建省汇通达网络有限公司", "A15-1"); add("淘宝闪购", "A15-3"); add("福建博扬环保科技有限公司", "A15-5");
+    add("福建闽海集团", "A15-6"); add("福建三钢闽光股份有限公司福州分公司", "A15-7");
+    add("锡斌光电（江苏）有限公司", "A15-9"); add("福建威泰思光电有限公司", "A15-10");
+    add("福州市道路货物运输协会", "A15-11"); add("福州福太太食品有限公司", "A15-12");
+    add("福州易碳空天数字科技有限公司", "A15-13"); add("福建谷丰源食品有限公司", "A15-14"); add("新奥能源", "A15-15");
+    add("自媒体", "B15-1"); add("金创天承投资有限公司", "B15-2"); add("上海锐成信息科技有限公司", "B15-3");
+    add("云和恩墨（北京）信息技术有限公司", "B15-12"); add("福建伟亿科技有限公司", "B15-13"); add("超鹿运动", "B15-15");
+
+    // === 第16排 ===
+    add("三明市飞云掣电新能源科技有限公司", "A16-1"); add("北京华力创通科技股份有限公司", "A16-3");
+    add("中创浩远科技（福建）有限公司", "A16-4"); add("福建安福盛源环保科技有限公司", "A16-5");
+    add("中国移动通信集团福建有限公司福州分公司", "A16-7"); add("长沙盈芯半导体科技有限公司", "A16-11");
+    add("中交华中（海西）区域总部", "A16-14"); add("瑞幸咖啡", "B16-1");
+
+    // === 金融机构区 ===
+    add("闽南理工学院", "A17-1"); add("福耀科技大学", "A17-2"); add("福州农商银行连江支行", "A17-3");
+    add("兴业银行福州分行", "A17-4"); add("中信银行福州分行", "A17-7"); add("建设银行城北支行", "A17-10");
+    add("农业银行福州分行", "A17-11"); add("国家开发银行福建省分行", "A17-12"); add("福建海峡银行总行", "A17-13");
+    add("中国银行福州分行", "B17-1");
+
+    // ==================== 查询逻辑 ====================
+    function parseSeatCode(code) {
+        const match = code.match(/^([AB])(\d+)-(\d+)$/);
+        if (!match) return null;
+        const row = parseInt(match[2]);
+        return {
+            zone: match[1],
+            row: row,
+            seat: parseInt(match[3]),
+            section: row <= 4 ? '前排' : row <= 9 ? '中排' : '后排'
+        };
     }
 
-    function drawAll(ctx, userSeat, pulse) {
-        ctx.clearRect(0, 0, LW, LH);
-        ctx.fillStyle = 'rgba(255,255,255,0.12)'; ctx.fillRect(0, 0, LW, LH);
-
-        const cx = LW / 2;
-        const sx = cx - stageW / 2;
-        ctx.fillStyle = '#4a4c56'; rr(ctx, sx, stageY, stageW, stageH, 5); ctx.fill();
-        ctx.fillStyle = '#dddde4'; ctx.font = 'bold 10px "PingFang SC","Microsoft YaHei",sans-serif'; ctx.textAlign = 'center'; ctx.fillText('舞 台', cx, stageY - 3);
-
-        ctx.fillStyle = 'rgba(80,60,120,0.85)'; ctx.font = 'bold 9px "PingFang SC","Microsoft YaHei",sans-serif';
-        const aCenter = startX + half15 / 2, bCenter = startX + half15 + aisleW + half15 / 2;
-        ctx.fillText('A区', aCenter, seatsTop - 6); ctx.fillText('B区', bCenter, seatsTop - 6);
-
-        for (let row = 1; row <= 13; row++) {
-            const ry = seatsTop + (row - 1) * rowGap;
-            const section = row <= 4 ? 'front' : row <= 9 ? 'middle' : 'back';
-            const clr = colors[section];
-            const seatsPerHalf = row <= 4 ? 10 : 15;
-            const halfWidth = seatsPerHalf === 10 ? half10 : half15;
-            const rowStartX = startX + (half15 - halfWidth) / 2;
-
-            for (let s = 1; s <= seatsPerHalf; s++) {
-                const sx2 = rowStartX + (s - 1) * (seatW + seatGap);
-                const isUser = userSeat && userSeat.zoneLetter === 'A' && userSeat.row === row && userSeat.seat === s;
-                drawSeat(ctx, sx2, ry, seatW, seatH, clr, isUser, pulse);
-            }
-            const ax = startX + half15;
-            ctx.fillStyle = 'rgba(180,190,200,0.25)'; ctx.fillRect(ax, ry, aisleW, seatH);
-            if (row === 6) { ctx.fillStyle = 'rgba(100,110,130,0.6)'; ctx.font = '7px "PingFang SC","Microsoft YaHei",sans-serif'; ctx.textAlign = 'center'; ctx.fillText('过道', ax + aisleW / 2, ry + seatH / 2 + 3); }
-            for (let s = 1; s <= seatsPerHalf; s++) {
-                const sx2 = rowStartX + half15 + aisleW + (s - 1) * (seatW + seatGap);
-                const isUser = userSeat && userSeat.zoneLetter === 'B' && userSeat.row === row && userSeat.seat === s;
-                drawSeat(ctx, sx2, ry, seatW, seatH, clr, isUser, pulse);
-            }
-        }
-
-        ctx.font = 'bold 7px "PingFang SC","Microsoft YaHei",sans-serif'; ctx.textAlign = 'left';
-        ctx.fillStyle = 'rgba(180,130,60,0.85)'; ctx.fillText('前排1-4排', 10, seatsTop + 2 * rowGap);
-        ctx.fillStyle = 'rgba(60,100,160,0.85)'; ctx.fillText('中排5-9排', 8, seatsTop + 7 * rowGap);
-        ctx.fillStyle = 'rgba(60,130,90,0.85)'; ctx.fillText('后排10-13排', 8, seatsTop + 11.5 * rowGap);
+    function fuzzySearchCompany(input) {
+        const lower = input.trim().toLowerCase();
+        const companies = Object.keys(companySeats);
+        const matches = companies.filter(name => name.toLowerCase().includes(lower));
+        if (matches.length === 0) return null;
+        if (matches.length === 1) return matches[0];
+        const exact = matches.find(name => name.toLowerCase() === lower);
+        if (exact) return exact;
+        matches.sort((a, b) => a.length - b.length);
+        return matches[0];
     }
 
-    let scale = 1, offX = 0, offY = 0;
-    const MIN_S = 0.5, MAX_S = 4;
-    let lastPinch = 0, lastTx = 0, lastTy = 0, dragging = false;
-    let animId = null, curSeat = null, pulseVal = 0;
-
-    function render() {
-        const dpr = Math.min(window.devicePixelRatio || 1, 2);
-        const dw = canvasWrapper.clientWidth;
-        const dh = canvasWrapper.clientHeight;
-        canvas.width = dw * dpr;
-        canvas.height = dh * dpr;
-        ctx.setTransform(1, 0, 0, 1, 0, 0);
-        ctx.scale(dpr, dpr);
-        const bs = dw / LW;
-        ctx.save();
-        ctx.translate(offX, offY);
-        ctx.scale(bs * scale, bs * scale);
-        drawAll(ctx, curSeat, pulseVal);
-        ctx.restore();
+    function findCompanySeats(input) {
+        const trimmed = input.trim();
+        if (!trimmed) return null;
+        const companyName = fuzzySearchCompany(trimmed);
+        if (!companyName) return null;
+        const codes = companySeats[companyName];
+        const parsedList = codes.map(c => ({ code: c, info: parseSeatCode(c) })).filter(x => x.info);
+        parsedList.sort((a, b) => {
+            if (a.info.row !== b.info.row) return a.info.row - b.info.row;
+            return a.info.seat - b.info.seat;
+        });
+        return { companyName, seats: parsedList, count: parsedList.length };
     }
 
-    function startAnim(seat) {
-        curSeat = seat; scale = 1; offX = 0; offY = 0;
-        if (animId) cancelAnimationFrame(animId);
-        function loop(ts) { pulseVal = (ts / 700) * Math.PI * 2; render(); animId = requestAnimationFrame(loop); }
-        animId = requestAnimationFrame(loop);
-    }
-    function stopAnim() { if (animId) { cancelAnimationFrame(animId); animId = null; } curSeat = null; }
+    // ==================== DOM ====================
+    const pageHome = document.getElementById('page-home');
+    const pageResult = document.getElementById('page-result');
+    const nameInput = document.getElementById('nameInput');
+    const btnFindSeat = document.getElementById('btnFindSeat');
+    const btnBack = document.getElementById('btnBack');
+    const resultGreeting = document.getElementById('resultGreeting');
+    const seatResultCard = document.getElementById('seatResultCard');
+    const errorMessage = document.getElementById('errorMessage');
 
-    function pinchDist(t1, t2) { return Math.sqrt((t1.clientX - t2.clientX) ** 2 + (t1.clientY - t2.clientY) ** 2); }
-    canvas.addEventListener('touchstart', function(e) {
-        e.preventDefault();
-        if (e.touches.length === 2) { dragging = false; lastPinch = pinchDist(e.touches[0], e.touches[1]); }
-        else if (e.touches.length === 1) { dragging = true; lastTx = e.touches[0].clientX; lastTy = e.touches[0].clientY; }
-    }, { passive: false });
-    canvas.addEventListener('touchmove', function(e) {
-        e.preventDefault();
-        if (e.touches.length === 2) {
-            dragging = false;
-            const nd = pinchDist(e.touches[0], e.touches[1]);
-            const rect = canvas.getBoundingClientRect();
-            const cx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left;
-            const cy = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top;
-            if (lastPinch > 0) {
-                const r = nd / lastPinch;
-                const ns = Math.min(MAX_S, Math.max(MIN_S, scale * r));
-                offX = cx - (cx - offX) * (ns / scale);
-                offY = cy - (cy - offY) * (ns / scale);
-                scale = ns;
-            }
-            lastPinch = nd;
-        } else if (e.touches.length === 1 && dragging) {
-            offX += e.touches[0].clientX - lastTx;
-            offY += e.touches[0].clientY - lastTy;
-            lastTx = e.touches[0].clientX; lastTy = e.touches[0].clientY;
-        }
-    }, { passive: false });
-    canvas.addEventListener('touchend', function(e) { if (e.touches.length === 0) { dragging = false; lastPinch = 0; } });
-
-    function buildBigInfoHTML(seat) {
-        const sc = seat.section;
-        const st = sc === 'front' ? '前排' : sc === 'middle' ? '中排' : '后排';
-        return `<div class="seat-zone-display"><span class="zone-badge ${sc}">${seat.zoneLetter}</span><span class="zone-text">${seat.zoneLetter}区 · ${st}</span></div><div class="seat-detail-row"><span class="seat-detail-item">第 ${seat.row} 排</span><span class="seat-detail-divider">·</span><span class="seat-detail-item">第 ${seat.seat} 座</span></div><span class="seat-code">🏷️ 编号：${seat.code}</span>`;
-    }
     function showError(msg) {
-        errorMessage.textContent = msg; errorMessage.classList.add('show');
-        nameInput.style.borderColor = 'rgba(255,138,138,0.9)';
-        setTimeout(() => { errorMessage.classList.remove('show'); nameInput.style.borderColor = 'rgba(255,255,255,0.35)'; }, 2000);
-    }
-    function showPage(p) { [pageHome, pageResult].forEach(x => x.classList.add('hidden')); p.classList.remove('hidden'); }
-
-    function showResult(name, seat) {
-        displayName.textContent = name.trim(); seatBigInfo.innerHTML = buildBigInfoHTML(seat);
-        showPage(pageResult); startAnim(seat);
-        const url = new URL(window.location); url.searchParams.set('name', name.trim());
-        history.pushState(null, '', url.toString());
+        errorMessage.textContent = msg;
+        errorMessage.classList.add('show');
+        setTimeout(() => errorMessage.classList.remove('show'), 2500);
     }
 
-    btnFindSeat.addEventListener('click', () => {
-        const name = nameInput.value.trim();
-        if (!name) { showError('请输入姓名'); return; }
-        const seat = getSeatByName(name);
-        if (!seat) { showError('未找到对应座位，请重试'); return; }
-        showResult(name, seat);
-    });
-    nameInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); btnFindSeat.click(); } });
-    btnBack.addEventListener('click', () => { stopAnim(); showPage(pageHome); nameInput.focus(); });
+    function showPage(p) {
+        [pageHome, pageResult].forEach(x => x.classList.add('hidden'));
+        p.classList.remove('hidden');
+    }
 
-    window.addEventListener('popstate', () => {
-        const p = new URLSearchParams(window.location.search), nm = p.get('name');
-        if (nm && nm.trim()) { const seat = getSeatByName(nm); if (seat) { showResult(nm, seat); return; } }
-        stopAnim(); showPage(pageHome); nameInput.focus();
-    });
+    function showResult(data) {
+        resultGreeting.innerHTML = `🏢 <span class="name-em">${data.companyName}</span>`;
+        let seatsHTML = data.seats.map(s => {
+            const info = s.info;
+            return `<div class="seat-item"><div class="code">${s.code}</div><div class="detail">${info.zone}区 ${info.section} 第${info.row}排</div></div>`;
+        }).join('');
+        seatResultCard.innerHTML = `
+            <div class="company-name-display">座位列表</div>
+            <div class="seat-list">${seatsHTML}</div>
+            <div class="seat-count">共 ${data.count} 个座位</div>
+        `;
+        showPage(pageResult);
+        pageResult.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 
+    function doSearch(input) {
+        if (!input.trim()) { showError('请输入公司名'); return; }
+        const result = findCompanySeats(input);
+        if (!result) { showError('未找到该公司，请尝试其他关键词'); return; }
+        showResult(result);
+    }
+
+    btnFindSeat.addEventListener('click', () => doSearch(nameInput.value));
+    nameInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); doSearch(nameInput.value); } });
+    btnBack.addEventListener('click', () => { showPage(pageHome); nameInput.focus(); });
+
+    // ==================== 初始化：支持URL参数（扫码场景） ====================
     function init() {
-        const p = new URLSearchParams(window.location.search), nm = p.get('name');
-        if (nm && nm.trim()) { const seat = getSeatByName(nm); if (seat) { showResult(nm, seat); return; } }
-        showPage(pageHome); nameInput.focus();
+        const params = new URLSearchParams(window.location.search);
+        const companyParam = params.get('company');
+        if (companyParam && companyParam.trim()) {
+            const result = findCompanySeats(companyParam);
+            if (result) {
+                showResult(result);
+                return;
+            }
+        }
+        showPage(pageHome);
+        nameInput.focus();
     }
     init();
 })();

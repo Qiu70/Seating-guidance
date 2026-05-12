@@ -93,16 +93,27 @@
             padding: 1.5vw 0; /* 只保留上下内边距 */
             text-align: center;
         }
-        .seat-code-big {
+     .seat-code-big {
     font-size: 6vw;
     font-weight: 800;
     color: #fff;
-    border: 2px solid rgba(255,255,255,0.5);
-    border-radius: 2vw;
-    padding: 1.5vw 3vw;
+    background: rgba(255,255,255,0.18);
+    border: 2px solid rgba(255,255,255,0.6);
+    border-radius: 2.5vw;
+    padding: 2vw 4vw;
     display: inline-block;
+    letter-spacing: 2px;
+    text-shadow: 0 0 20px rgba(255,255,255,0.5), 0 2px 8px rgba(0,0,0,0.3);
+    box-shadow: 0 0 18px rgba(255,255,255,0.25), 0 4px 12px rgba(0,0,0,0.2);
 }
-        .seat-detail { font-size: 3.6vw; color: rgba(255,255,255,0.8); margin-top: 1.5vw; }
+       .seat-detail {
+    font-size: 3.8vw;
+    color: rgba(255,255,255,0.85);
+    margin-top: 1.5vw;
+    letter-spacing: 1px;
+    font-weight: 500;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
 
         @media (max-width: 360px) {
             .home-title { font-size: 5.8vw; }
@@ -115,8 +126,8 @@
             .btn { padding: 14px 24px; font-size: 0.9rem; }
             .error-message { height: 18px; line-height: 18px; font-size: 0.7rem; }
             .checkin-text { font-size: 1.1rem; } .checkin-sub { font-size: 0.75rem; }
-            .seat-code-big { font-size: 1.5rem; }
-            .seat-detail { font-size: 0.9rem; }
+           .seat-code-big { font-size: 1.5rem; padding: 10px 22px; letter-spacing: 2px; }
+           .seat-detail { font-size: 0.95rem; }
         }
     </style>
 </head>

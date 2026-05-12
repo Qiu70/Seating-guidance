@@ -158,13 +158,13 @@
     function getSeatByName(name) { const t = name.trim(); if (!t) return null; return allSeats[hashString(t) % allSeats.length]; }
 
     const LW = 700, LH = 480;
-    const seatW = 14, seatH = 11, seatGap = 2;
+    const seatW = 22, seatH = 17, seatGap = 3;
     const half10 = 10 * seatW + 9 * seatGap;
     const half15 = 15 * seatW + 14 * seatGap;
-    const aisleW = 40;
+    const aisleW = 48;
     const groupW = half15 * 2 + aisleW;
     const startX = (LW - groupW) / 2;
-    const rowGap = 16, seatsTop = 70;
+    const rowGap = 24, seatsTop = 70;
     const stageW = 320, stageH = 22, stageY = 14;
 
     const colors = {

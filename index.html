@@ -120,6 +120,12 @@
             font-weight: 500;
             text-shadow: 0 1px 4px rgba(0,0,0,0.2);
         }
+        .seat-company {
+            font-size: 2.8vw;
+            color: rgba(255,255,255,0.55);
+            margin-top: 0.5vw;
+            font-weight: 400;
+        }
 
         @media (max-width: 360px) {
             .home-title { font-size: 5.8vw; }
@@ -135,6 +141,7 @@
             .seat-code-big { font-size: 1.5rem; padding: 10px 22px; letter-spacing: 2px; }
             .seat-code-big.vip { font-size: 1.4rem; }
             .seat-detail { font-size: 0.95rem; }
+            .seat-company { font-size: 0.7rem; }
         }
     </style>
 </head>
@@ -327,18 +334,44 @@
         };
     }
 
-    function findSeatByNameExact(name) {
+    function findSeatByName(name) {
         const trimmed = name.trim();
         if (!trimmed) return null;
-        if (!nameToSeats.hasOwnProperty(trimmed)) return null;
-        const codes = nameToSeats[trimmed];
-        const parsed = codes.map(c => {
-            const info = parseSeatCode(c);
-            return { code: c, info };
-        }).filter(x => x.info);
-        if (parsed.length === 0) return null;
-        parsed.sort((a, b) => a.info.row - b.info.row || a.info.seat - b.info.seat);
-        return { name: trimmed, seats: parsed, count: parsed.length };
+        
+        // 精确匹配
+        if (nameToSeats.hasOwnProperty(trimmed)) {
+            const codes = nameToSeats[trimmed];
+            const parsed = codes.map(c => {
+                const info = parseSeatCode(c);
+                return { code: c, info, label: '' };
+            }).filter(x => x.info);
+            if (parsed.length > 0) {
+                parsed.sort((a, b) => a.info.row - b.info.row || a.info.seat - b.info.seat);
+                return { name: trimmed, seats: parsed, count: parsed.length };
+            }
+        }
+        
+        // 前缀匹配（支持“陈熙” -> “陈熙(盛丰集团)”等）
+        const prefix = trimmed + '(';
+        const matchedKeys = Object.keys(nameToSeats).filter(k => k.startsWith(prefix));
+        if (matchedKeys.length > 0) {
+            const allSeats = [];
+            matchedKeys.forEach(k => {
+                const codes = nameToSeats[k];
+                // 提取公司名（括号内的内容）
+                const label = k.substring(trimmed.length + 1, k.length - 1); // 去掉姓名和包裹的括号
+                codes.forEach(code => {
+                    const info = parseSeatCode(code);
+                    if (info) allSeats.push({ code, info, label });
+                });
+            });
+            if (allSeats.length > 0) {
+                allSeats.sort((a, b) => a.info.row - b.info.row || a.info.seat - b.info.seat);
+                return { name: trimmed, seats: allSeats, count: allSeats.length };
+            }
+        }
+        
+        return null;
     }
 
     const pageHome = document.getElementById('page-home');
@@ -359,10 +392,10 @@
 
     function showResult(data) {
         const displayName = data.name.replace(/\((.+)\)/, '<br><small>$1</small>');
-resultGreeting.innerHTML = `👋 <span class="name-em">${displayName}</span> 的座位`;
+        resultGreeting.innerHTML = `👋 <span class="name-em">${displayName}</span> 的座位`;
         let html = '';
         data.seats.forEach(s => {
-            const { zone, row, seat, section } = s.info;
+            const { zone, row, seat, section, label } = { ...s.info, label: s.label };
             if (zone === 'VIP') {
                 html += `
                     <div class="seat-info-box">
@@ -376,6 +409,7 @@ resultGreeting.innerHTML = `👋 <span class="name-em">${displayName}</span> 的
                     <div class="seat-info-box">
                         <div class="seat-code-big">${s.code}</div>
                         <div class="seat-detail">${zone}区 ${section} 第${row}排 第${seat}座</div>
+                        ${s.label ? `<div class="seat-company">${s.label}</div>` : ''}
                     </div>
                     <div style="height:2vw;"></div>
                 `;
@@ -388,7 +422,7 @@ resultGreeting.innerHTML = `👋 <span class="name-em">${displayName}</span> 的
 
     function doSearch() {
         const input = nameInput.value;
-        const result = findSeatByNameExact(input);
+        const result = findSeatByName(input);
         if (!result) {
             showError('未找到该姓名，请检查是否输入完整姓名');
             return;
@@ -404,7 +438,7 @@ resultGreeting.innerHTML = `👋 <span class="name-em">${displayName}</span> 的
         const params = new URLSearchParams(window.location.search);
         const nameParam = params.get('name');
         if (nameParam && nameParam.trim()) {
-            const result = findSeatByNameExact(nameParam.trim());
+            const result = findSeatByName(nameParam.trim());
             if (result) {
                 showResult(result);
                 return;

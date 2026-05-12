@@ -82,25 +82,26 @@
         .result-greeting .name-em { color: #fff; font-weight: 800; }
 
         .seat-result-card {
-            margin: 2vw 0; padding: 3vw; background: rgba(255,255,255,0.12);
-            border-radius: 3vw; border: 1px solid rgba(255,255,255,0.22); text-align: center;
+            margin: 2vw 0; padding: 3vw;
+            background: none; /* 去掉背景 */
+            border-radius: 3vw; border: none; text-align: center;
         }
         .seat-info-box {
-    background: rgba(255,255,255,0.15);
-    border: 1px solid rgba(255,255,255,0.25);
-    border-radius: 3vw;
-    width: 22vw;          /* 宽度 */
-    height: 22vw;         /* 高度与宽度相等 → 正方形 */
-    max-width: 90px;      /* 限制最大宽度 */
-    max-height: 90px;     /* 限制最大高度 */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;       /* 居中 */
-    padding: 1vw;         /* 减小内边距，防止内容溢出 */
+            background: none; /* 去掉背景 */
+            border: none; /* 去掉边框 */
+            border-radius: 0;
+            padding: 1.5vw 0; /* 只保留上下内边距 */
+            text-align: center;
+        }
+        .seat-code-big {
+    font-size: 6vw;
+    font-weight: 800;
+    color: #fff;
+    border: 2px solid rgba(255,255,255,0.5);
+    border-radius: 2vw;
+    padding: 1.5vw 3vw;
+    display: inline-block;
 }
-        .seat-code-big { font-size: 6vw; font-weight: 800; color: #fff; }
         .seat-detail { font-size: 3.6vw; color: rgba(255,255,255,0.8); margin-top: 1.5vw; }
 
         @media (max-width: 360px) {
@@ -108,14 +109,15 @@
             .checkin-text { font-size: 5vw; }
         }
         @media (min-width: 420px) {
-    .seat-info-box {
-        width: 90px;
-        height: 90px;
-        max-width: none;
-        max-height: none;
-        padding: 6px;
-    }
-}
+            .glass-card { border-radius: 18px; padding: 24px 20px; }
+            .home-title { font-size: 1.3rem; } .home-subtitle { font-size: 0.82rem; }
+            .input-wrap input { padding: 14px 38px 14px 14px; font-size: 0.9rem; }
+            .btn { padding: 14px 24px; font-size: 0.9rem; }
+            .error-message { height: 18px; line-height: 18px; font-size: 0.7rem; }
+            .checkin-text { font-size: 1.1rem; } .checkin-sub { font-size: 0.75rem; }
+            .seat-code-big { font-size: 1.5rem; }
+            .seat-detail { font-size: 0.9rem; }
+        }
     </style>
 </head>
 <body>
@@ -155,7 +157,6 @@
 
 <script>
 (function() {
-    // ==================== 姓名 → 座位编号（按最新排座表） ====================
     const nameToSeats = {};
 
     function add(name, code) {
@@ -238,7 +239,6 @@
         return { zone: match[1], row: row, seat: parseInt(match[3]), section: row <= 4 ? '前排' : row <= 9 ? '中排' : '后排' };
     }
 
-    // 精确查找
     function findSeatByNameExact(name) {
         const trimmed = name.trim();
         if (!trimmed) return null;
@@ -250,7 +250,6 @@
         return { name: trimmed, seats: parsed, count: parsed.length };
     }
 
-    // DOM
     const pageHome = document.getElementById('page-home');
     const pageResult = document.getElementById('page-result');
     const nameInput = document.getElementById('nameInput');
@@ -299,7 +298,6 @@
     nameInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); doSearch(); } });
     btnBack.addEventListener('click', () => { showPage(pageHome); nameInput.focus(); });
 
-    // 扫码参数支持 ?name=完整姓名
     function init() {
         const params = new URLSearchParams(window.location.search);
         const nameParam = params.get('name');

@@ -27,7 +27,6 @@
             border: 1px solid rgba(255,255,255,0.3); border-radius: 4vw; box-shadow: 0 10px 40px rgba(0,0,0,0.18);
             padding: 5vw 4vw; text-align: center; display: flex; flex-direction: column;
         }
-        /* 签到成功提示 */
         .checkin-banner {
             background: linear-gradient(135deg, rgba(74,222,128,0.3) 0%, rgba(34,197,94,0.2) 100%);
             border: 1px solid rgba(74,222,128,0.5); border-radius: 3vw; padding: 3vw 4vw;
@@ -46,7 +45,6 @@
         .checkin-text { font-size: 4.5vw; font-weight: 700; color: #fff; text-shadow: 0 2px 6px rgba(0,0,0,0.2); }
         .checkin-sub { font-size: 3vw; color: rgba(255,255,255,0.8); margin-top: 0.5vw; }
 
-        /* 首页 */
         .home-icon {
             width: 52px; height: 52px; margin: 0 auto 3vw; background: rgba(255,255,255,0.18); border-radius: 15px;
             display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.28);
@@ -79,7 +77,6 @@
             width: auto; padding: 2.2vw 4vw; font-size: 3.2vw; border-radius: 8vw; box-shadow: none;
         }
 
-        /* 结果页 */
         .result-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2vw; }
         .result-greeting { font-size: 4.2vw; font-weight: 600; color: rgba(255,255,255,0.9); text-align: left; }
         .result-greeting .name-em { color: #fff; font-weight: 800; }
@@ -88,20 +85,16 @@
             margin: 2vw 0; padding: 3vw; background: rgba(255,255,255,0.12);
             border-radius: 3vw; border: 1px solid rgba(255,255,255,0.22); text-align: center;
         }
-        .seat-list { display: flex; flex-wrap: wrap; gap: 2vw; justify-content: center; }
-        .seat-item {
+        .seat-info-box {
             background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
-            border-radius: 3vw; padding: 2.5vw 3.5vw; text-align: center; min-width: 22vw;
+            border-radius: 3vw; padding: 3vw 4vw; text-align: center;
         }
-        .seat-item .code { font-size: 4vw; font-weight: 800; color: #fff; }
-        .seat-item .detail { font-size: 2.6vw; color: rgba(255,255,255,0.7); margin-top: 1vw; }
-        .seat-count { font-size: 3vw; color: rgba(255,255,255,0.6); margin-top: 2.5vw; }
-        .company-name-display { font-size: 4.2vw; font-weight: 700; color: #fff; margin-bottom: 2.5vw; }
+        .seat-code-big { font-size: 6vw; font-weight: 800; color: #fff; }
+        .seat-detail { font-size: 3.6vw; color: rgba(255,255,255,0.8); margin-top: 1.5vw; }
 
         @media (max-width: 360px) {
             .home-title { font-size: 5.8vw; }
             .checkin-text { font-size: 5vw; }
-            .seat-item { min-width: 26vw; padding: 3vw 4vw; }
         }
         @media (min-width: 420px) {
             .glass-card { border-radius: 18px; padding: 24px 20px; }
@@ -110,35 +103,30 @@
             .btn { padding: 14px 24px; font-size: 0.9rem; }
             .error-message { height: 18px; line-height: 18px; font-size: 0.7rem; }
             .checkin-text { font-size: 1.1rem; } .checkin-sub { font-size: 0.75rem; }
-            .company-name-display { font-size: 1rem; }
-            .seat-item .code { font-size: 0.95rem; }
-            .seat-item .detail { font-size: 0.68rem; }
-            .seat-count { font-size: 0.75rem; }
+            .seat-code-big { font-size: 1.5rem; }
+            .seat-detail { font-size: 0.9rem; }
         }
     </style>
 </head>
 <body>
 <div class="bg-fixed"></div>
 <div class="app-container">
-    <!-- 首页 / 搜索页 -->
     <div class="page active" id="page-home">
         <div class="glass-card">
             <div class="home-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="2.5" rx="1"/><rect x="5.5" y="10" width="3.5" height="3.5" rx="0.8"/><rect x="11" y="10" width="3.5" height="3.5" rx="0.8"/><rect x="16.5" y="10" width="3.5" height="3.5" rx="0.8"/><rect x="5.5" y="16" width="3.5" height="3.5" rx="0.8"/><rect x="11" y="16" width="5" height="3.5" rx="0.8" fill="currentColor" stroke="none" opacity="0.35"/><circle cx="13.5" cy="17.75" r="1" fill="#fff"/></svg></div>
             <h1 class="home-title">座位导航</h1>
-            <p class="home-subtitle">输入公司名，查看座位安排</p>
+            <p class="home-subtitle">输入完整姓名，查看座位</p>
             <div class="input-wrap">
-                <input type="text" id="nameInput" placeholder="请输入公司名" autocomplete="off" maxlength="30">
+                <input type="text" id="nameInput" placeholder="请输入完整的姓名" autocomplete="off" maxlength="30">
                 <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
             </div>
-            <span class="error-message" id="errorMessage">请输入公司名</span>
+            <span class="error-message" id="errorMessage">请输入正确的姓名</span>
             <button class="btn" id="btnFindSeat" type="button">查找座位</button>
         </div>
     </div>
 
-    <!-- 结果页 -->
     <div class="page hidden" id="page-result">
         <div class="glass-card">
-            <!-- 签到成功横幅 -->
             <div class="checkin-banner">
                 <div class="checkin-icon">✓</div>
                 <div>
@@ -157,178 +145,102 @@
 
 <script>
 (function() {
-    // ==================== 公司座位数据（请根据最终清单修改） ====================
-    // 格式：公司名 -> [座位编号数组]
-    const companySeats = {};
+    // ==================== 姓名 → 座位编号（按最新排座表） ====================
+    const nameToSeats = {};
 
-    function add(company, code) {
-        if (!company) return;
-        const c = company.trim();
-        if (!c) return;
-        if (!companySeats[c]) companySeats[c] = [];
-        if (!companySeats[c].includes(code)) companySeats[c].push(code);
+    function add(name, code) {
+        if (!name) return;
+        const n = name.trim();
+        if (!n) return;
+        if (!nameToSeats[n]) nameToSeats[n] = [];
+        nameToSeats[n].push(code);
     }
 
-    // === 第1排 ===
-    add("宏龙海洋", "A1-1"); add("奇瑞商用车", "A1-2"); add("中景石化", "A1-3");
-    add("国家碳计量中心", "A1-5"); add("沐曦股份", "A1-6"); add("星网锐捷", "A1-7");
-    add("福州大学电气学院", "B1-5"); add("福州大学先进制造学院", "B1-6"); add("福建理工大学", "B1-7");
+    // 第1排
+    add("项凤华", "A1-1"); add("黄为民", "A1-2"); add("祁麟", "A1-3"); add("辛军飞", "A1-4");
+    add("卢文晶", "A1-5"); add("陈圣焜", "A1-6"); add("林贤华", "A1-7"); add("陈明东", "A1-8");
+    add("杨学敏", "A1-9"); add("黄正洪", "A1-10");
+    add("严梅明", "B1-1"); add("熊培惠", "B1-2"); add("高远忠", "B1-3"); add("陈颖", "B1-4");
+    add("林金泉", "B1-5"); add("查恩尧", "B1-6"); add("刘芳", "B1-7"); add("赵鑫旸", "B1-8");
+    add("林善和", "B1-9"); add("李亚亚", "B1-10");
 
-    // === 第2排 ===
-    add("福州鸿瑞光电科技", "A2-8"); add("鸿生股份", "B2-5"); add("大东海", "B2-9");
+    // 第2排
+    add("胡九龙", "A2-1"); add("黄福祥", "A2-2"); add("鲍光海", "A2-3"); add("黄萍", "A2-4");
+    add("罗堪", "A2-5"); add("王丹琼", "A2-6"); add("陈芳", "A2-7"); add("陈学农", "A2-8");
+    add("念保镖", "A2-9"); add("黄照琴", "A2-10");
+    add("陈昆", "B2-1"); add("李硕", "B2-2"); add("郑清廉", "B2-3"); add("张权勋", "B2-4");
+    add("邹慧云", "B2-5"); add("龚凉红", "B2-6"); add("宋鹏军", "B2-7"); add("曹而超", "B2-8");
+    add("卢米高", "B2-9"); add("邱小琴", "B2-10");
 
-    // === 第3排 ===
-    add("丰大集团", "A3-1"); add("农林大学海洋学院", "A3-3"); add("福建空天碳科技集团有限公司", "A3-4");
-    add("中国科学院空天信息创新研究院", "A3-6");
+    // 第3排
+    add("翁磊", "A3-1"); add("骆华涛", "A3-2"); add("陈麦麟", "A3-3"); add("吴红洲", "A3-4");
+    add("黄敬春", "A3-5"); add("李向红", "A3-6"); add("毕超", "A3-7"); add("张翼", "A3-8");
+    add("董川", "A3-9"); add("谢风光", "A3-10");
+    add("王长琛", "B3-1"); add("赖志艺", "B3-2"); add("陈勇庆", "B3-3"); add("李琦山", "B3-4");
+    add("胡晓东", "B3-5"); add("吴小付", "B3-6"); add("张会东", "B3-7"); add("李殿魁", "B3-8");
+    add("卞晓丽", "B3-9"); add("李元杰", "B3-10");
 
-    // === 第4排 ===
-    add("金华夏建筑", "A4-1"); add("奋安铝业", "A4-2"); add("五谷丰登", "A4-3"); add("振凯实业", "A4-4");
-    add("中渔食品", "A4-5"); add("风暴渔供应链", "A4-6"); add("东南汽车", "A4-7"); add("安徽建工", "A4-8");
-    add("海康威视", "A4-9"); add("中建海峡", "A4-10"); add("仙芝楼", "B4-1"); add("亚通公司", "B4-2");
-    add("连江海洋渔业经济发展协会", "B4-6"); add("力美水产", "B4-7"); add("闽投深海", "B4-8");
-    add("乾动科技", "B4-9"); add("胜田食品", "B4-10"); add("盛丰集团", "B4-10");
+    // 第4排
+    add("郑和", "A4-1"); add("陈晓春", "A4-2"); add("童正群", "A4-3"); add("林而庄", "A4-4");
+    add("林超", "A4-5"); add("连若裴", "A4-6"); add("吴瑞敏", "A4-7"); add("余俊乐", "A4-8");
+    add("钱磊", "A4-9"); add("谢威", "A4-10");
+    add("苏天耀", "B4-1"); add("徐道煌", "B4-2"); add("熊凯宏", "B4-3"); add("蒋小军", "B4-4");
+    add("潘守彬", "B4-5"); add("陈启", "B4-6"); add("何潇", "B4-7"); add("吴秀清", "B4-8");
+    add("唐睿", "B4-9"); add("黄磊", "B4-10");
 
-    // === 第5排 ===
-    add("盛丰集团", "A5-1"); add("福州农商银行", "A5-2"); add("金蝶天燕", "A5-3"); add("长沙盈芯", "A5-4");
-    add("阿石创", "A5-5"); add("海尔公司", "A5-6"); add("中铝瑞闽", "A5-8"); add("永荣控股", "A5-9");
-    add("中景石化", "A5-10"); add("易鹿供应链", "A5-12"); add("天马科技", "A5-13"); add("富轩科技", "A5-14");
-    add("福耀科技大学", "A5-15"); add("汉特云", "B5-1"); add("电管家", "B5-2"); add("中石化森美", "B5-6");
-    add("三峡海上风电", "B5-7"); add("中建海峡", "B5-8"); add("瑞凌新能", "B5-9"); add("金强（福建）建材", "B5-10");
-    add("奋安铝业", "B5-11"); add("春伦集团", "B5-12"); add("空天碳（福州）数字科技有限公司", "B5-14"); add("智行航空", "B5-15");
+    // 第5排
+    add("范祖洪", "A5-1"); add("张为东", "A5-2"); add("罗惠文", "A5-3"); add("黄黎明", "A5-4");
+    add("陈宁", "A5-5"); add("阳成虎", "A5-6"); add("廖熙阳", "A5-7"); add("林晞睿", "A5-8");
+    add("张利剑", "A5-10"); add("吴景红", "A5-11"); add("林建军", "A5-12"); add("钱媛", "A5-13");
+    add("胡海明", "A5-14"); add("陆观立", "A5-15");
+    add("李宣霈", "B5-1");
 
-    // === 第6排 ===
-    add("绿创投资", "A6-1"); add("福规院", "A6-2"); add("建科院", "A6-3"); add("福州易碳空天数字科技有限公司", "A6-5");
-    add("福建友谊集团", "A6-6"); add("中国铁建华东区域总部福建总部", "A6-7"); add("中铁（福建）投资有限公司", "A6-8");
-    add("奋安铝业", "A6-11"); add("中渔食品", "A6-12"); add("安徽建工", "A6-13"); add("亚通公司", "A6-14");
-    add("丰大集团", "A6-15"); add("宏龙海洋", "B6-1"); add("连江海洋渔业经济发展协会", "B6-2");
-    add("力美水产", "B6-4"); add("闽投深海", "B6-5"); add("乾动科技", "B6-7"); add("农林大学海洋学院", "B6-8");
-    add("海尔公司", "B6-9"); add("中铝瑞闽", "B6-11"); add("永荣控股", "B6-12"); add("鸿生股份", "B6-14");
-    add("易鹿供应链", "B6-15");
+    // 第6排
+    add("郑晨行", "A6-1"); add("吕杨", "A6-2"); add("鄢仁武", "A6-3"); add("陈世光", "A6-4");
+    add("牛畅", "A6-5"); add("蔡浩威", "A6-7"); add("严璇", "A6-8"); add("赵素雅", "A6-9");
+    add("魏剑斌", "A6-10"); add("黄桦", "A6-11"); add("刘伟", "A6-12"); add("丁光振", "A6-13");
+    add("陈宗燕", "A6-14"); add("黄勤登", "A6-15");
+    add("朱爱虹", "B6-1"); add("黄山", "B6-2"); add("林智斌", "B6-3"); add("程文钊", "B6-4");
+    add("邱宏彬", "B6-5");
 
-    // === 第7排 ===
-    add("天马科技", "A7-1"); add("电管家", "A7-2"); add("星网锐捷", "A7-3"); add("福州鸿瑞光电科技", "A7-7");
-    add("中石化森美", "A7-10"); add("三峡海上风电", "A7-11"); add("中建海峡", "A7-12"); add("奋安铝业", "A7-14");
-    add("春伦集团", "A7-15"); add("武夷碳投", "B7-1"); add("福建空天碳科技集团有限公司", "B7-5");
-    add("智行航空", "B7-8"); add("福规院", "B7-9");
+    // 第7排
+    add("邓莉", "A7-1"); add("郭晓光", "A7-2"); add("邓一雄", "A7-3"); add("陈历历", "A7-4");
+    add("李渝", "A7-5");
 
-    // === 第8排 ===
-    add("建科院", "A8-1"); add("中铁（福建）投资有限公司", "A8-2"); add("中交华中（海西）区域总部", "A8-3");
-    add("福建理工大学", "A8-5"); add("福州京东方", "A8-6"); add("冠捷电子", "A8-8"); add("阿石创新", "A8-10");
-    add("久策气体", "A8-11"); add("海尔智家福建分公司", "A8-12"); add("科慧能源", "A8-14"); add("汉特云", "B8-1");
-    add("中铝瑞闽", "B8-4"); add("新大陆慧创科技", "B8-4"); add("新大陆数字技术股份有限公司", "B8-6");
-    add("帝视科技", "B8-9"); add("中国电信福州分公司", "B8-10"); add("联通福州分公司", "B8-13");
-    add("福州万翔电子商务有限公司", "B8-15");
+    // 第10排
+    add("林心舒", "A10-1"); add("张霞", "A10-2"); add("邱文真", "A10-3"); add("陈洋", "A10-4");
+    add("沈磊", "A10-5"); add("毛丽华", "A10-6"); add("徐闻铭", "A10-7"); add("曾盘高", "A10-8");
+    add("陈兆宝", "A10-9"); add("罗长裕", "A10-10"); add("赵雷", "A10-11"); add("林妮娜", "A10-12");
+    add("何文馨", "A10-13"); add("卢金华", "A10-14"); add("钟辉", "A10-15");
+    add("孙宏伟", "B10-1"); add("郭文新", "B10-2"); add("吴伟", "B10-3"); add("胡勇强", "B10-4");
+    add("黄光海", "B10-5"); add("王静", "B10-6"); add("蔡宗荣", "B10-7"); add("程隽", "B10-8");
+    add("唐凌凡", "B10-9"); add("王小庄", "B10-10"); add("房祥凯", "B10-11"); add("胡达明", "B10-12");
+    add("孙明春", "B10-13"); add("陈有章", "B10-14"); add("虞志轩", "B10-15");
 
-    // === 第9排 ===
-    add("福建省五维智讯电气有限公司", "A9-1"); add("华为数字能源技术有限公司", "A9-3");
-    add("万帮数字能源股份有限公司", "A9-5"); add("超聚变数字技术有限公司", "A9-7"); add("万家智能科技", "A9-10");
-    add("金蝶天燕", "A9-11"); add("电管家", "A9-12"); add("星网锐捷", "A9-14"); add("星网锐捷", "B9-1");
-    add("中国联通福建公司", "B9-4"); add("海康威视（杭州）", "B9-5"); add("福昕软件", "B9-7");
-    add("福建省数据流通控股有限公司", "B9-8"); add("朴朴", "B9-9"); add("朗新科技", "B9-10");
-    add("沐曦股份", "B9-13"); add("奇瑞贵州万达客车股份有限公司", "B9-15");
+    // 第11排
+    add("朱佑健", "A11-1"); add("张礼", "A11-2"); add("林彬龙", "A11-3"); add("沈晓芝", "A11-4");
+    add("林文杰", "A11-5");
 
-    // === 第10排 ===
-    add("福州鸿瑞光电科技", "A10-1"); add("国核（福建）", "A10-3"); add("福建奔驰", "A10-4");
-    add("宁德时代", "A10-5"); add("厦门金旅", "A10-7"); add("厦门金龙", "A10-8"); add("万润新能源", "A10-10");
-    add("东南汽车", "A10-12"); add("奇瑞商用车公司", "A10-13"); add("中国银行福州分行", "A10-15");
-    add("福建理工大学", "B10-1"); add("远致富海", "B10-3"); add("上海沪闽再生资源有限公司", "B10-5");
-    add("永荣控股", "B10-7"); add("福州晋安三创基金", "B10-10"); add("榕投基金", "B10-11");
-    add("万华化学", "B10-12"); add("中石化森美", "B10-13"); add("金风科技", "B10-14");
-
-    // === 第11排 ===
-    add("三峡海上风电", "A11-1"); add("新福兴玻璃", "A11-3"); add("中建海峡", "A11-6");
-    add("福建灵信信息科技有限公司", "A11-8"); add("深城交科技集团股份有限公司", "A11-10");
-    add("福建恒宇智能科技有限公司", "A11-11"); add("福建金华夏建筑发展", "A11-12"); add("福州华源混凝土", "A11-14");
-    add("春伦集团", "B11-1"); add("金牛水泥", "B11-2"); add("金强（福建）建材", "B11-4"); add("奋安铝业", "B11-5");
-    add("亚通新材料", "B11-6"); add("维锦纺织", "B11-7"); add("华东造船厂", "B11-9"); add("马尾造船", "B11-10");
-    add("安徽建工", "B11-11"); add("福建省冷冻食品协会", "B11-12"); add("御冠食品", "B11-13");
-    add("名成食品", "B11-15");
-
-    // === 第12排 ===
-    add("中闽杰仕", "A12-1"); add("仓廪衣食", "A12-3"); add("仙芝楼", "A12-4"); add("淼天汇食品", "A12-5");
-    add("宏龙海洋", "A12-7"); add("建科院", "A12-8"); add("罗源县鲍鱼协会", "A12-10");
-    add("福建省洋泽海洋生物科技有限公司", "A12-10"); add("连江海洋渔业经济发展协会", "A12-12");
-    add("福州上华防火设备", "A12-14"); add("深圳市盛弘电气股份有限公司", "B12-1"); add("富发水产", "B12-3");
-    add("源融鑫", "B12-4"); add("重庆七腾机器人有限公司", "B12-5"); add("闽投深海公司", "B12-7");
-    add("乾动科技", "B12-10"); add("胜田食品", "B12-12"); add("汉吉斯", "B12-13"); add("中交冷链", "B12-13");
-
-    // === 第13排 ===
-    add("福建贵安新天地", "A13-1"); add("福州振凯实业有限公司", "A13-2"); add("兆华水产", "A13-3");
-    add("中渔(福州)食品科技有限公司", "A13-4"); add("福建赛鸥农业发展有限公司", "A13-6");
-    add("风暴渔供应链", "A13-7"); add("福建省石油化工供销", "A13-8"); add("盛丰集团", "A13-9");
-    add("福州名城保护开发", "A13-10"); add("龙旺闽越水镇", "A13-11"); add("携程集团", "A13-12");
-    add("武夷碳投", "A13-14"); add("武夷碳投", "B13-1"); add("冶城集团", "B13-3");
-    add("天津南大通用数据技术股份有限公司", "B13-4"); add("智行航空", "B13-8"); add("绿创投资", "B13-10");
-    add("福晓律师事务所", "B13-11"); add("东海航运保险股份有限公司福建分公司", "B13-13");
-    add("福建恒宇智能科技有限公司", "B13-14");
-
-    // === 第14排 ===
-    add("上和（福州）服务有限公司", "A14-1"); add("肯信（福建）企业管理咨询有限公司", "A14-2");
-    add("福规院", "A14-4"); add("福建拓维律师事务所", "A14-11"); add("闽都创新实验室", "A14-12");
-    add("福州技术市场有限公司", "B14-1"); add("富轩科技", "B14-3"); add("中国科学院空天信息创新研究院", "B14-5");
-    add("福州嘉福电子科技有限公司", "B14-7"); add("福建省建筑设计研究院有限公司", "B14-10");
-
-    // === 第15排 ===
-    add("福建省汇通达网络有限公司", "A15-1"); add("淘宝闪购", "A15-3"); add("福建博扬环保科技有限公司", "A15-5");
-    add("福建闽海集团", "A15-6"); add("福建三钢闽光股份有限公司福州分公司", "A15-7");
-    add("锡斌光电（江苏）有限公司", "A15-9"); add("福建威泰思光电有限公司", "A15-10");
-    add("福州市道路货物运输协会", "A15-11"); add("福州福太太食品有限公司", "A15-12");
-    add("福州易碳空天数字科技有限公司", "A15-13"); add("福建谷丰源食品有限公司", "A15-14"); add("新奥能源", "A15-15");
-    add("自媒体", "B15-1"); add("金创天承投资有限公司", "B15-2"); add("上海锐成信息科技有限公司", "B15-3");
-    add("云和恩墨（北京）信息技术有限公司", "B15-12"); add("福建伟亿科技有限公司", "B15-13"); add("超鹿运动", "B15-15");
-
-    // === 第16排 ===
-    add("三明市飞云掣电新能源科技有限公司", "A16-1"); add("北京华力创通科技股份有限公司", "A16-3");
-    add("中创浩远科技（福建）有限公司", "A16-4"); add("福建安福盛源环保科技有限公司", "A16-5");
-    add("中国移动通信集团福建有限公司福州分公司", "A16-7"); add("长沙盈芯半导体科技有限公司", "A16-11");
-    add("中交华中（海西）区域总部", "A16-14"); add("瑞幸咖啡", "B16-1");
-
-    // === 金融机构区 ===
-    add("闽南理工学院", "A17-1"); add("福耀科技大学", "A17-2"); add("福州农商银行连江支行", "A17-3");
-    add("兴业银行福州分行", "A17-4"); add("中信银行福州分行", "A17-7"); add("建设银行城北支行", "A17-10");
-    add("农业银行福州分行", "A17-11"); add("国家开发银行福建省分行", "A17-12"); add("福建海峡银行总行", "A17-13");
-    add("中国银行福州分行", "B17-1");
-
-    // ==================== 查询逻辑 ====================
     function parseSeatCode(code) {
         const match = code.match(/^([AB])(\d+)-(\d+)$/);
         if (!match) return null;
         const row = parseInt(match[2]);
-        return {
-            zone: match[1],
-            row: row,
-            seat: parseInt(match[3]),
-            section: row <= 4 ? '前排' : row <= 9 ? '中排' : '后排'
-        };
+        return { zone: match[1], row: row, seat: parseInt(match[3]), section: row <= 4 ? '前排' : row <= 9 ? '中排' : '后排' };
     }
 
-    function fuzzySearchCompany(input) {
-        const lower = input.trim().toLowerCase();
-        const companies = Object.keys(companySeats);
-        const matches = companies.filter(name => name.toLowerCase().includes(lower));
-        if (matches.length === 0) return null;
-        if (matches.length === 1) return matches[0];
-        const exact = matches.find(name => name.toLowerCase() === lower);
-        if (exact) return exact;
-        matches.sort((a, b) => a.length - b.length);
-        return matches[0];
-    }
-
-    function findCompanySeats(input) {
-        const trimmed = input.trim();
+    // 精确查找
+    function findSeatByNameExact(name) {
+        const trimmed = name.trim();
         if (!trimmed) return null;
-        const companyName = fuzzySearchCompany(trimmed);
-        if (!companyName) return null;
-        const codes = companySeats[companyName];
-        const parsedList = codes.map(c => ({ code: c, info: parseSeatCode(c) })).filter(x => x.info);
-        parsedList.sort((a, b) => {
-            if (a.info.row !== b.info.row) return a.info.row - b.info.row;
-            return a.info.seat - b.info.seat;
-        });
-        return { companyName, seats: parsedList, count: parsedList.length };
+        if (!nameToSeats.hasOwnProperty(trimmed)) return null;
+        const codes = nameToSeats[trimmed];
+        const parsed = codes.map(c => ({ code: c, info: parseSeatCode(c) })).filter(x => x.info);
+        if (parsed.length === 0) return null;
+        parsed.sort((a, b) => a.info.row - b.info.row || a.info.seat - b.info.seat);
+        return { name: trimmed, seats: parsed, count: parsed.length };
     }
 
-    // ==================== DOM ====================
+    // DOM
     const pageHome = document.getElementById('page-home');
     const pageResult = document.getElementById('page-result');
     const nameInput = document.getElementById('nameInput');
@@ -343,44 +255,46 @@
         errorMessage.classList.add('show');
         setTimeout(() => errorMessage.classList.remove('show'), 2500);
     }
-
-    function showPage(p) {
-        [pageHome, pageResult].forEach(x => x.classList.add('hidden'));
-        p.classList.remove('hidden');
-    }
+    function showPage(p) { [pageHome, pageResult].forEach(x => x.classList.add('hidden')); p.classList.remove('hidden'); }
 
     function showResult(data) {
-        resultGreeting.innerHTML = `🏢 <span class="name-em">${data.companyName}</span>`;
-        let seatsHTML = data.seats.map(s => {
-            const info = s.info;
-            return `<div class="seat-item"><div class="code">${s.code}</div><div class="detail">${info.zone}区 ${info.section} 第${info.row}排</div></div>`;
-        }).join('');
-        seatResultCard.innerHTML = `
-            <div class="company-name-display">座位列表</div>
-            <div class="seat-list">${seatsHTML}</div>
-            <div class="seat-count">共 ${data.count} 个座位</div>
-        `;
+        resultGreeting.innerHTML = `👋 <span class="name-em">${data.name}</span> 的座位`;
+        let html = '';
+        data.seats.forEach(s => {
+            const { zone, row, seat, section } = s.info;
+            html += `
+                <div class="seat-info-box">
+                    <div class="seat-code-big">${s.code}</div>
+                    <div class="seat-detail">${zone}区 ${section} 第${row}排 第${seat}座</div>
+                </div>
+                <div style="height:2vw;"></div>
+            `;
+        });
+        seatResultCard.innerHTML = html;
         showPage(pageResult);
         pageResult.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    function doSearch(input) {
-        if (!input.trim()) { showError('请输入公司名'); return; }
-        const result = findCompanySeats(input);
-        if (!result) { showError('未找到该公司，请尝试其他关键词'); return; }
+    function doSearch() {
+        const input = nameInput.value;
+        const result = findSeatByNameExact(input);
+        if (!result) {
+            showError('未找到该姓名，请检查是否输入完整姓名');
+            return;
+        }
         showResult(result);
     }
 
-    btnFindSeat.addEventListener('click', () => doSearch(nameInput.value));
-    nameInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); doSearch(nameInput.value); } });
+    btnFindSeat.addEventListener('click', doSearch);
+    nameInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); doSearch(); } });
     btnBack.addEventListener('click', () => { showPage(pageHome); nameInput.focus(); });
 
-    // ==================== 初始化：支持URL参数（扫码场景） ====================
+    // 扫码参数支持 ?name=完整姓名
     function init() {
         const params = new URLSearchParams(window.location.search);
-        const companyParam = params.get('company');
-        if (companyParam && companyParam.trim()) {
-            const result = findCompanySeats(companyParam);
+        const nameParam = params.get('name');
+        if (nameParam && nameParam.trim()) {
+            const result = findSeatByNameExact(nameParam.trim());
             if (result) {
                 showResult(result);
                 return;
